@@ -19,7 +19,10 @@ class Combine:
         gold_lines = open(gold_file, 'r').readlines()
         gold_lines = [x.split('\t') for x in gold_lines]
         # sanity check to make sure we actually have annotations
-        assert([x[7] != '' and x[8] != '' for x in gold_lines])
+        try:
+            assert([x[7] != '' and x[8] != '' for x in gold_lines])
+        except:
+            pdb.set_trace()
         # pull source, target, and annotations ONLY if both agree it's a paraphrase
         gold_lines = [[x[1], x[3], ' '.join([x[7], x[8]]).strip()] for x in gold_lines if x[5] == '1' and x[6] == '1']
         # gold_lines = [[x[1], x[2], x[3]] for x in gold_lines if x[5] == '1' or x[6] == '1']

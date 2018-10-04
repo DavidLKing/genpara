@@ -80,8 +80,6 @@ def get_low_freq(corrected):
             return_sents.append(line)
     return return_sents
 
-    
-
 def swap(sents, swap_dict):
     paraphrases = []
     for line in sents:
@@ -92,6 +90,13 @@ def swap(sents, swap_dict):
                     para = sent.replace(swappable, swap)
                     paraphrases.append([para] + line)
     return paraphrases
+
+def writeout(name, lines):
+    with open(name, 'w') as of:
+        for line in lines:
+            # TODO we shouldn't need this check
+            if line[0] != line[1]:
+                of.write('\t'.join(line) + '\n')
 
 c = Combine()
 
@@ -150,5 +155,9 @@ gold_sg_para = swap(low_freq, gold_singles)
 elmo_sg_para = swap(low_freq, elmo_singles)
 gold_ph_para = swap(low_freq, gold_phrases)
 elmo_ph_para = swap(low_freq, elmo_phrases)
+
+writeout('gold_singular_swap.tsv', gold_sg_para)
+writeout('elmo_singular_swap.tsv', elmo_sg_para)
+
 
 pdb.set_trace()
