@@ -1,0 +1,2755 @@
+0
+[]
+[]
+
+1
+['3-0']
+['are | are']
+
+2
+['4-3', '2-1']
+['a | a', 'you | you']
+
+3
+[]
+[]
+
+4
+['1-1']
+['else | else']
+
+5
+['1-3']
+['else | need']
+
+6
+['1-5', '3-7', '4-8']
+['else | else', 'this | this', 'problem | problem']
+
+7
+['1-1']
+['else | else']
+
+8
+['4-0', '6-2', '5-1']
+['more | more', 'urination | urination', 'frequent | frequent']
+
+9
+['6-0']
+['urination | urination']
+
+10
+['0-3', '5-4', '6-5']
+['anythng | any', 'frequent | frequent', 'urination | urination']
+
+11
+['5-4', '0-0', '1-1']
+['description | pain', 'can | can', 'you | you']
+
+12
+['1-1', '0-0']
+['you | you', 'can | can']
+
+13
+['3-3', '1-0']
+['a | a', 'you | have']
+
+14
+['0-3', '1-4']
+['any | any', 'trouble | trouble']
+
+15
+['0-3']
+['any | any']
+
+16
+['1-2']
+['trouble | to']
+
+17
+['1-1', '0-0']
+['trouble | trouble', 'any | any']
+
+18
+['1-1', '0-0']
+['trouble | problems', 'any | any']
+
+19
+['2-2', '1-1', '0-0']
+['peeing | urinating', 'trouble | pain', 'any | any']
+
+20
+['1-1', '0-0']
+['you | you', 'are | are']
+
+21
+[]
+[]
+
+22
+['0-0']
+['are | have']
+
+23
+['1-1', '0-0']
+['you | you', 'are | are']
+
+24
+['1-1', '0-0']
+['you | you', 'are | are']
+
+25
+['0-2']
+['are | do']
+
+26
+['1-2', '5-4', '0-0', '3-3', '6-5']
+['anything | you', 'to | to', 'does | you', 'the | need', 'urinate | urinate']
+
+27
+['2-2', '1-1', '0-0', '7-4']
+['make | make', 'anything | anything', 'does | does', 'better | better']
+
+28
+['3-3', '1-1', '0-0', '7-5', '2-2']
+['the | the', 'anything | anything', 'does | does', 'better | better', 'make | make']
+
+29
+['4-3', '5-4', '3-2', '0-1', '6-5']
+['urge | urge', 'to | to', 'the | the', 'does | did', 'urinate | urinate']
+
+30
+['1-1', '7-9', '0-0', '5-7', '6-8', '2-2', '4-6', '3-5']
+['do | do', 'time | time', 'what | what', 'your | your', 'spare | spare', 'you | you', 'in | in', 'do | do']
+
+31
+['1-1', '0-0']
+['do | are', 'what | what']
+
+32
+['3-3', '1-1', '0-0', '7-7', '4-4', '2-2', '5-5']
+['do | do', 'do | do', 'what | what', 'time | time', 'in | in', 'you | you', 'your | your']
+
+33
+['3-3', '1-1', '0-0', '7-7', '2-2', '5-5']
+['do | do', 'do | do', 'what | what', 'time | time', 'you | you', 'your | your']
+
+34
+['3-3', '2-2', '1-1', '0-0']
+['do | do', 'you | you', 'do | do', 'what | what']
+
+35
+['5-3', '1-1']
+['work | work', 'do | do']
+
+36
+['0-6', '2-8', '1-7', '5-9']
+['what | where', 'you | you', 'do | do', 'work | work']
+
+37
+['2-8', '1-7', '5-9']
+['you | you', 'do | do', 'work | work']
+
+38
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['do | do', 'do | do', 'what | what', 'for | for', 'you | you']
+
+39
+['2-3', '5-6', '3-4', '1-2', '4-5', '0-1']
+['you | you', 'work | work', 'do | do', 'do | do', 'for | for', 'what | what']
+
+40
+['3-3', '2-2', '1-1', '0-0']
+['do | do', 'you | you', 'do | do', 'what | what']
+
+41
+['3-6']
+['pain | pain']
+
+42
+['6-2']
+['areas | move']
+
+43
+['3-1']
+['pain | pain']
+
+44
+['3-3', '2-2', '1-1', '0-0']
+['pain | pain', 'feel | feel', 'you | you', 'do | do']
+
+45
+['3-3', '2-2', '1-1', '0-0']
+['pain | pain', 'feel | feel', 'you | you', 'do | do']
+
+46
+['1-1', '0-0', '6-6', '3-4', '2-2']
+['you | you', 'do | do', 'areas | else', 'pain | pain', 'feel | feel']
+
+47
+['5-4', '0-0']
+['side | side', 'is | is']
+
+48
+['3-3']
+['on | on']
+
+49
+['1-1', '4-3', '0-0', '5-4', '3-2']
+['it | it', 'one | one', 'is | is', 'side | side', 'on | on']
+
+50
+['3-3', '1-1', '0-0', '4-4', '5-5']
+['on | on', 'it | it', 'is | is', 'one | one', 'side | side']
+
+51
+['1-2', '2-3']
+['it | it', 'worse | worse']
+
+52
+['4-2', '0-0']
+['shots | shots', 'do | are']
+
+53
+['3-3', '1-1', '0-0']
+['any | any', 'you | you', 'do | do']
+
+54
+['3-3', '1-1', '0-0']
+['any | any', 'you | you', 'do | do']
+
+55
+['3-3', '1-1', '0-0']
+['any | any', 'you | you', 'do | do']
+
+56
+['1-3', '0-0', '4-6']
+["'m | !", 'i | i', 'hear | exercise']
+
+57
+[]
+[]
+
+58
+['4-3']
+['hear | exercise']
+
+59
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['to | to', "'m | 'm", 'i | i', 'hear | hear', 'sorry | sorry']
+
+60
+['3-3', '1-1', '0-0', '5-6', '3-5', '4-4', '2-2']
+['to | to', "'m | 'm", 'i | i', 'you | that', 'to | about', 'hear | hear', 'sorry | sorry']
+
+61
+['1-1', '2-3', '0-0', '3-4', '4-5']
+["'m | 'm", 'sorry | sorry', 'i | i', 'to | to', 'hear | hear']
+
+62
+['1-1', '0-0']
+['are | are', 'what | what']
+
+63
+['5-6']
+['about | about']
+
+64
+['0-5', '5-8']
+['what | what', 'about | about']
+
+65
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['most | most', 'are | are', 'what | what', 'worried | concerned', 'you | you', 'about | about']
+
+66
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['most | most', 'are | are', 'what | what', 'worried | afraid', 'you | you', 'about | of']
+
+67
+[]
+[]
+
+68
+['3-0']
+['how | how']
+
+69
+['9-5', '0-2', '1-1']
+['work | work', 'i | you', 'can | good.']
+
+70
+['8-5', '4-2', '5-3', '7-4']
+['your | your', 'your | your', 'injury | injury', 'affect | affected']
+
+71
+['8-2', '3-0', '9-3']
+['your | your', 'how | how', 'work | work']
+
+72
+['9-5', '7-3', '3-0', '8-4']
+['work | work', 'affect | affected', 'how | how', 'your | your']
+
+73
+['3-3', '1-1', '0-0']
+['marijuana | drugs', 'you | you', 'do | do']
+
+74
+['2-2', '1-1', '0-0']
+['smoke | smoke', 'you | you', 'do | do']
+
+75
+['0-1', '1-2', '2-3']
+['do | do', 'you | you', 'smoke | smoke']
+
+76
+['0-1', '1-2', '2-3']
+['do | do', 'you | you', 'smoke | smoke']
+
+77
+['3-4', '1-1', '0-0', '2-2']
+['it | i', 'told | ,', 'you | okay', 'me | i']
+
+78
+['0-1']
+['you | you']
+
+79
+['3-7', '1-1', '0-0']
+['it | you', 'told | are', 'you | you']
+
+80
+['2-3', '1-2', '0-1', '4-6', '3-5']
+['me | me', 'told | tell', 'you | you', 'started | started', 'it | it']
+
+81
+['0-1', '1-0', '1-2', '2-3']
+['you | you', 'told | could', 'told | tell', 'me | me']
+
+82
+['0-1', '2-3', '2-6']
+['you | you', 'me | me', 'me | that']
+
+83
+['3-3', '1-1', '4-4', '0-0']
+['anything | anything', 'you | you', 'else | else', 'have | have']
+
+84
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['anything | anything', 'you | you', 'have | are', 'else | else', 'taken | taking']
+
+85
+['3-3', '2-2', '1-1', '0-0']
+['anything | anything', 'taken | taken', 'you | you', 'have | have']
+
+86
+['3-0', '4-1']
+['anything | anything', 'else | else']
+
+87
+['3-3', '1-0', '4-4', '2-1']
+['of | it', 'the | how', '1 | hurt', 'sacle | much']
+
+88
+['0-0', '9-7', '7-5', '4-2', '6-4', '2-0', '0-8', '5-3', '8-6', '3-1', '1-9', '4-2']
+['on | on', 'tell | tell', 'can | can', '1 | 1', '10 | 10', 'sacle | on', 'on | me', 'to | to', 'you | you', 'of | scale', 'the | how', '1 | 1']
+
+89
+['9-2', '7-0', '8-1', '0-3']
+['tell | tell', 'can | can', 'you | you', 'on | me']
+
+90
+['9-2', '3-6', '8-1', '0-3', '7-0']
+['tell | tell', 'of | it', 'you | you', 'on | me', 'can | can']
+
+91
+['0-1']
+['aching | would']
+
+92
+['0-3', '4-5']
+['that | that', 'difficult | difficult']
+
+93
+['0-0']
+['that | that']
+
+94
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['very | very', 'must | must', 'that | that', 'difficult | frustrating', 'be | be']
+
+95
+['1-1', '4-3', '0-0', '3-2']
+['must | is', 'difficult | uncomfortable', 'that | that', 'very | very']
+
+96
+['2-2', '1-1', '4-3', '0-0']
+['be | be', 'must | must', 'difficult | frustrating', 'that | that']
+
+97
+['1-0', '2-3', '0-9']
+['other | good', "tobacco | 's", 'any | any']
+
+98
+['2-5', '0-3', '3-6', '1-4']
+['tobacco | tobacco', 'any | any', 'products | products', 'other | other']
+
+99
+['2-0']
+['tobacco | tobacco']
+
+100
+['3-4', '0-2', '2-3']
+['products | products', 'any | any', 'tobacco | nicotine']
+
+101
+['2-5', '3-6']
+['the | the', 'pain | pain']
+
+102
+['3-3', '2-2', '0-0']
+['pain | pain', 'the | the', 'what | what']
+
+103
+['3-3', '2-2', '0-0']
+['pain | pain', 'the | the', 'what | what']
+
+104
+['0-0']
+['okay | okay']
+
+105
+['3-0']
+['you. | ok.']
+
+106
+['3-3', '1-1', '0-0', '0-0', '4-4', '1-1', '2-2', '5-5']
+['you. | you.', ', | ,', 'okay | ok', 'okay | ok', 'i | i', ', | ,', 'thank | thank', 'will | will']
+
+107
+['2-2', '1-1', '0-0']
+['thank | thank', ', | ,', 'okay | ok']
+
+108
+['1-1', '7-1', '3-9', '0-0', '8-5', '4-2', '4-0', '2-8', '5-3', '0-6', '1-7']
+[', | ,', 'over | ,', 'you. | we', 'okay | okay', 'this | this', 'i | we', 'i | okay', 'thank | what', "will | 'll", 'okay | and', ', | see']
+
+109
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'do | do', 'problems | conditions', 'chronic | chronic', 'have | have', 'medical | medical']
+
+110
+['4-3']
+['chronic | chronic']
+
+111
+['4-5', '6-8', '0-0']
+['chronic | chronic', 'problems | disease', 'do | have']
+
+112
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'do | do', 'problems | problems', 'chronic | chronic', 'have | have', 'medical | health']
+
+113
+['3-3', '1-1', '0-0', '5-4', '2-2', '6-5']
+['any | any', 'you | you', 'do | do', 'medical | medical', 'have | have', 'problems | problems']
+
+114
+['3-3', '1-1', '0-0', '5-4', '2-2', '6-5']
+['any | any', 'you | they', 'do | do', 'medical | medical', 'have | have', 'problems | problems']
+
+115
+['1-1', '5-5', '0-0']
+[', | ,', 'this | this', 'okay | okay']
+
+116
+['1-1', '0-0']
+[', | ,', 'okay | okay']
+
+117
+['0-0']
+['okay | okay']
+
+118
+['1-2', '4-5', '2-3']
+['did | did', 'your | your', 'you | you']
+
+119
+['0-1', '1-5']
+['when | how', 'did | did']
+
+120
+['0-3', '1-4']
+['when | when', 'did | did']
+
+121
+['1-1', '0-0', '4-2', '6-4', '5-3']
+['did | did', 'when | when', 'your | your', 'move | move', 'friend | friend']
+
+122
+['1-3', '3-5', '6-8', '2-4', '4-6', '5-7']
+['did | did', 'help | help', 'move | move', 'you | you', 'your | your', 'friend | friend']
+
+123
+['2-1']
+['you | you']
+
+124
+['3-0', '6-2']
+['to | that', 'it | frustrating']
+
+125
+['3-0']
+['to | that']
+
+126
+['3-3', '1-1', '0-0', '3-5', '4-4', '2-2']
+['to | to', 'am | am', 'i | i', 'to | that', 'hear | hear', 'sorry | sorry']
+
+127
+['1-3', '3-5', '0-2', '5-7', '1-0', '2-4', '4-6', '2-1']
+['am | am', 'to | to', 'i | i', 'that | that', 'am | i', 'sorry | sorry', 'hear | hear', 'sorry | understand.']
+
+128
+['2-0', '4-2', '3-1', '3-3']
+['sorry | sorry', 'hear | hear', 'to | to', 'to | that']
+
+129
+['3-1', '2-0']
+['! | !', 'good | good']
+
+130
+['2-1', '3-2']
+['good | good', '! | !']
+
+131
+['2-0']
+['good | good']
+
+132
+['3-3', '1-1', '0-0', '5-6', '4-5', '2-2']
+['any | any', 'you | you', 'do | do', 'conditions | conditions', 'medical | medical', 'have | have']
+
+133
+['4-4']
+['medical | this']
+
+134
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'you | they', 'do | do', 'medical | medical', 'have | have', 'conditions | conditions']
+
+135
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'you | they', 'do | did', 'medical | health', 'have | have', 'conditions | conditions']
+
+136
+['3-3', '1-1', '0-0']
+['any | any', 'you | you', 'do | do']
+
+137
+['9-4', '0-9', '5-1', '2-6', '4-0', '6-2', '1-7', '4-8']
+[', | time', 'i | go', 'you | you', 'so | wilkins.', 'thank | thank', 'for | for', 'hope | i', 'thank | will']
+
+138
+['5-1', '6-5', '8-4', '4-0', '6-2', '7-3']
+['you | you', 'for | today', 'in | in', 'thank | thank', 'for | for', 'coming | coming']
+
+139
+['0-5', '9-4', '5-1', '3-7', '4-0', '4-9', '2-6']
+['i | i', ', | ,', 'you | you', 'too. | be', 'thank | thank', 'thank | back', "so | 'll"]
+
+140
+['4-0', '5-1']
+['thank | thank', 'you | you']
+
+141
+['5-5', '6-9']
+['been | been', 'working | work']
+
+142
+['0-0', '8-7', '3-0', '7-6', '9-8', '4-1']
+['that | have', 'past | past', 'have | have', 'the | the', 'few | couple', 'you | you']
+
+143
+['9-7', '7-5', '5-4', '0-8', '8-6']
+['few | few', 'the | the', 'been | been', 'that | days', 'past | past']
+
+144
+['4-2', '3-1', '2-0']
+['you | you', 'have | have', 'great. | great.']
+
+145
+['2-4', '1-3']
+['this | this', 'was | was']
+
+146
+['1-2', '2-3']
+['was | did', 'this | that']
+
+147
+['1-0', '4-2']
+['i | i', 'i | i']
+
+148
+[]
+[]
+
+149
+['1-4']
+['i | we']
+
+150
+['1-0', '4-2', '2-3', '5-6']
+['i | i', 'i | i', 'have | have', 'need | need']
+
+151
+['1-0', '2-1', '4-5', '5-6']
+['i | i', 'have | have', 'i | i', 'need | need']
+
+152
+['5-4', '0-0', '1-1']
+['need | that', 'ok. | ok.', 'i | i']
+
+153
+['1-3']
+['you | you']
+
+154
+['1-0']
+['you | you']
+
+155
+['3-4', '4-5', '1-2', '2-3']
+['your | your', 'back | back', 'you | you', 'injured | hurt']
+
+156
+['4-3', '3-2']
+['back | back', 'your | your']
+
+157
+['1-3', '2-4', '4-6', '3-5']
+['you | you', 'injured | hurt', 'back | back', 'your | your']
+
+158
+['6-0', '4-6', '5-9', '3-5']
+['problems | could', 'chronic | chronic', 'health | health', 'any | any']
+
+159
+['2-2']
+['have | have']
+
+160
+['0-1', '1-2', '5-6']
+['do | would', 'you | you', 'health | health']
+
+161
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'do | do', 'problems | issues', 'chronic | chronic', 'have | have', 'health | health']
+
+162
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'do | do', 'problems | problems', 'chronic | chronic', 'have | have', 'health | medical']
+
+163
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['any | any', 'you | they', 'do | do', 'problems | conditions', 'chronic | chronic', 'have | have', 'health | health']
+
+164
+['1-4', '0-3', '2-5']
+['idea | to', 'any | try', 'what | get']
+
+165
+['2-0']
+['what | what']
+
+166
+['2-0']
+['what | what']
+
+167
+['6-2', '0-0']
+['spiritual | religious', 'do | are']
+
+168
+['6-2']
+['spiritual | religious']
+
+169
+['3-3', '2-2', '1-1', '0-0']
+['yourself | yourself', 'consider | consider', 'you | you', 'do | do']
+
+170
+['1-1', '0-0']
+['you | you', 'do | do']
+
+171
+['1-1', '0-0']
+['you | you', 'do | do']
+
+172
+['5-1', '9-2', '9-0']
+['you | did', 'your | your', 'your | when']
+
+173
+['5-1', '7-3', '8-4', '6-2', '9-0']
+['you | did', 'to | pain', 'help | start', 'wanted | the', 'your | when']
+
+174
+['7-3', '9-0', '8-4', '5-1']
+['to | pain', 'your | when', 'help | start', 'you | did']
+
+175
+['5-1', '7-3', '8-4', '6-2', '4-0']
+['you | did', 'to | pain', 'help | start', 'wanted | the', 'that | whan']
+
+176
+['7-5', '8-6', '6-2', '5-1']
+['medical | health', 'issues | issues', 'grandparents | grandparents', 'your | your']
+
+177
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['me | me', 'you | you', 'can | can', 'grandparents | grandparents', 'about | about', 'tell | tell', 'your | your']
+
+178
+['4-3', '2-1', '5-4', '3-2', '6-5']
+['about | about', 'tell | tell', 'your | your', 'me | me', 'grandparents | grandparents']
+
+179
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['me | me', 'you | you', 'can | can', 'grandparents | father', 'about | about', 'tell | tell', 'your | your']
+
+180
+['2-2', '1-1', '4-3', '0-0']
+['have | have', 'you | you', 'headaches | headaches', 'do | do']
+
+181
+['4-0']
+['headaches | headache']
+
+182
+['1-1', '4-3']
+['you | you', 'headaches | experieincing']
+
+183
+['3-3', '2-2', '1-1', '0-0']
+['any | any', 'have | have', 'you | you', 'do | do']
+
+184
+['3-3', '1-1', '0-0', '4-5', '2-2']
+['any | any', 'you | you', 'do | do', 'headaches | concerns', 'have | have']
+
+185
+['3-3', '2-2', '1-1', '0-0']
+['any | any', 'have | have', 'you | you', 'do | do']
+
+186
+['5-4']
+['health | health']
+
+187
+[]
+[]
+
+188
+[]
+[]
+
+189
+['3-3', '1-1', '0-0', '4-4', '5-5']
+['in | in', 'you | you', 'are | are', 'good | good', 'health | health']
+
+190
+['1-1', '0-0']
+['you | you', 'are | are']
+
+191
+['3-3', '1-1', '0-0', '4-4', '5-5']
+['in | in', 'you | they', 'are | are', 'good | good', 'health | health']
+
+192
+['1-1', '2-4', '4-6', '0-0']
+['did | were', 'your | your', 'move | move', 'when | when']
+
+193
+['1-1', '0-0', '2-4', '4-6', '3-5']
+['did | did', 'when | when', 'your | your', 'move | move', 'friend | friend']
+
+194
+['3-3', '1-0', '2-1']
+['friend | friends', 'did | do', 'your | you']
+
+195
+['2-2', '1-1', '0-0']
+['your | your', 'did | did', 'when | when']
+
+196
+['1-0']
+['drugs | drugs']
+
+197
+['1-1']
+['you | you']
+
+198
+['1-2']
+['you | you']
+
+199
+['3-3', '2-2', '1-1', '0-0']
+['angry | upset', 'get | get', 'you | you', 'do | do']
+
+200
+['1-1', '0-0']
+['you | you', 'do | do']
+
+201
+['2-2', '1-1', '0-0']
+['get | take', 'you | you', 'do | do']
+
+202
+['2-2', '0-0']
+['changes | peeing', 'any | any']
+
+203
+['0-0']
+['any | besides']
+
+204
+['2-2', '0-0']
+['changes | changes', 'any | any']
+
+205
+['2-2', '0-0']
+['changes | changes', 'any | any']
+
+206
+['2-2', '0-0']
+['changes | changes', 'any | any']
+
+207
+['1-3']
+['cancers | cancer']
+
+208
+[]
+[]
+
+209
+[]
+[]
+
+210
+['3-2']
+['you | you']
+
+211
+['2-4', '0-0']
+['awful | difficult', 'that | that']
+
+212
+['2-2', '1-1', '0-0']
+['awful | frustrating', 'sounds | sounds', 'that | that']
+
+213
+['1-1', '2-3', '0-0']
+['sounds | sounds', 'awful | painfull', 'that | that']
+
+214
+['4-2', '4-3', '1-5']
+['your | your', 'your | grandparents', "'s | health"]
+
+215
+['1-4']
+["'s | health"]
+
+216
+['1-3']
+["'s | health"]
+
+217
+['1-1', '0-0', '5-5', '4-4', '2-2', '9-3']
+["'s | 's", 'let | let', 'family | family', 'your | your', 'talk | talk', 'about | about']
+
+218
+['9-2', '2-5', '4-7', '3-6', '8-1', '0-3', '1-4', '7-0']
+['about | about', 'talk | of', 'your | parents', 'about | your', 'me | me', 'let | the', "'s | health", 'tell | tell']
+
+219
+['3-3', '1-1', '0-0', '2-2', '5-5', '3-4']
+['about | about', "'s | 's", 'let | let', 'talk | talk', 'family | family', 'about | your']
+
+220
+['2-5', '3-6', '8-1', '0-3', '1-4', '7-0']
+['so | unusual', 'sorry | symptoms', 'you | you', 'i | any', "'m | other", 'have | do']
+
+221
+['3-9', '7-3', '0-4', '0-1', '8-2', '1-5']
+['sorry | especially', 'have | see', 'i | how', 'i | i', 'you | could', "'m | this"]
+
+222
+['7-0', '8-1', '4-6']
+['have | have', 'you | you', 'to | to']
+
+223
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['sorry | sorry', "'m | 'm", 'i | i', 'to | to', 'so | so', 'hear | hear']
+
+224
+['9-2', '3-5', '8-1', '0-3', '1-4', '7-0']
+['noticed | noticed', 'sorry | symptoms', 'you | you', 'i | any', "'m | other", 'have | have']
+
+225
+['1-1', '0-0', '2-2', '3-3']
+["'m | other", 'i | any', 'so | associated', 'sorry | symptoms']
+
+226
+['5-3', '0-0']
+['pain | pain', 'how | how']
+
+227
+['2-2', '6-4', '0-0', '1-1']
+['does | does', 'hurt | hurt', 'how | how', 'much | much']
+
+228
+['3-3', '2-2', '6-5', '0-0']
+['your | your', 'does | has', 'hurt | hurt', 'how | how']
+
+229
+['6-3', '3-1', '2-0']
+['hurt | hurt', 'your | your', 'does | does']
+
+230
+['0-0']
+['good | good']
+
+231
+['0-1']
+['good | good']
+
+232
+['4-5', '7-7', '5-6']
+['did | did', 'happen | happen', 'this | this']
+
+233
+['4-2']
+['did | did']
+
+234
+['3-0', '4-1']
+['when | when', 'did | did']
+
+235
+['1-1', '4-3', '5-4', '7-6', '3-2', '6-5']
+[', | ,', 'did | did', 'this | this', 'happen | occur', 'when | when', 'incident | incident']
+
+236
+['3-0', '5-2', '4-1', '7-3']
+['when | when', 'this | this', 'did | did', 'happen | happen']
+
+237
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['when | when', ', | ,', 'ok | okay', 'did | did', 'and | and', 'this | it']
+
+238
+['2-3']
+['back | accidients']
+
+239
+['0-1', '6-3', '1-2', '7-4']
+['was | was', 'car | car', 'your | your', 'accidents | accident']
+
+240
+['1-2']
+['your | your']
+
+241
+['0-1', '1-2', '2-3']
+['was | is', 'your | your', 'back | back']
+
+242
+['3-3', '2-2', '1-1', '0-0']
+['last | last', 'your | your', 'was | was', 'when | when']
+
+243
+['2-2', '1-1', '0-0']
+['your | your', 'was | was', 'when | when']
+
+244
+['3-3', '2-2', '1-1', '0-0']
+['parent | mother', 'your | your', 'is | is', 'how | how']
+
+245
+[]
+[]
+
+246
+[]
+[]
+
+247
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['parent | mother', 'is | is', 'how | how', "'s | 's", 'your | your', 'health | health']
+
+248
+['2-2', '5-3', '0-0', '1-1']
+['your | your', 'health | health', 'how | how', 'is | is']
+
+249
+['3-3', '1-1', '0-0', '5-4', '2-2']
+['parent | parents', 'is | is', 'how | how', 'health | health', 'your | your']
+
+250
+['7-0', '8-1', '0-0', '9-2']
+['your | did', 'back | the', 'do | did', 'pain | increased']
+
+251
+['7-6']
+['your | your']
+
+252
+['7-8', '8-9', '9-0']
+['your | your', 'back | back', 'pain | has']
+
+253
+['2-3', '3-4', '8-7', '1-2', '7-6', '0-1', '9-8']
+['think | think', 'that | is', 'back | back', 'you | you', 'your | your', 'do | do', 'pain | pain']
+
+254
+['8-2', '7-1', '9-3', '0-0']
+['back | back', 'your | your', 'pain | hurt', 'do | does']
+
+255
+['8-5', '0-1', '1-2', '7-4']
+['back | back', 'do | did', 'you | you', 'your | your']
+
+256
+['2-2', '6-3', '0-0', '1-1']
+['sorry | sorry', 'it | you', 'i | i', "'m | 'm"]
+
+257
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['to | to', "'m | 'm", 'i | i', 'hear | hear', 'sorry | sorry']
+
+258
+['1-1', '2-3', '0-0', '5-6', '3-4', '4-5']
+["'m | 'm", 'sorry | sorry', 'i | i', 'that | that', 'to | to', 'hear | hear']
+
+259
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['to | to', "'m | 'm", 'i | i', 'hear | hear', 'sorry | sorry', 'that | about']
+
+260
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'they | they', 'do | do', 'medical | medical', 'have | have', 'conditions | problems']
+
+261
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'they | you', 'do | do', 'medical | medical', 'have | have', 'conditions | conditions']
+
+262
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'they | they', 'do | did', 'medical | health', 'have | have', 'conditions | conditions']
+
+263
+['3-0', '5-2', '4-1']
+['any | any', 'conditions | conditions', 'medical | medical']
+
+264
+['1-1']
+['are | do']
+
+265
+[]
+[]
+
+266
+['2-2', '1-1', '0-0']
+['you | you', 'are | are', 'why | how']
+
+267
+['2-2', '1-1', '0-0']
+['you | you', 'are | are', 'why | why']
+
+268
+['3-3', '2-2', '1-1', '0-0']
+['do | do', 'you | you', 'do | do', 'what | what']
+
+269
+['2-5', '3-8', '0-0', '1-4']
+['you | you', 'do | do', 'what | what', 'do | do']
+
+270
+['7-9', '2-3', '0-0', '3-4', '1-2']
+['time | work', 'you | you', 'what | what', 'do | do', 'do | do']
+
+271
+['3-3', '1-1', '0-0', '7-7', '4-4', '2-2', '5-5']
+['do | do', 'do | do', 'what | what', 'time | time', 'in | in', 'you | you', 'your | your']
+
+272
+['3-3', '1-1', '0-0', '6-6', '7-7', '4-4', '2-2', '5-5']
+['do | do', 'do | do', 'what | what', 'free | free', 'time | time', 'in | on', 'you | you', 'your | your']
+
+273
+['3-3', '2-2', '1-1', '0-0']
+['do | do', 'you | you', 'do | do', 'what | what']
+
+274
+['1-1', '2-3', '0-0']
+['you | you', 'working | working', 'are | are']
+
+275
+['0-2']
+['are | you']
+
+276
+['1-1', '0-0']
+['you | you', 'are | are']
+
+277
+['1-1', '0-0']
+['you | you', 'are | do']
+
+278
+['1-1', '0-0']
+['you | you', 'are | do']
+
+279
+['1-1', '0-0']
+['are | is', 'what | how']
+
+280
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['most | most', 'are | are', 'what | what', 'concerned | worried', 'you | you', 'about | about']
+
+281
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['most | most', 'are | are', 'what | what', 'concerned | afraid', 'you | you', 'about | of']
+
+282
+['1-0', '2-1']
+['are | do', 'you | you']
+
+283
+['3-7']
+['work | work']
+
+284
+['0-0', '3-2']
+['how | how', 'work | work']
+
+285
+['3-2']
+['work | work']
+
+286
+['1-0', '2-1']
+['your | your', 'grandparents | grandparents']
+
+287
+['1-1', '2-2', '0-0']
+['your | good.', 'grandparents | now', 'are | ok']
+
+288
+['2-2', '1-1', '0-0']
+['grandparents | mom', 'your | your', 'are | are']
+
+289
+['3-3', '2-2', '1-1', '0-0']
+['healthy | healthy', 'grandparents | grandparents', 'your | your', 'are | were']
+
+290
+['1-2', '2-3']
+['your | your', 'grandparents | grandparents']
+
+291
+['2-0']
+['grandparents | grandparents']
+
+292
+['2-1', '3-2']
+['have | have', 'any | any']
+
+293
+['1-1', '2-3']
+['you | yo', 'have | had']
+
+294
+['1-1', '2-3']
+['you | you', 'have | had']
+
+295
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['any | any', 'you | you', 'do | do', 'stds | pets', 'have | have']
+
+296
+['3-3', '2-2', '1-1', '0-0']
+['any | any', 'have | have', 'you | you', 'do | do']
+
+297
+['3-3', '2-2', '1-1', '0-0']
+['any | any', 'have | have', 'you | you', 'do | do']
+
+298
+['1-4']
+['tingling | tingling']
+
+299
+['3-3', '5-6', '8-7', '2-1', '4-5', '0-0']
+['need | the', 'urinate | urinate', 'more | better', 'you | anything', 'to | to', 'you | does']
+
+300
+['0-0', '4-2']
+['you | was', 'to | back']
+
+301
+['5-4', '2-2', '1-1', '3-3', '0-0']
+['urinate | you', 'you | anything', 'said | there', 'need | else', 'you | is']
+
+302
+['3-6', '4-7', '2-5', '2-2', '5-8', '1-1', '8-3', '0-0']
+['need | the', 'to | back', 'you | with', 'you | anything', 'urinate | pain', 'said | there', 'more | that', 'you | is']
+
+303
+['0-5', '2-2', '1-1', '3-3', '0-0']
+['you | you', 'you | anything', 'said | there', 'need | else', 'you | is']
+
+304
+['2-2', '1-1', '0-0']
+['work | work', 'is | is', 'how | how']
+
+305
+[]
+[]
+
+306
+['2-4']
+['work | work']
+
+307
+['1-1', '0-0']
+['is | is', 'how | what']
+
+308
+[]
+[]
+
+309
+['3-1']
+['pain | hopefully']
+
+310
+['0-0', '3-4']
+['does | you', 'pain | gets']
+
+311
+['0-1', '1-2']
+['does | does', 'it | it']
+
+312
+['0-1', '4-8', '3-7', '2-6']
+['what | the', 'back | back', 'your | your', 'of | of']
+
+313
+['2-3', '5-6', '3-4', '4-5', '0-1']
+['of | of', 'hurts | hurts', 'your | your', 'back | back', 'what | what']
+
+314
+['3-4', '4-5']
+['your | your', 'back | back']
+
+315
+['4-3', '0-0', '3-2']
+['back | back', 'what | what', 'your | your']
+
+316
+['2-2', '1-1', '0-0']
+['problems | problems', 'cardiac | cardiovascular', 'any | any']
+
+317
+['2-2', '1-1', '0-0']
+['problems | problems', 'cardiac | heart', 'any | any']
+
+318
+['2-2', '0-0']
+['problems | issues', 'any | any']
+
+319
+['2-5', '0-3']
+['problems | problems', 'any | any']
+
+320
+['2-2', '1-1', '0-0']
+['father | mom', 'your | your', 'has | has']
+
+321
+['0-6', '2-8', '1-7']
+['has | does', 'father | mom', 'your | your']
+
+322
+['2-2', '1-1']
+['father | mom', 'your | your']
+
+323
+['2-2', '5-3', '0-0', '1-1']
+['father | mother', 'sick | still', 'has | is', 'your | your']
+
+324
+['2-2', '1-1']
+['father | parents', 'your | your']
+
+325
+['2-2', '1-1', '0-0']
+['father | father', 'your | your', 'has | is']
+
+326
+['2-2', '1-1', '0-0']
+['you | you', 'do | do', 'what | what']
+
+327
+['2-2', '1-1', '0-0', '3-5']
+['you | you', 'do | are', 'what | what', 'enjoy | of']
+
+328
+['2-1']
+['you | you']
+
+329
+['3-4', '1-2', '0-0', '2-3']
+['enjoy | enjoy', 'do | do', 'what | what', 'you | you']
+
+330
+['1-0', '2-1', '3-2']
+['do | do', 'you | you', 'enjoy | enjoy']
+
+331
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'have | have', 'change | change', 'noticed | noticed', 'in | in']
+
+332
+['1-8', '3-0', '0-7', '2-9']
+['you | you', 'any | besides', 'have | have', 'noticed | had']
+
+333
+['3-0']
+['any | any']
+
+334
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'have | have', 'change | changes', 'noticed | noticed', 'in | in']
+
+335
+['3-0', '5-2', '4-1']
+['any | any', 'in | in', 'change | changs']
+
+336
+['3-3', '2-2', '1-1', '0-0']
+['any | any', 'noticed | noticed', 'you | you', 'have | have']
+
+337
+['3-1', '0-0', '4-2', '6-4', '5-3']
+['activities | activities', 'what | what', 'do | do', 'do | do', 'you | you']
+
+338
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['activities | work', 'kind | kind', 'what | what', 'do | do', 'do | do', 'of | of', 'you | you']
+
+339
+['3-1', '0-0', '4-2', '6-4', '5-3']
+['activities | activities', 'what | what', 'do | do', 'do | do', 'you | you']
+
+340
+['5-3', '6-4', '4-2', '0-0']
+['you | you', 'do | do', 'do | do', 'what | what']
+
+341
+['4-5', '1-6']
+['back | back', 'pain | pain']
+
+342
+['3-5']
+['your | your']
+
+343
+['2-4', '1-3']
+['in | in', 'pain | pain']
+
+344
+['1-3', '2-4', '4-6', '3-5']
+['pain | pain', 'in | in', 'back | back', 'your | your']
+
+345
+['3-3', '2-2', '1-1', '4-4']
+['your | your', 'in | in', 'pain | pain', 'back | legs']
+
+346
+['1-3', '2-4', '4-6', '3-5']
+['pain | pain', 'in | in', 'back | back', 'your | your']
+
+347
+['3-2']
+['pain | pain']
+
+348
+['1-5']
+['you | you']
+
+349
+['1-1', '0-0']
+['you | you', 'are | have']
+
+350
+['3-3', '1-1', '0-0', '4-5', '2-2']
+['pain | pain', 'you | you', 'are | are', 'currently | now', 'in | in']
+
+351
+['4-4']
+['currently | now']
+
+352
+['1-1', '0-0']
+['you | you', 'are | are']
+
+353
+['3-3', '1-1', '0-0', '5-4', '2-2']
+['mother | mothers', 'is | is', 'how | how', 'health | health', 'your | your']
+
+354
+['5-4', '3-1']
+['health | health', 'mother | mom']
+
+355
+['1-6', '3-8', '2-7']
+['is | are', 'mother | parents', 'your | your']
+
+356
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['mother | parent', 'is | is', 'how | how', "'s | 's", 'your | your', 'health | health']
+
+357
+['3-3', '2-2', '1-1', '0-0']
+['mother | mother', 'your | your', 'is | is', 'how | how']
+
+358
+['2-2', '5-3', '0-0', '1-1']
+['your | your', 'health | health', 'how | how', 'is | is']
+
+359
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['with | with', "is | 's", 'what | what', 'your | your', 'wrong | wrong', 'back | back']
+
+360
+['0-2']
+['what | what']
+
+361
+['0-5', '2-8']
+['what | get', 'wrong | better']
+
+362
+['4-2', '5-3', '3-1', '0-0']
+['your | your', 'back | back', 'with | about', 'what | what']
+
+363
+['4-2', '0-0']
+['your | your', 'what | what']
+
+364
+['4-2', '5-3', '0-0']
+['your | your', 'back | back', 'what | how']
+
+365
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['any | any', 'you | you', 'have | have', 'difficulty | trouble', 'had | had']
+
+366
+['1-1']
+['you | you']
+
+367
+['1-1', '0-0']
+['you | you', 'have | have']
+
+368
+['3-3', '1-1', '0-0', '6-6', '7-7', '4-4', '8-8', '2-2', '5-5']
+['any | any', 'you | you', 'have | have', 'to | to', 'the | the', 'difficulty | problems', 'bathroom | bathroom', 'had | had', 'going | going']
+
+369
+['8-5', '7-4', '3-0', '6-3', '5-2', '4-1']
+['bathroom | bathroom', 'the | the', 'any | any', 'to | to', 'going | going', 'difficulty | trouble']
+
+370
+['7-2', '6-1', '5-0', '8-3']
+['the | the', 'to | to', 'going | going', 'bathroom | bathroom']
+
+371
+['1-3', '2-4', '3-5']
+['about | about', 'your | your', 'back | back']
+
+372
+['2-2', '1-1', '0-0']
+['your | your', 'about | about', 'what | what']
+
+373
+['1-3', '2-4', '0-0', '3-5']
+['about | with', 'your | your', 'what | what', 'back | back']
+
+374
+['2-2', '1-1', '0-0']
+['your | your', 'about | about', 'what | what']
+
+375
+['2-5', '1-4']
+['grandparents | grandparents', 'your | your']
+
+376
+['3-3', '2-2', '1-1', '0-0']
+['healthy | healthy', 'grandparents | grandparents', 'your | your', 'were | are']
+
+377
+['1-0', '2-1']
+['your | your', 'grandparents | grandparents']
+
+378
+['1-2', '2-3']
+['your | your', 'grandparents | grandparents']
+
+379
+['1-1', '2-4', '0-0']
+['other | other', 'questions | questions', 'any | any']
+
+380
+[]
+[]
+
+381
+['0-5']
+['any | have']
+
+382
+['1-1', '0-0']
+['other | other', 'any | any']
+
+383
+['2-3', '0-0']
+['okay | okay', 'is | are']
+
+384
+[]
+[]
+
+385
+[]
+[]
+
+386
+[]
+[]
+
+387
+['4-3', '2-1', '1-0', '5-4', '3-2']
+['the | the', 'you | you', 'do | do', 'dose | dosage', 'know | know']
+
+388
+['2-2', '1-1']
+['you | you', 'do | do']
+
+389
+['1-0', '2-1']
+['do | do', 'you | you']
+
+390
+['7-7', '2-3', '6-6']
+['pain | pain', 'you | you', 'back | back']
+
+391
+['0-0']
+['i | i']
+
+392
+['6-3', '2-1', '7-4']
+['back | back', 'you | you', 'pain | pain']
+
+393
+['7-5', '6-4']
+['pain | pain', 'back | back']
+
+394
+['0-1']
+['you | you']
+
+395
+['0-1', '1-2']
+['you | you', 'pee | urinate']
+
+396
+['0-1', '5-5', '4-4']
+['you | you', 'night | night', 'at | at']
+
+397
+[]
+[]
+
+398
+['5-4', '6-1']
+['back | back', 'pain | pain']
+
+399
+['5-6']
+['back | back']
+
+400
+['6-3']
+['pain | pain']
+
+401
+['1-1', '0-0']
+['else | else', 'anything | anything']
+
+402
+['3-1', '0-0', '4-2', '6-4', '5-3']
+['to | beside', 'anything | anything', 'the | the', 'pain | pain', 'back | back']
+
+403
+['0-2', '1-3']
+['anything | anything', 'else | else']
+
+404
+['1-1', '0-0']
+['you | you', 'do | are']
+
+405
+['1-8', '0-7', '4-9']
+["you | 's", 'do | it', 'sexual | a']
+
+406
+['3-3', '2-2', '1-1', '0-0']
+['any | a', 'have | have', 'you | you', 'do | do']
+
+407
+['3-3', '1-1', '0-0', '5-4', '2-2']
+['any | any', 'you | you', 'do | do', 'partners | pets', 'have | have']
+
+408
+['3-3', '2-2', '1-1', '0-0']
+['any | any', 'have | have', 'you | you', 'do | do']
+
+409
+['1-1', '0-0']
+['of | of', 'loss | loss']
+
+410
+['1-1', '0-0']
+['of | of', 'loss | loss']
+
+411
+['0-1']
+['loss | loss']
+
+412
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['you | you', 'activities | activities', 'what | what', 'do | enjoy', 'do | do']
+
+413
+['3-4', '4-6']
+['you | you', 'do | doing']
+
+414
+['3-3', '2-2', '4-4', '0-0']
+['you | you', 'do | do', 'do | do', 'what | what']
+
+415
+['0-0', '4-3', '2-1', '3-2']
+['what | what', 'do | do', 'do | do', 'you | you']
+
+416
+['3-1', '2-0']
+['you | you', 'do | do']
+
+417
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['you | you', 'activities | activities', 'what | what', 'do | ahve', 'do | do']
+
+418
+[]
+[]
+
+419
+['0-6']
+['what | what']
+
+420
+['1-1', '7-9', '0-0', '5-1', '4-7', '3-5']
+["'m | 'm", 'you | you', 'i | i', "difficult | 'm", "'s | 's", 'that | that']
+
+421
+['3-0']
+['that | that']
+
+422
+['1-1', '0-0']
+["'m | 'm", 'i | i']
+
+423
+['3-3', '2-2', '1-1', '0-0']
+['that | that', 'sure | sure', "'m | 'm", 'i | i']
+
+424
+['1-1', '0-0']
+["'m | 'm", 'i | i']
+
+425
+['1-1', '0-0']
+["'m | 'm", 'i | i']
+
+426
+['1-1']
+['you | you']
+
+427
+['1-2']
+['you | you']
+
+428
+['5-2', '4-1']
+['parents | parents', 'your | your']
+
+429
+['3-3', '4-1', '5-2', '0-0']
+['with | with', 'your | your', 'parents | parents', 'are | are']
+
+430
+['0-1', '4-2', '5-3']
+['are | are', 'your | your', 'parents | parents']
+
+431
+['3-3', '1-1', '0-0', '7-5', '2-2']
+['any | any', 'you | you', 'do | do', 'medications | medications', 'take | take']
+
+432
+['7-1', '2-0']
+['medications | medication', 'take | taking']
+
+433
+['2-5', '1-3']
+['take | taking', 'you | you']
+
+434
+['3-3', '1-1', '0-0', '6-6', '7-7', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'do | do', 'counter | counter', 'medications | drugs', 'over | over', 'take | take', 'the | the']
+
+435
+['3-3', '0-0', '6-6', '7-7', '4-4', '2-2', '5-5']
+['any | any', 'do | are', 'counter | counter', 'medications | drugs', 'over | over', 'take | taking', 'the | the']
+
+436
+['2-3', '5-6', '3-4', '7-8', '1-2', '4-5', '0-1', '6-7']
+['take | take', 'the | the', 'any | any', 'medications | medications', 'you | you', 'over | over', 'do | do', 'counter | counter']
+
+437
+['1-1', '0-0']
+[', | ,', 'okay | okay']
+
+438
+['0-0']
+['okay | okay']
+
+439
+['1-1']
+['diabetes | diabetes']
+
+440
+['1-1', '4-3', '0-0', '5-4', '6-5']
+['diabetes | diabetes', 'high | high', 'no | no', 'blood | blood', 'pressure | pressure']
+
+441
+['5-0', '6-1']
+['blood | blood', 'pressure | pressure']
+
+442
+['5-4', '6-5', '4-3']
+['blood | blood', 'pressure | pressure', 'high | high']
+
+443
+['4-4']
+['stds | stds']
+
+444
+[]
+[]
+
+445
+[]
+[]
+
+446
+['1-0', '2-1', '3-2']
+['no | no', 'history | history', 'of | of']
+
+447
+['3-1', '2-0']
+['of | of', 'history | history']
+
+448
+['4-3', '2-1', '3-2']
+['stds | illnesses', 'history | history', 'of | of']
+
+449
+['3-4', '2-2', '1-1', '0-0']
+['worse | worse', 'gotten | gotten', 'it | it', 'has | has']
+
+450
+['3-3', '2-2', '1-1', '0-0']
+['worse | worse', 'gotten | getting', 'it | it', 'has | is']
+
+451
+['3-4', '1-1', '2-3', '0-0']
+['worse | worse', 'it | it', 'gotten | getting', 'has | has']
+
+452
+['3-3']
+['worse | worse']
+
+453
+['5-4']
+['enjoy | enjoy']
+
+454
+['3-3', '2-2', '1-1', '0-0']
+['else | else', 'anything | anything', 'there | there', 'is | is']
+
+455
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['else | else', 'there | there', 'is | is', 'you | you', 'anything | anything', 'enjoy | need']
+
+456
+['3-1', '2-0']
+['else | else', 'anything | anything']
+
+457
+['0-0']
+['what | what']
+
+458
+[]
+[]
+
+459
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['tried | tried', 'have | have', 'what | what', 'so | so', 'you | you', 'far | far']
+
+460
+['1-0', '2-1', '3-2']
+['have | have', 'you | you', 'tried | tried']
+
+461
+['8-6', '5-3', '3-1', '7-5', '6-4', '9-7', '2-0', '4-2', '0-6']
+['free | what', 'do | understand', 'like | can', 'your | ,', 'in | that', 'time | are', 'you | i', 'to | definitely', 'what | what']
+
+462
+[]
+[]
+
+463
+['0-5']
+['what | how']
+
+464
+['3-3', '1-1', '0-0', '6-6', '7-7', '4-4', '2-2', '5-5', '9-9']
+['like | like', 'do | do', 'what | what', 'in | in', 'your | your', 'to | to', 'you | you', 'do | do', 'time | time']
+
+465
+['1-1', '0-0', '9-7', '7-5', '6-4', '5-3', '8-6', '2-2']
+['do | do', 'what | what', 'time | time', 'your | your', 'in | in', 'do | do', 'free | free', 'you | you']
+
+466
+['1-1', '0-0', '9-7', '7-5', '6-4', '5-3', '2-2']
+['do | do', 'what | what', 'time | time', 'your | your', 'in | in', 'do | do', 'you | you']
+
+467
+['0-0', '4-3', '2-1', '3-2']
+['what | what', 'do | do', 'do | do', 'you | you']
+
+468
+[]
+[]
+
+469
+[]
+[]
+
+470
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['you | you', 'work | activities', 'what | what', 'do | do', 'do | do']
+
+471
+['3-1', '2-0']
+['you | you', 'do | do']
+
+472
+['4-3', '2-1', '0-0', '3-2', '1-5']
+['do | do', 'do | do', 'what | what', 'you | you', 'work | work']
+
+473
+['7-7', '6-5', '5-4']
+['happen | happen', 'this | this', 'did | did']
+
+474
+['5-1']
+['did | did']
+
+475
+['5-2']
+['did | did']
+
+476
+['3-3', '2-2', '1-1']
+['days | days', 'many | many', 'how | how']
+
+477
+['7-5', '1-0', '4-2', '6-4', '5-3']
+['happen | happen', 'how | how', 'ago | ago', 'this | this', 'did | did']
+
+478
+['5-1', '6-2', '7-3']
+['did | did', 'this | this', 'happen | happen']
+
+479
+['2-5', '0-3', '5-1', '1-4']
+['grandparents | grandparents', 'did | did', 'health | health', 'your | your']
+
+480
+['5-9']
+['health | health']
+
+481
+['5-3']
+['health | health']
+
+482
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['have | have', 'your | your', 'did | did', 'issues | problems', 'any | any', 'grandparents | grandparents', 'health | health']
+
+483
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['have | have', 'your | your', 'did | did', 'issues | conditions', 'any | any', 'grandparents | grandparents', 'health | health']
+
+484
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['have | have', 'your | your', 'did | did', 'issues | conditions', 'any | any', 'grandparents | grandparents', 'health | medical']
+
+485
+['7-3', '1-7', '5-2', '7-3']
+['you | you', 'are | pain', '! | summarize', 'you | you']
+
+486
+['7-3', '0-0']
+['you | it', 'you | you']
+
+487
+['7-2', '1-3', '2-4', '4-6', '3-5']
+['you | you', 'are | are', 'a | a', 'friend | friend', 'good | good']
+
+488
+['1-3', '2-4', '6-5']
+['are | pain', 'a | right', 'so | now']
+
+489
+['9-6', '6-0', '5-8', '2-7', '1-1', '1-4', '0-1', '4-2']
+['a | out', 'so | so', '! | and', 'a | sharp', 'are | you', 'are | pain', 'you | you', 'friend | said']
+
+490
+['4-3', '2-6', '3-2']
+['discuss | discuss', 'we | we', 'will | can']
+
+491
+['1-1']
+[', | ,']
+
+492
+['0-0']
+['alright | alright']
+
+493
+['0-2', '2-4', '1-3']
+['any | any', 'medications | medications', 'other | other']
+
+494
+['2-2', '1-1', '0-0']
+['medications | medicine', 'other | other', 'any | any']
+
+495
+['2-2', '1-1', '0-0']
+['medications | medicines', 'other | other', 'any | any']
+
+496
+['0-0', '2-1']
+['any | any', 'medications | medications']
+
+497
+['9-7', '4-4', '2-0', '0-8', '7-6', '3-1', '1-9', '5-5', '4-2']
+['figure | figure', 'we | we', 'wilkins | aw.', 'okay | out', 'try | help', ', | well', 'mr. | what', "'ll | can", 'we | i']
+
+498
+['0-0']
+['okay | ok']
+
+499
+['4-1']
+['we | i']
+
+500
+['3-2', '7-6', '4-3', '5-4', '6-5', '2-1', '1-0']
+[', | going', 'try | back', 'we | on', "'ll | with", 'definitely | your', "wilkins | 's", 'mr. | what']
+
+501
+['5-3', '2-1', '7-5', '1-0', '6-4']
+["'ll | with", "wilkins | 's", 'try | back', 'mr. | what', 'definitely | your']
+
+502
+['5-1', '3-3', '0-0', '6-6', '0-0', '1-1', '5-6', '7-7', '3-1', '4-4', '4-5', '2-2', '8-8', '6-2', '9-9']
+["'ll | ,", ', | you', 'okay | okay', 'definitely | will', 'okay | okay', 'mr. | ,', "'ll | will", 'try | go', ', | ,', 'we | !', 'we | i', 'wilkins | thank', 'to | discuss', 'definitely | thank', 'figure | your']
+
+503
+['1-1', '0-0', '3-2']
+['you | you', 'are | are', 'working | working']
+
+504
+['0-2', '1-3']
+['are | you', 'you | mentioned']
+
+505
+['3-3', '2-2', '1-1', '0-0']
+['working | employed', 'currently | currently', 'you | you', 'are | are']
+
+506
+['0-0', '3-2']
+['are | do', 'working | work']
+
+507
+['1-1', '0-0']
+['you | you', 'are | are']
+
+508
+['8-2']
+['summarize | summarize']
+
+509
+['8-3', '0-5', '3-4', '4-2', '1-1', '7-1', '2-0']
+["summarize | 'll", 'okay | able', 'see. | be', 'i | i', ', | hope', 'to | hope', 'i | i']
+
+510
+[]
+[]
+
+511
+['8-2']
+['summarize | summarize']
+
+512
+['1-1', '4-0']
+[', | ,', 'i | okay']
+
+513
+['1-1', '2-3', '0-0', '8-4']
+[', | ,', 'i | i', 'okay | okay', 'summarize | summarize']
+
+514
+['3-2']
+['appetite | appetite']
+
+515
+['2-2', '1-1', '0-0']
+['your | your', 'is | is', 'how | how']
+
+516
+['3-3', '2-2', '1-1', '0-0']
+['appetite | mood', 'your | your', 'is | is', 'how | how']
+
+517
+['2-2', '1-1', '0-0']
+['your | your', 'is | is', 'how | how']
+
+518
+[]
+[]
+
+519
+['1-2', '3-1', '2-0']
+[', | ,', 'course | course', 'of | of']
+
+520
+['2-3', '0-0', '5-6', '3-4', '4-5']
+['have | have', 'did | did', 'conditions | conditions', 'any | any', 'health | health']
+
+521
+[]
+[]
+
+522
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'they | they', 'did | do', 'health | medical', 'have | have', 'conditions | conditions']
+
+523
+['3-3', '1-1', '0-0', '4-4', '2-2', '5-5']
+['any | any', 'they | you', 'did | do', 'health | medical', 'have | have', 'conditions | conditions']
+
+524
+['3-3', '1-1', '0-0', '5-6', '4-5', '2-2']
+['any | any', 'they | they', 'did | do', 'conditions | conditions', 'health | health', 'have | have']
+
+525
+['0-1', '1-2', '2-3']
+['have | have', 'you | you', 'tried | tried']
+
+526
+['9-4', '5-1', '4-0', '6-2', '7-3']
+['medications | medications', 'over | over', 'any | any', 'the | the', 'counter | counter']
+
+527
+['5-1', '9-5', '8-4', '4-0', '6-2', '7-3']
+['over | over', 'medications | meds', 'pain | pain', 'any | any', 'the | the', 'counter | counter']
+
+528
+['3-3', '1-1', '0-0', '9-5', '4-4', '6-7', '8-8', '2-2']
+['using | taking', 'you | you', 'have | have', 'medications | medications', 'any | any', 'the | the', 'pain | pain', 'tried | tried']
+
+529
+['5-9']
+['prescribed | prescribed']
+
+530
+['0-0']
+['ok. | ok.']
+
+531
+['1-1', '0-0']
+['what | what', 'ok. | ok.']
+
+532
+['3-0', '6-2', '4-1']
+['any | any', 'symptoms | concerns', 'other | other']
+
+533
+['1-2', '4-5', '2-3', '3-4', '6-9', '0-1']
+['you | could', 'other | this', 'have | see', 'any | how', 'symptoms | especially', 'do | i']
+
+534
+['0-7', '3-0', '1-8', '6-3', '4-1']
+['do | have', 'any | i', 'you | you', 'symptoms | sorry', "other | 'm"]
+
+535
+['3-3', '1-1', '0-0', '4-4', '2-2', '6-5']
+['any | any', 'you | you', 'do | do', 'other | other', 'have | have', 'symptoms | symptoms']
+
+536
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2']
+['any | any', 'you | you', 'do | do', 'symptoms | symptoms', 'other | other', 'have | have']
+
+537
+['3-3', '1-1', '0-0', '4-4', '2-2', '6-5']
+['any | any', 'you | you', 'do | do', 'other | other', 'have | have', 'symptoms | illnesses']
+
+538
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['me | me', 'you | you', 'could | can', 'how | if', 'tell | tell']
+
+539
+['3-3', '1-1', '0-0', '3-5', '4-4', '2-2']
+['me | me', 'you | you', 'could | could', 'me | your', 'how | how', 'tell | tell']
+
+540
+['3-3', '1-1', '0-0', '0-5', '6-7', '3-6', '2-2']
+['me | me', 'you | you', 'could | could', 'could | about', 'back | back', 'me | your', 'tell | tell']
+
+541
+['5-6', '1-2', '4-5', '0-1', '2-3', '3-4']
+['your | move', 'you | you', 'how | friend', 'could | did', 'tell | help', 'me | your']
+
+542
+['1-1', '0-0', '3-2']
+['is | is', 'how | how', 'work | work']
+
+543
+['2-0']
+['your | i']
+
+544
+['1-4', '3-5']
+['is | enjoy', 'work | work']
+
+545
+['3-3', '2-2', '1-1', '0-0']
+['work | work', 'your | your', 'is | is', 'how | what']
+
+546
+['3-3', '2-2', '1-1', '0-0']
+['work | job', 'your | your', 'is | is', 'how | what']
+
+547
+['4-3', '2-1', '0-0', '5-4', '3-2']
+['hurt | help', 'did | did', 'what | when', 'your | your', 'you | you']
+
+548
+['2-4']
+['did | did']
+
+549
+['4-3', '2-1', '5-4', '3-2', '6-5']
+['hurt | hurt', 'did | did', 'your | your', 'you | you', 'back | back']
+
+550
+['2-0', '6-2', '4-3', '5-1']
+['did | does', 'back | back', 'hurt | hurt', 'your | your']
+
+551
+['6-3', '5-2', '2-1']
+['back | back', 'your | your', 'did | does']
+
+552
+['7-0']
+['stress | stress']
+
+553
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['you | you', 'activities | activities', 'what | what', 'do | do', 'do | do']
+
+554
+['3-3', '2-2', '4-4', '0-0']
+['you | you', 'do | do', 'do | do', 'what | what']
+
+555
+['0-0', '4-3', '2-1']
+['what | what', 'do | do', 'do | do']
+
+556
+['1-2']
+['hear | see']
+
+557
+['1-1', '0-0']
+['hear | see', 'i | i']
+
+558
+['2-1']
+['you | you']
+
+559
+[]
+[]
+
+560
+['1-1', '0-0']
+['you | you', 'do | do']
+
+561
+[]
+[]
+
+562
+['2-5', '1-1', '0-0']
+['exercise | activity', 'you | you', 'do | do']
+
+563
+['1-1', '0-0']
+['you | you', 'do | do']
+
+564
+['1-1', '0-0']
+['you | you', 'do | are']
+
+565
+['0-1', '1-2']
+['do | do', 'you | you']
+
+566
+['2-2', '1-1', '0-0']
+['you | you', 'see | hear', 'i | i']
+
+567
+['1-1', '0-0']
+['see | see', 'i | i']
+
+568
+['1-2', '2-3']
+['see | see', 'you | you']
+
+569
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['a | a', 'you | you', 'do | do', 'wife | girlfriend', 'have | have']
+
+570
+['3-0']
+['a | i']
+
+571
+['1-2']
+['you | you']
+
+572
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['a | a', 'you | you', 'do | do', 'wife | spouse', 'have | have']
+
+573
+['3-3', '2-2', '1-1', '0-0']
+['a | a', 'have | take', 'you | you', 'do | do']
+
+574
+['1-1', '0-0']
+['you | you', 'do | do']
+
+575
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['your | your', 'old | old', 'how | how', 'grandparents | grandparents', 'were | were']
+
+576
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['your | your', 'old | old', 'how | how', 'grandparents | grandparents', 'were | are']
+
+577
+['0-0', '4-3', '2-1', '3-2']
+['how | how', 'grandparents | grandparents', 'were | are', 'your | your']
+
+578
+['2-2', '1-1', '0-0']
+['were | are', 'old | old', 'how | how']
+
+579
+['0-0']
+['have | has']
+
+580
+['1-5', '0-4', '6-7']
+['you | you', 'have | have', 'work | work']
+
+581
+['0-0']
+['have | are']
+
+582
+['1-1', '4-3', '0-0', '5-4', '3-2', '6-5']
+['you | you', 'able | able', 'have | have', 'to | to', 'been | been', 'work | work']
+
+583
+['1-1', '0-0', '9-7', '7-5', '8-6', '2-2']
+['you | you', 'have | have', 'injury | injury', 'since | since', 'the | the', 'not | had']
+
+584
+['1-0', '5-4', '6-5', '4-3']
+['you | is', 'to | to', 'work | work', 'able | able']
+
+585
+['3-6', '0-3', '2-5', '5-8', '4-7', '1-4']
+['do | do', 'what | what', 'you | you', 'exercise | exercise', 'for | for', 'do | do']
+
+586
+['5-4', '0-2']
+['exercise | hear', 'what | sorry']
+
+587
+['1-0', '2-1']
+['do | do', 'you | you']
+
+588
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['do | do', 'do | do', 'what | what', 'for | for', 'you | you']
+
+589
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['do | do', 'do | do', 'what | what', 'for | for', 'you | you']
+
+590
+['2-3', '3-4', '1-2', '4-5', '0-1']
+['you | you', 'do | do', 'do | do', 'for | for', 'what | what']
+
+591
+['1-0', '5-3']
+['i | i', 'to | to']
+
+592
+['7-2']
+['your | your']
+
+593
+['7-2', '8-3']
+['your | your', 'back | back']
+
+594
+['7-2', '8-3']
+['your | your', 'back | back']
+
+595
+['6-2']
+['you | you']
+
+596
+['2-4', '0-9', '4-5', '1-5']
+["'s | be", 'so | back', 'been | able', 'it | able']
+
+597
+['0-8', '8-6', '9-7']
+['so | days', 'past | past', 'few | few']
+
+598
+['0-0', '7-7', '8-8', '4-5', '9-9']
+['so | that', 'these | the', 'past | past', 'been | been', 'few | few']
+
+599
+['0-0', '8-7']
+['so | have', 'past | past']
+
+600
+['0-1', '1-2', '2-3']
+['is | is', 'your | your', 'mother | mother']
+
+601
+['3-3', '2-2', '1-1', '0-0']
+['healthy | healthy', 'mother | father', 'your | your', 'is | is']
+
+602
+['0-1', '3-4', '1-2', '2-3']
+['is | is', 'healthy | health', 'your | your', 'mother | mothers']
+
+603
+['0-1', '1-2', '2-3']
+['is | is', 'your | your', 'mother | mother']
+
+604
+['7-8', '0-3', '6-7']
+['back | back', 'any | any', 'your | your']
+
+605
+['2-2', '1-1', '0-0']
+['weakness | weakness', 'muscle | muscle', 'any | any']
+
+606
+['6-3', '5-2', '0-0', '2-1']
+['your | your', 'in | in', 'any | any', 'weakness | weakness']
+
+607
+['6-3', '5-2', '0-0', '7-4']
+['your | your', 'in | in', 'any | any', 'back | back']
+
+608
+['3-2', '2-6', '2-1']
+['accidients | back', 'car | car', 'car | your']
+
+609
+['9-0', '5-4', '1-2', '0-1', '2-3']
+['any | any', 'you | legs', 'the | in', 'after | pain', 'car | your']
+
+610
+['9-0', '5-4', '1-2', '0-1', '2-3']
+['any | any', 'you | neck', 'the | in', 'after | pain', 'car | your']
+
+611
+['5-6', '9-2', '2-5', '0-3', '1-4']
+['you | legs', 'any | any', 'car | your', 'after | pain', 'the | in']
+
+612
+['1-0', '2-1']
+['stomach | stomach', 'pain | pain']
+
+613
+['2-4', '0-0']
+['pain | pain', 'any | any']
+
+614
+['0-2', '2-3']
+['any | any', 'pain | pain']
+
+615
+['1-1', '0-0']
+['stomach | stomach', 'any | any']
+
+616
+['2-5', '0-3', '1-4']
+['pain | pain', 'any | any', 'stomach | stomach']
+
+617
+['2-2', '0-0']
+['pain | pain', 'any | any']
+
+618
+['3-4', '7-0', '2-3', '0-0']
+['caused | made', 'work | has', 'pain | pain', 'has | has']
+
+619
+['7-7', '6-6']
+['work | work', 'miss | missing']
+
+620
+['2-3', '4-1', '0-0']
+['pain | pain', 'you | you', 'has | are']
+
+621
+['0-1', '2-5']
+['has | do', 'pain | pain']
+
+622
+['2-2', '1-1', '0-0']
+['pain | pain', 'the | the', 'has | has']
+
+623
+['7-2', '4-1']
+['work | work', 'you | you']
+
+624
+['5-5', '4-4', '2-3']
+['start | started', 'it | it', 'how | how']
+
+625
+['5-3', '2-0']
+['start | to', 'how | i']
+
+626
+['5-2', '2-8']
+['start | tell', 'how | how']
+
+627
+['3-3', '1-1', '0-0', '4-4', '5-5']
+['did | did', ', | ,', 'okay | okay', 'it | it', 'start | start']
+
+628
+['1-1', '0-0', '5-6', '3-4', '4-5']
+[', | ,', 'okay | okay', 'start | start', 'did | did', 'it | it']
+
+629
+['4-2', '5-3', '3-1', '2-0']
+['it | it', 'start | start', 'did | did', 'how | when']
+
+630
+['3-1', '4-2', '6-4', '5-3', '7-6']
+[', | ,', 'when | when', 'this | this', 'did | did', 'start | occur']
+
+631
+[]
+[]
+
+632
+['4-0', '6-2', '5-1', '7-3']
+['when | when', 'this | this', 'did | did', 'start | start']
+
+633
+['4-0', '5-1', '6-2', '7-3']
+['when | when', 'did | did', 'this | that', 'start | start']
+
+634
+['5-1', '3-4', '4-0', '6-2', '7-3']
+['did | did', ', | ,', 'when | when', 'this | this', 'start | start']
+
+635
+['0-1', '1-2']
+['thank | thank', 'you | you']
+
+636
+['1-1', '0-0', '4-2', '6-4', '5-3']
+['you | you', 'thank | thank', 'for | for', 'time | time', 'your | your']
+
+637
+['1-1', '3-9', '0-0', '9-5', '4-0', '2-8', '0-6', '1-7']
+['you | you', 'much | in', 'thank | thank', 'the | the', 'for | thank', 'very | be', 'thank | doctor', 'you | will']
+
+638
+['1-1', '0-0']
+['you | you', 'thank | thank']
+
+639
+['0-0']
+['okay | okay']
+
+640
+['0-2']
+['okay | okay']
+
+641
+['0-0']
+['okay | okay']
+
+642
+['2-2']
+['peeing | peeing']
+
+643
+['3-3', '2-2', '1-1', '0-0']
+['normally | normally', 'peeing | urinating', 'you | you', 'are | are']
+
+644
+['1-1']
+['you | you']
+
+645
+['3-4', '0-2']
+['normally | urinate', 'are | do']
+
+646
+['3-3', '4-5', '1-1', '0-0']
+['any | any', 'problems | problems', 'you | you', 'are | do']
+
+647
+['7-2']
+['vision | vision']
+
+648
+['5-1', '6-2', '7-3']
+['with | in', 'your | your', 'vision | vision']
+
+649
+['3-3', '1-1', '0-0', '6-6', '7-7', '4-4', '5-5']
+['any | any', 'you | you', 'are | have', 'your | your', 'vision | vision', 'problems | trouble', 'with | with']
+
+650
+['3-3', '1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['any | any', 'you | you', 'are | are', 'your | your', 'problems | trouble', 'experiencing | experiencing', 'with | with']
+
+651
+['3-3', '0-0']
+['any | any', 'are | have']
+
+652
+[]
+[]
+
+653
+[]
+[]
+
+654
+['2-2', '1-1', '0-0']
+['describe | describe', 'you | you', 'can | can']
+
+655
+['1-1', '6-2', '0-0']
+['you | you', 'urinate | urinate', 'can | can']
+
+656
+['3-3', '2-2', '1-1', '0-0']
+['your | your', 'describe | describe', 'you | you', 'can | can']
+
+657
+['0-1', '1-2', '5-6']
+['do | would', 'you | you', 'health | health']
+
+658
+['1-2']
+['anything | anything']
+
+659
+['5-4', '6-5']
+['about | about', 'your | your']
+
+660
+['3-3']
+['your | your']
+
+661
+['5-3', '6-4']
+['about | with', 'your | your']
+
+662
+['1-2']
+['you | you']
+
+663
+['1-6']
+['you | you']
+
+664
+['1-0', '3-4']
+['you | i', 'on | that']
+
+665
+['1-3', '0-2', '2-4', '4-6', '3-5']
+['you | you', 'so | so', 'work | work', 'cars | cars', 'on | with']
+
+666
+['2-2', '1-1']
+['work | work', 'you | you']
+
+667
+[]
+[]
+
+668
+['3-3', '1-1', '0-0', '4-4', '2-2']
+['any | any', 'you | you', 'do | do', 'concerns | questions', 'have | have']
+
+669
+['3-0']
+['any | any']
+
+670
+['1-1']
+['you | you']
+
+671
+['3-3', '2-2', '1-1', '0-0']
+['any | any', 'have | have', 'you | you', 'do | do']
+
+672
+['3-3', '1-1', '0-0', '4-5', '2-2']
+['any | any', 'you | you', 'do | do', 'concerns | concerns', 'have | have']
+
+673
+['2-2', '1-1', '0-0']
+['have | have', 'you | you', 'do | do']
+
+674
+['6-0', '8-2', '7-1']
+['we | we', 'get | get', 'can | will']
+
+675
+['0-0', '6-9']
+['wow | ok', 'we | i']
+
+676
+['1-0', '2-1', '3-2']
+['that | that', 'sounds | sounds', 'terrible | awful']
+
+677
+['5-0', '6-1', '7-2']
+['hopefully | hopefully', 'we | we', 'can | can']
+
+678
+['8-5', '9-6', '7-4', '6-3', '5-2']
+['get | get', 'that | that', 'can | can', 'we | we', 'hopefully | hopefully']
+
+679
+['3-1', '0-0', '4-2', '6-4', '5-3']
+['work | work', 'what | what', 'do | do', 'do | do', 'you | you']
+
+680
+[]
+[]
+
+681
+[]
+[]
+
+682
+['1-1', '0-0', '6-6', '4-4', '2-2', '5-5']
+['kind | kind', 'what | what', 'do | do', 'do | do', 'of | of', 'you | you']
+
+683
+['5-3', '6-4', '4-2', '0-0']
+['you | you', 'do | do', 'do | do', 'what | what']
+
+684
+['4-1', '6-3', '0-0', '3-5']
+['do | do', 'do | do', 'what | what', 'work | work']
+
+685
+['3-1', '4-2', '6-4', '5-3', '2-0']
+['long | long', 'ago | ago', 'this | this', 'did | did', 'how | how']
+
+686
+['4-2', '6-4', '3-1', '2-0']
+['ago | ago', 'this | this', 'long | long', 'how | how']
+
+687
+['4-2', '5-3', '3-1', '2-0']
+['ago | ago', 'did | did', 'long | long', 'how | how']
+
+Precision: 0.6853881278538813
+Recall: 0.7615423642820903
+F1: 0.7214611872146119
