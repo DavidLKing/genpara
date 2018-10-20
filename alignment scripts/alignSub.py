@@ -83,9 +83,10 @@ def get_low_freq(corrected):
 def swap(sents, swap_dict):
     paraphrases = []
     for line in sents:
-        sent = line[1]
+        sent = line[0]
         for swappable in swap_dict:
-            if swappable in sent:
+            # TODO temp hack to stop history + i > we = hwestory
+            if ' ' + swappable + ' ' in sent:
                 for swap in swap_dict[swappable]:
                     para = sent.replace(swappable, swap)
                     paraphrases.append([para] + line)
