@@ -54,19 +54,74 @@ class PhraseTable:
             prev = num
         return phrase.strip()
 
+    def update_phrase_table(self, src, tgt, src_phrase, tgt_phrase, phrase_table):
+        '''
+        Data structure looks like:
+        {
+            src_1 :
+                {
+                    tgt_1 :
+                        src_sents = [s1, s2, s3, ...],
+                        tgt_sents = [t1, t2, t3, ...]
+                    tgt_2 :
+                        ...
+                }
+            src_2 :
+                ...
+        }
+        '''
+        if src_phrase != tgt_phrase:
+            if src_phrase not in phrase_table:
+                phrase_table[src_phrase] = {}
+            if tgt_phrase not in phrase_table[src_phrase]:
+                phrase_table[src_phrase][tgt_phrase] = {}
+                phrase_table[src_phrase][tgt_phrase]['src_sents'] = []
+                phrase_table[src_phrase][tgt_phrase]['tgt_sents'] = []
+            if src not in phrase_table[src_phrase][tgt_phrase]['src_sents']:
+                phrase_table[src_phrase][tgt_phrase]['src_sents'].append(src)
+            if tgt not in phrase_table[src_phrase][tgt_phrase]['tgt_sents']:
+                phrase_table[src_phrase][tgt_phrase]['tgt_sents'].append(tgt)
+        '''
+        other idea:
+        swap = (src_phrase, tgt_phrase)
+        if src_phrase != tgt_phrase:
+            if swap not in phrase_table:
+                phrase_table[swap] = {}
+                phrase_table[swap]['src_sents'] = []
+                phrase_table[swap]['tgt_sents'] = []
+            if src not in phrase_table[swap]['src_sents']:
+                phrase_table[swap]['src_sents'].append(src)
+            if tgt not in phrase_table[swap]['tgt_sents']:
+                phrase_table[swap]['tgt_sents'].append(tgt)
+        '''
+        return phrase_table
+
+    # def align_single(self, src, tgt, indexes, phrase_table):
+    #     # mocked up from PhraseTable.py to not create phrases
+    #     src = src.split()
+    #     tgt = tgt.split()
+    #     # indexes = p.conv2range(indexes)
+    #     for pair in indexes:
+    #         # src_phrase = self.gen_phrase(src, pair[0])
+    #         # tgt_phrase = self.gen_phrase(tgt, pair[1])
+    #         src_phrase = src[pair[0]]
+    #         tgt_phrase = tgt[pair[1]]
+    #         if src_phrase != tgt_phrase:
+    #             if src_phrase not in phrase_table:
+    #                 phrase_table[src_phrase] = []
+    #             if tgt_phrase not in phrase_table[src_phrase]:
+    #                 phrase_table[src_phrase].append(tgt_phrase)
+    #     return phrase_table
 
     def align(self, src, tgt, indexes, phrase_table):
         src = src.split()
         tgt = tgt.split()
-        indexes = self.conv2range(indexes)
         for pair in indexes:
             src_phrase = self.gen_phrase(src, pair[0])
             tgt_phrase = self.gen_phrase(tgt, pair[1])
-            if src_phrase != tgt_phrase:
-                if src_phrase not in phrase_table:
-                    phrase_table[src_phrase] = []
-                if tgt_phrase not in phrase_table[src_phrase]:
-                    phrase_table[src_phrase].append(tgt_phrase)
+            phrase_table = self.update_phrase_table(src, tgt, src_phrase, tgt_phrase, phrase_table)
+            # Reverse it, too
+            phrase_table = self.update_phrase_table(tgt, src, tgt_phrase, src_phrase, phrase_table)
         return phrase_table
 
     def build(self, src_tgt_array):

@@ -1,49 +1,40 @@
 #!/usr/bin/env python3
 
 import sys
+import gensim
 import pdb
+from allennlp.modules.elmo import Elmo, batch_to_ids
 from combineGold import Combine
 from build_phrase_table import PhraseTable
-
+from score import Score
 
 # Usage: ./elmoEval.py elmoalignments.tsv ../data/.../batch*
 
-def align(src, tgt, indexes, phrase_table):
-    # mocked up from PhraseTable.py to not create phrases
-    src = src.split()
-    tgt = tgt.split()
-    # indexes = p.conv2range(indexes)
-    for pair in indexes:
-        # src_phrase = self.gen_phrase(src, pair[0])
-        # tgt_phrase = self.gen_phrase(tgt, pair[1])
-        src_phrase = src[pair[0]]
-        tgt_phrase = tgt[pair[1]]
-        if src_phrase != tgt_phrase:
-            if src_phrase not in phrase_table:
-                phrase_table[src_phrase] = []
-            if tgt_phrase not in phrase_table[src_phrase]:
-                phrase_table[src_phrase].append(tgt_phrase)
-    return phrase_table
-
-def get_align(groups, phrases):
+def get_align(groups, phrases, use_phrase = False):
     for group in groups:
         src = group[0]
         tgt = group[1]
         idxes = group[2]
         if idxes != '':
             idxes = p.str2idx(idxes)
-            phrases = align(src, tgt, idxes, phrases)
-    return phrases
-
-def get_range_align(groups, phrases):
-    for group in groups:
-        src = group[0]
-        tgt = group[1]
-        idxes = group[2]
-        if idxes != '':
-            idxes = p.str2idx(idxes)
+            if use_phrase:
+                idxes = p.conv2range(idxes)
+            else:
+                # get analgous output to above
+                idxes = [[[i[0]], [i[1]]] for i in idxes]
             phrases = p.align(src, tgt, idxes, phrases)
+    # pdb.set_trace()
     return phrases
+
+# def get_range_align(groups, phrases):
+#     for group in groups:
+#         src = group[0]
+#         tgt = group[1]
+#         idxes = group[2]
+#         if idxes != '':
+#             idxes = p.str2idx(idxes)
+#             phrases = p.align_phrase(src, tgt, idxes, phrases)
+#     return phrases
 
 def elmo_clean(elmos):
     new_elmos = []
@@ -82,7 +73,12 @@ def get_low_freq(corrected):
 
 def swap(sents, swap_dict):
     paraphrases = []
+    mltplsrc = 0
+    total = 0
+    sum_multiple = 0
+    sum_all = 0
     for line in sents:
+        total += 1
         sent = line[0]
         for swappable in swap_dict:
             # TODO temp hack to stop history + i > we = hwestory
@@ -90,6 +86,14 @@ def swap(sents, swap_dict):
                 for swap in swap_dict[swappable]:
                     para = sent.replace(swappable, swap)
                     paraphrases.append([para] + line)
+                    srcs = len(swap_dict[swappable][swap]['src_sents'])
+                    if srcs > 1:
+                        mltplsrc += 1
+                        sum_multiple += srcs
+                    sum_all += srcs
+    print("multiple sources", mltplsrc, total, mltplsrc / total)
+    print("avg multiple source count", sum_multiple, total, sum_multiple / total)
+    print("overall average source count", sum_all, total, sum_all / total)
     return paraphrases
 
 def writeout(name, lines):
@@ -98,6 +102,16 @@ def writeout(name, lines):
             # TODO we shouldn't need this check
             if line[0] != line[1]:
                 of.write('\t'.join(line) + '\n')
+
+### ELLMO ###
+options_file = "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo/2x4096_512_2048cnn_2xhighway/elmo_2x4096_512_2048cnn_2xhighway_options.json"
+weight_file = "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo/2x4096_512_2048cnn_2xhighway/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
+
+elmo = Elmo(options_file, weight_file, 2, dropout=0)
+# messy prototype
+single_sent_elmo = lambda sent: elmo(batch_to_ids([sent]))
+### Ready
+pdb.set_trace()
 
 c = Combine()
 
@@ -129,14 +143,14 @@ print("f1", f1)
 
 # PHRASES
 gold_phrases = {}
-gold_phrases = get_range_align(golds, gold_phrases)
+gold_phrases = get_align(golds, gold_phrases, use_phrase = True)
 
 elmos = open(sys.argv[1], 'r').readlines()
 elmos = [x.strip().split('\t') for x in elmos]
 elmos = elmo_clean(elmos)
 
 elmo_phrases = {}
-elmo_phrases = get_range_align(elmos, elmo_phrases)
+elmo_phrases = get_align(elmos, elmo_phrases, use_phrase = True)
 
 prec = rec_prec(elmo_phrases, gold_phrases)
 rec = rec_prec(gold_phrases, elmo_phrases)
@@ -154,6 +168,7 @@ low_freq = get_low_freq(sents)
 # GEN SWAPS
 gold_sg_para = swap(low_freq, gold_singles)
 elmo_sg_para = swap(low_freq, elmo_singles)
+# Not currently being used
 gold_ph_para = swap(low_freq, gold_phrases)
 elmo_ph_para = swap(low_freq, elmo_phrases)
 
@@ -161,4 +176,4 @@ writeout('gold_singular_swap.tsv', gold_sg_para)
 writeout('elmo_singular_swap.tsv', elmo_sg_para)
 
 
-pdb.set_trace()
+# pdb.set_trace()
