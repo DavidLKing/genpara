@@ -5,17 +5,18 @@ import pdb
 import numpy as np
 import gensim
 import allennlp
+from allennlp.modules.elmo import Elmo, batch_to_ids
 
 class Score:
 
     def __init__(self):
         pass
 
-    def sim(a, b):
+    def sim(self, a, b):
         cos_sim = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
         return cos_sim
 
-    def mean_maker(sent, model):
+    def mean_maker(self, sent, model):
         vecs = []
         for word in sent.split():
             if word in model:
@@ -25,10 +26,46 @@ class Score:
         mean = np.mean(np.asarray(vecs), axis=0)
         return mean
 
-    def david_metric(cos, dist):
+    def david_metric(self, cos, dist):
         return (1 - ((cos + 1) / 2)) * dist
 
-    def score(line, word2vec, glove):
+    def elmo_diffs(self, elmo, data):
+        newdata = []
+        print("generating elmo vectors")
+        srcs = elmo(batch_to_ids([x[2] for x in data]))['elmo_representations'][2]
+        paras = elmo(batch_to_ids([x[3] for x in data]))['elmo_representations'][2]
+        for line, src_vec, para_vec in zip(data, srcs, paras):
+            src_word = line[0]
+            para_word = line[1]
+            src = line[2]
+            # tgt = line[4]
+            para = line[3]
+            # try:
+            src_idx = src.split().index(src_word)
+            para_idx = para.split().index(para_word)
+            # except:
+            #     pdb.set_trace()
+            dist, cos, joint = self.elmo_word_diff(elmo, src, para, src_idx, para_idx, src_vec, para_vec)
+            line = [str(dist), str(cos), str(joint)] + line
+            # print(dist, cos, joint)
+            newdata.append(line)
+            # pdb.set_trace()
+        return newdata
+
+
+    def elmo_word_diff(self, model, src, para, src_idx, para_idx, src_vec, para_vec):
+        # src_vecs = model(batch_to_ids([src]))
+        src_word_vec = np.asarray(src_vec[src_idx].detach())
+        # para_vecs = model(batch_to_ids([para]))
+        para_word_vec = np.asarray(para_vec[para_idx].detach())
+        dist = np.linalg.norm(src_word_vec - para_word_vec)
+        cos = self.sim(src_word_vec, para_word_vec)
+        joint = self.david_metric(cos, dist)
+        # pdb.set_trace()
+        return dist, cos, joint
+
+    def score(self, line, word2vec, glove):
+        # defunct
         para = line.strip().split('\t')[0]
         sent = line.strip().split('\t')[1]
         glove_para = mean_maker(para, glove)

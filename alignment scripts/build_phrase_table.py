@@ -43,8 +43,13 @@ class PhraseTable:
         return full_ranges
 
     def gen_phrase(self, sent, indexes):
+        # print(indexes)
         prev = None
         phrase = ''
+        if type(indexes) == int:
+            # TODO weird even handling.
+            indexes = [indexes]
+        # try:
         for num in indexes:
             if prev == None or num - prev == 1:
                 phrase += sent[num]
@@ -52,6 +57,8 @@ class PhraseTable:
             else:
                 phrase += '_ '
             prev = num
+        # except:
+        #     pdb.set_trace()
         return phrase.strip()
 
     def update_phrase_table(self, src, tgt, src_phrase, tgt_phrase, phrase_table):
@@ -112,6 +119,7 @@ class PhraseTable:
         src = src.split()
         tgt = tgt.split()
         for pair in indexes:
+            # pdb.set_trace()
             src_phrase = self.gen_phrase(src, pair[0])
             tgt_phrase = self.gen_phrase(tgt, pair[1])
             phrase_table = self.update_phrase_table(src, tgt, src_phrase, tgt_phrase, phrase_table)

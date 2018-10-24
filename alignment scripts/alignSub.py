@@ -114,7 +114,7 @@ def swap(sents, swap_dict):
                 for swap in swap_dict[swappable]:
                     src = random.choice(swap_dict[swappable][swap])
                     para = sent.replace(swappable, swap)
-                    paraphrases.append([src, para] + line)
+                    paraphrases.append([swappable, swap, src, para] + line)
     return paraphrases
 
 def writeout(name, lines):
@@ -124,7 +124,14 @@ def writeout(name, lines):
             if line[0] != line[1]:
                 of.write('\t'.join(line) + '\n')
 
+### GloVe ###
+print("loading GloVe vectors")
+# currently commented out for processing time
+# glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[1], binary=False)
+
+
 ### ELLMO ###
+print("loading ELMo...")
 # to do: download these
 options_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_options.json"
 weight_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
@@ -133,7 +140,8 @@ weight_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
 
 elmo = Elmo(options_file, weight_file, 3, dropout=0)
 # messy prototype
-single_sent_elmo = lambda sent: elmo(batch_to_ids([sent]))
+# sent = "This is a test"
+# single_sent_elmo = lambda sent: elmo(batch_to_ids([sent]))
 '''
 (Pdb) len(single_sent_elmo("This is a test"))
 2
@@ -172,7 +180,7 @@ torch.Size([1, 14, 1024])
 c = Combine()
 
 golds = []
-for files in sys.argv[2:]:
+for files in sys.argv[3:]:
     golds = c.read_gold(golds, files)
 
 p = PhraseTable()
@@ -180,8 +188,9 @@ p = PhraseTable()
 # SINGLES
 gold_singles = {}
 gold_singles = get_align(golds, gold_singles)
+# pdb.set_trace()
 
-elmos = open(sys.argv[1], 'r').readlines()
+elmos = open(sys.argv[2], 'r').readlines()
 elmos = [x.strip().split('\t') for x in elmos]
 elmos = elmo_clean(elmos)
 
@@ -192,6 +201,7 @@ prec = rec_prec(elmo_singles, gold_singles)
 rec = rec_prec(gold_singles, elmo_singles)
 f1 = 2 * ((prec * rec) / (prec + rec))
 
+
 print("single word alignments")
 print("prec", prec)
 print("rec", rec)
@@ -199,14 +209,14 @@ print("f1", f1)
 
 # PHRASES
 gold_phrases = {}
-gold_phrases = get_align(golds, gold_phrases, use_phrase = True)
+gold_phrases = get_align(golds, gold_phrases)# , use_phrase = True)
 
-elmos = open(sys.argv[1], 'r').readlines()
+elmos = open(sys.argv[2], 'r').readlines()
 elmos = [x.strip().split('\t') for x in elmos]
 elmos = elmo_clean(elmos)
 
 elmo_phrases = {}
-elmo_phrases = get_align(elmos, elmo_phrases, use_phrase = True)
+elmo_phrases = get_align(elmos, elmo_phrases)#  , use_phrase = True)
 
 prec = rec_prec(elmo_phrases, gold_phrases)
 rec = rec_prec(gold_phrases, elmo_phrases)
@@ -227,6 +237,12 @@ elmo_sg_para = swap(low_freq, elmo_singles)
 # Not currently being used
 gold_ph_para = swap(low_freq, gold_phrases)
 elmo_ph_para = swap(low_freq, elmo_phrases)
+
+s = Score()
+print("getting gold alignment vectors")
+gold_sg_para = s.elmo_diffs(elmo, gold_sg_para)
+print("getting elmo alignment vectors")
+elmo_sg_para = s.elmo_diffs(elmo, elmo_sg_para)
 
 writeout('gold_singular_swap.tsv', gold_sg_para)
 writeout('elmo_singular_swap.tsv', elmo_sg_para)
