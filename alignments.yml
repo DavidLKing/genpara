@@ -128,5 +128,5 @@ dependencies:
     - werkzeug==0.14.1
     - wrapt==1.10.11
     - xmltodict==0.11.0
-prefix: /home/david/miniconda2/envs/alignments
+prefix: /home/david/miniconda/envs/alignments
 
