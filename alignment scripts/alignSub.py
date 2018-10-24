@@ -3,6 +3,7 @@
 import sys
 import gensim
 import pdb
+import random
 from allennlp.modules.elmo import Elmo, batch_to_ids
 from combineGold import Combine
 from build_phrase_table import PhraseTable
@@ -10,7 +11,34 @@ from score import Score
 
 # Usage: ./elmoEval.py elmoalignments.tsv ../data/.../batch*
 
-def get_align(groups, phrases, use_phrase = False):
+def align(src, tgt, indexes, phrase_table):
+    # mocked up from PhraseTable.py to not create phrases
+    src = src.split()
+    tgt = tgt.split()
+    # indexes = p.conv2range(indexes)
+    for pair in indexes:
+        # src_phrase = self.gen_phrase(src, pair[0])
+        # tgt_phrase = self.gen_phrase(tgt, pair[1])
+        src_phrase = src[pair[0]]
+        tgt_phrase = tgt[pair[1]]
+        if src_phrase != tgt_phrase:
+            if src_phrase not in phrase_table:
+                phrase_table[src_phrase] = []
+            if tgt_phrase not in phrase_table[src_phrase]:
+                phrase_table[src_phrase].append(tgt_phrase)
+    return phrase_table
+
+def get_align(groups, phrases):
+    for group in groups:
+        src = group[0]
+        tgt = group[1]
+        idxes = group[2]
+        if idxes != '':
+            idxes = p.str2idx(idxes)
+            phrases = p.align(src, tgt, idxes, phrases)
+    return phrases
+
+def get_range_align(groups, phrases):
     for group in groups:
         src = group[0]
         tgt = group[1]
@@ -84,16 +112,9 @@ def swap(sents, swap_dict):
             # TODO temp hack to stop history + i > we = hwestory
             if ' ' + swappable + ' ' in sent:
                 for swap in swap_dict[swappable]:
+                    src = random.choice(swap_dict[swappable][swap])
                     para = sent.replace(swappable, swap)
-                    paraphrases.append([para] + line)
-                    srcs = len(swap_dict[swappable][swap]['src_sents'])
-                    if srcs > 1:
-                        mltplsrc += 1
-                        sum_multiple += srcs
-                    sum_all += srcs
-    print("multiple sources", mltplsrc, total, mltplsrc / total)
-    print("avg multiple source count", sum_multiple, total, sum_multiple / total)
-    print("overall average source count", sum_all, total, sum_all / total)
+                    paraphrases.append([src, para] + line)
     return paraphrases
 
 def writeout(name, lines):
@@ -147,7 +168,6 @@ torch.Size([1, 14, 1024])
 (Pdb) 
 '''
 ### Ready
-pdb.set_trace()
 
 c = Combine()
 
@@ -212,4 +232,5 @@ writeout('gold_singular_swap.tsv', gold_sg_para)
 writeout('elmo_singular_swap.tsv', elmo_sg_para)
 
 
-# pdb.set_trace()
+pdb.set_trace()
+

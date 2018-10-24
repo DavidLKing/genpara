@@ -74,13 +74,8 @@ class PhraseTable:
             if src_phrase not in phrase_table:
                 phrase_table[src_phrase] = {}
             if tgt_phrase not in phrase_table[src_phrase]:
-                phrase_table[src_phrase][tgt_phrase] = {}
-                phrase_table[src_phrase][tgt_phrase]['src_sents'] = []
-                phrase_table[src_phrase][tgt_phrase]['tgt_sents'] = []
-            if src not in phrase_table[src_phrase][tgt_phrase]['src_sents']:
-                phrase_table[src_phrase][tgt_phrase]['src_sents'].append(src)
-            if tgt not in phrase_table[src_phrase][tgt_phrase]['tgt_sents']:
-                phrase_table[src_phrase][tgt_phrase]['tgt_sents'].append(tgt)
+                phrase_table[src_phrase][tgt_phrase] = []
+            phrase_table[src_phrase][tgt_phrase].append(' '.join(src))
         '''
         other idea:
         swap = (src_phrase, tgt_phrase)
@@ -137,6 +132,7 @@ class PhraseTable:
                 # print(tgt)
                 # print(indexes)
                 indexes = self.str2idx(indexes)
+                # pdb.set_trace()
                 phrase_table = self.align(src, tgt, indexes, phrase_table)
             else:
                 print("Error! There's a bug in this entry. alignments cannot be empty.",
