@@ -32,6 +32,31 @@ class Score:
     def elmo_diffs(self, elmo, data):
         newdata = []
         print("generating elmo vectors")
+        # srcs = elmo(batch_to_ids([x[2] for x in data]))['elmo_representations'][2]
+        # paras = elmo(batch_to_ids([x[3] for x in data]))['elmo_representations'][2]
+        # for line, src_vec, para_vec in zip(data, srcs, paras):
+        for line in data:
+            src_word = line[0]
+            para_word = line[1]
+            src = line[2]
+            # tgt = line[4]
+            para = line[3]
+            # try:
+            src_idx = src.split().index(src_word)
+            para_idx = para.split().index(para_word)
+            # except:
+            #     pdb.set_trace()
+            dist, cos, joint = self.elmo_word_diff(elmo, src, para, src_idx, para_idx)#, src_vec, para_vec)
+            line = [str(dist), str(cos), str(joint)] + line
+            # print(dist, cos, joint)
+            print('\t'.join(line))
+            newdata.append(line)
+            # pdb.set_trace()
+        return newdata
+
+    def elmo_diffs_batch(self, elmo, data):
+        newdata = []
+        print("generating elmo vectors")
         srcs = elmo(batch_to_ids([x[2] for x in data]))['elmo_representations'][2]
         paras = elmo(batch_to_ids([x[3] for x in data]))['elmo_representations'][2]
         for line, src_vec, para_vec in zip(data, srcs, paras):
@@ -47,17 +72,20 @@ class Score:
             #     pdb.set_trace()
             dist, cos, joint = self.elmo_word_diff(elmo, src, para, src_idx, para_idx, src_vec, para_vec)
             line = [str(dist), str(cos), str(joint)] + line
+            print('\t'.join(line))
             # print(dist, cos, joint)
             newdata.append(line)
             # pdb.set_trace()
         return newdata
 
 
-    def elmo_word_diff(self, model, src, para, src_idx, para_idx, src_vec, para_vec):
+    def elmo_word_diff(self, model, src, para, src_idx, para_idx):#, src_vec, para_vec):
         # src_vecs = model(batch_to_ids([src]))
-        src_word_vec = np.asarray(src_vec[src_idx].detach())
+        # elmo(batch_to_ids([src]))['elmo_representations'][2]
+        src_word_vec = np.asarray(model(batch_to_ids([src]))['elmo_representations'][2][0][src_idx].detach())
         # para_vecs = model(batch_to_ids([para]))
-        para_word_vec = np.asarray(para_vec[para_idx].detach())
+        para_word_vec = np.asarray(model(batch_to_ids([para]))['elmo_representations'][2][0][para_idx].detach())
+        # pdb.set_trace()
         dist = np.linalg.norm(src_word_vec - para_word_vec)
         cos = self.sim(src_word_vec, para_word_vec)
         joint = self.david_metric(cos, dist)

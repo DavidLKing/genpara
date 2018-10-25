@@ -239,13 +239,13 @@ gold_ph_para = swap(low_freq, gold_phrases)
 elmo_ph_para = swap(low_freq, elmo_phrases)
 
 s = Score()
-print("getting gold alignment vectors")
-gold_sg_para = s.elmo_diffs(elmo, gold_sg_para)
+# print("getting gold alignment vectors")
+# gold_sg_para = s.elmo_diffs(elmo, gold_sg_para)
 print("getting elmo alignment vectors")
 elmo_sg_para = s.elmo_diffs(elmo, elmo_sg_para)
 
-writeout('gold_singular_swap.tsv', gold_sg_para)
-writeout('elmo_singular_swap.tsv', elmo_sg_para)
+# writeout('gold_singular_swap.tsv', gold_sg_para)
+writeout('elmo_singular_swap_1.tsv', elmo_sg_para)
 
 
 # pdb.set_trace()
