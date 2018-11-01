@@ -4,10 +4,9 @@ import sys
 import gensim
 import pdb
 import random
-from allennlp.modules.elmo import Elmo, batch_to_ids
 from combineGold import Combine
 from build_phrase_table import PhraseTable
-from score import Score
+# from score import Score
 
 # Usage: ./elmoEval.py elmoalignments.tsv ../data/.../batch*
 
@@ -114,6 +113,7 @@ def swap(sents, swap_dict):
                 for swap in swap_dict[swappable]:
                     src = random.choice(swap_dict[swappable][swap])
                     para = sent.replace(swappable, swap)
+                    # pdb.set_trace()
                     paraphrases.append([swappable, swap, src, para] + line)
     return paraphrases
 
@@ -124,63 +124,17 @@ def writeout(name, lines):
             if line[0] != line[1]:
                 of.write('\t'.join(line) + '\n')
 
-### GloVe ###
-print("loading GloVe vectors")
-# currently commented out for processing time
-# glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[1], binary=False)
 
 
-### ELLMO ###
-print("loading ELMo...")
-# to do: download these
-options_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_options.json"
-weight_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
-# options_file = "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo/2x4096_512_2048cnn_2xhighway/elmo_2x4096_512_2048cnn_2xhighway_options.json"
-# weight_file = "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo/2x4096_512_2048cnn_2xhighway/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
 
-elmo = Elmo(options_file, weight_file, 3, dropout=0)
-# messy prototype
-# sent = "This is a test"
-# single_sent_elmo = lambda sent: elmo(batch_to_ids([sent]))
-'''
-(Pdb) len(single_sent_elmo("This is a test"))
-2
-(Pdb) single_sent_elmo("This is a test").keys()
-dict_keys(['elmo_representations', 'mask'])
-(Pdb) single_sent_elmo("This is a test")['mask']
-tensor([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]])
-(Pdb) single_sent_elmo("This is a test")['elmo_representations'].shape
-*** AttributeError: 'list' object has no attribute 'shape'
-(Pdb) len(single_sent_elmo("This is a test")['elmo_representations'])
-2
-(Pdb) single_sent_elmo("This is a test")['elmo_representations'][0]
-tensor([[[-4.1971e-01, -4.4025e-01, -1.0587e+00,  ...,  7.2652e-02,
-          -7.4392e-01, -4.4630e-01],
-         [-3.3414e-01, -7.8741e-01, -4.8827e-01,  ...,  7.9663e-02,
-           3.8118e-01,  1.9112e-02],
-         [-1.1728e-01, -2.9004e-01, -5.1561e-01,  ..., -1.3266e-01,
-          -9.3138e-02, -2.9839e-01],
-         ...,
-         [ 2.0640e-01,  3.3418e-01, -4.8526e-02,  ...,  4.1011e-02,
-           7.4620e-01,  9.6554e-02],
-         [ 3.9084e-01,  6.2279e-01, -1.3639e-01,  ...,  4.2772e-01,
-           6.9154e-01, -2.4551e-01],
-         [ 8.0042e-02, -9.9265e-02, -4.2147e-01,  ..., -3.7287e-01,
-           1.8058e-01,  2.3906e-01]]], grad_fn=<DropoutBackward>)
-(Pdb) single_sent_elmo("This is a test")['elmo_representations'][0].shape
-torch.Size([1, 14, 1024])
-(Pdb) single_sent_elmo("This is a test")['elmo_representations'][1].shape
-torch.Size([1, 14, 1024])
-(Pdb) single_sent_elmo("This is a test")['elmo_representations'][2].shape
-*** IndexError: list index out of range
-(Pdb) 
-'''
+
+
 ### Ready
 
 c = Combine()
 
 golds = []
-for files in sys.argv[3:]:
+for files in sys.argv[2:]:
     golds = c.read_gold(golds, files)
 
 p = PhraseTable()
@@ -190,7 +144,7 @@ gold_singles = {}
 gold_singles = get_align(golds, gold_singles)
 # pdb.set_trace()
 
-elmos = open(sys.argv[2], 'r').readlines()
+elmos = open(sys.argv[1], 'r').readlines()
 elmos = [x.strip().split('\t') for x in elmos]
 elmos = elmo_clean(elmos)
 
@@ -211,9 +165,9 @@ print("f1", f1)
 gold_phrases = {}
 gold_phrases = get_align(golds, gold_phrases)# , use_phrase = True)
 
-elmos = open(sys.argv[2], 'r').readlines()
-elmos = [x.strip().split('\t') for x in elmos]
-elmos = elmo_clean(elmos)
+# elmos = open(sys.argv[2], 'r').readlines()
+# elmos = [x.strip().split('\t') for x in elmos]
+# elmos = elmo_clean(elmos)
 
 elmo_phrases = {}
 elmo_phrases = get_align(elmos, elmo_phrases)#  , use_phrase = True)
@@ -238,11 +192,11 @@ elmo_sg_para = swap(low_freq, elmo_singles)
 gold_ph_para = swap(low_freq, gold_phrases)
 elmo_ph_para = swap(low_freq, elmo_phrases)
 
-s = Score()
-print("getting gold alignment vectors")
-gold_sg_para = s.elmo_diffs(elmo, gold_sg_para)
-print("getting elmo alignment vectors")
-elmo_sg_para = s.elmo_diffs(elmo, elmo_sg_para)
+# s = Score()
+# print("getting gold alignment vectors")
+# gold_sg_para = s.elmo_diffs(elmo, gold_sg_para)
+# print("getting elmo alignment vectors")
+# elmo_sg_para = s.elmo_diffs(elmo, elmo_sg_para)
 
 writeout('gold_singular_swap.tsv', gold_sg_para)
 writeout('elmo_singular_swap.tsv', elmo_sg_para)

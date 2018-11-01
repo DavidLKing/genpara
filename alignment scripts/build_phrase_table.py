@@ -82,7 +82,7 @@ class PhraseTable:
                 phrase_table[src_phrase] = {}
             if tgt_phrase not in phrase_table[src_phrase]:
                 phrase_table[src_phrase][tgt_phrase] = []
-            phrase_table[src_phrase][tgt_phrase].append(' '.join(src))
+            phrase_table[src_phrase][tgt_phrase].append(' '.join(tgt))
         '''
         other idea:
         swap = (src_phrase, tgt_phrase)
