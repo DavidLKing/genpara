@@ -153,13 +153,13 @@ glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=Fals
 
 ### ELMO ###
 print("loading ELMo...")
-elmo_src = h5py.File(sys.argv[3], 'r')
+# elmo_src = h5py.File(sys.argv[3], 'r')
 # elmo_src = h5py.File('elmo_singular_swap.src.h5py', 'r')
-elmo_tgt = h5py.File(sys.argv[4], 'r')
+# elmo_tgt = h5py.File(sys.argv[4], 'r')
 # elmo_para = h5py.File('elmo_singular_swap.tgt.h5py', 'r')
 
-swap_csv = open(sys.argv[5], 'r').readlines()
-# swap_csv = open('elmo_singular_swap.tsv', 'r').readlines()
+# swap_csv = open(sys.argv[5], 'r').readlines()
+swap_csv = open('test.tsv', 'r').readlines()
 
 line_nmr = 0
 # TODO add sanity check to make sure lengths are all correct
