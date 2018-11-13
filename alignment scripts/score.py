@@ -176,6 +176,7 @@ elmo = Elmo(options_file, weight_file, 3, dropout=0)
 swap_csv = open(sys.argv[3], 'r').readlines()
 pdb.set_trace()
 # swap_csv = open('elmo_singular_swap.tsv', 'r').readlines()
+# swap_csv = open(sys.argv[5], 'r').readlines()
 
 line_nmr = 0
 # TODO add sanity check to make sure lengths are all correct
