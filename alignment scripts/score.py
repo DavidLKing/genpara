@@ -5,6 +5,7 @@ import pdb
 import h5py
 import numpy as np
 import gensim
+import pandas
 import allennlp
 from allennlp.modules.elmo import Elmo, batch_to_ids
 
@@ -80,6 +81,8 @@ class Score:
         return newdata
 
 
+
+
     def elmo_word_diff(self, model, src, para, src_idx, para_idx):#, src_vec, para_vec):
         # src_vecs = model(batch_to_ids([src]))
         # elmo(batch_to_ids([src]))['elmo_representations'][2]
@@ -99,20 +102,28 @@ class Score:
         joint = self.david_metric(cos_sim, dist)
         return cos_sim, dist, joint
 
-    def score(self, line, word2vec, glove, elmo_src, elmo_para):
+    def score(self, line, word2vec, glove, elmo_src, elmo_aligned, elmo_orig, elmo_para):
         # defunct
         line = line.strip().split('\t')
-        para = line[3].split(' ')
-        sent = line[2].split(' ')
-        # src_word = line[0]
+        swappable = line[0]
+        # swapped = line[1]
         para_word = line[1]
-        src_idx = sent.index(para_word)
+        src = line[2].split(' ')
+        aligned = line[3].split(' ')
+        orig = line[4].split(' ')
+        para = line[5].split(' ')
+        # src_word = line[0]
+        orig_idx = orig.index(para_word)
         para_idx = para.index(para_word)
+        # ELMO
         elmo_src_vec = elmo_src[src_idx]
         elmo_para_vec = elmo_para[para_idx]
         elmo_sim, elmo_dist, elmo_david = self.score_list(elmo_src_vec, elmo_para_vec)
+        # GLOVE
         glove_para =self.mean_maker(para, glove)
-        glove_sent = self.mean_maker(sent, glove)
+        glove_para =self.mean_maker(para, glove)
+        glove_para =self.mean_maker(para, glove)
+        # W2V
         w2v_para = self.mean_maker(para, word2vec)
         w2v_sent = self.mean_maker(sent, word2vec)
         # pdb.set_trace()
@@ -126,6 +137,7 @@ class Score:
             glove_david = self.david_metric(glove_sim, glove_dist)
             w2v_david = self.david_metric(w2v_sim, w2v_dist)
             return w2v_sim, glove_sim, elmo_sim, w2v_dist, glove_dist, elmo_dist, w2v_david, glove_david, elmo_david
+
 
 # w2v = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=True)
 # glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[3], binary=False)
@@ -153,19 +165,23 @@ glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=Fals
 
 ### ELMO ###
 print("loading ELMo...")
-elmo_src = h5py.File(sys.argv[3], 'r')
+options_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_options.json"
+weight_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
+elmo = Elmo(options_file, weight_file, 3, dropout=0)
+# elmo_src = h5py.File(sys.argv[3], 'r')
 # elmo_src = h5py.File('elmo_singular_swap.src.h5py', 'r')
-elmo_tgt = h5py.File(sys.argv[4], 'r')
+# elmo_tgt = h5py.File(sys.argv[4], 'r')
 # elmo_para = h5py.File('elmo_singular_swap.tgt.h5py', 'r')
 
-swap_csv = open(sys.argv[5], 'r').readlines()
+swap_csv = open(sys.argv[3], 'r').readlines()
+pdb.set_trace()
 # swap_csv = open('elmo_singular_swap.tsv', 'r').readlines()
 
 line_nmr = 0
 # TODO add sanity check to make sure lengths are all correct
 for line in swap_csv:
     # w2v_sim, glove_sim, elmo_sim, w2v_dist, glove_dist, elmo_dist, w2v_david, glove_david, elmo_david = s.score(line, w2v, glove, elmo_src[str(line_nmr)], elmo_para[str(line_nmr)])
-    sims = s.score(line, w2v, glove, elmo_src[str(line_nmr)], elmo_tgt[str(line_nmr)])
+    sims = s.score(line, w2v, glove, elmo)
     print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
     line_nmr += 1
 
