@@ -1,21 +1,21 @@
-swappable	swap	src	aligned	orig	para	Notes:
-bug	illness	I ‘m coming down with a bug	I think I have an illness	I have a bug	I have a illness	allowed, ungrammatical
-illness	bug	I think I have an illness	I ‘m coming down with a bug	I have a illness	I have an bug	reversed
-bug	illness	I ‘m coming down with a bug	I think I have an illness	I have a bug	I have an illness	perfect
-illness	bug	I think I have an illness	I ‘m coming down with a bug	I have an illness	I have a bug	reversed
-bug	sick	My program has a bug	My code is not so sick	I have a bug	I have a sick	word sense off (in original alignment)
-sick	bug	My code is not so sick	My program has a bug	I have a sick	I have a bug	reversed
-bugs	insects	I like bugs	Insects are cool	do you like bugs	do you like insects	perfect
-insects	bugs	Insects are cool	I like bugs	do you like insects	do you like bugs	reversed
-pain	hurt	What a pain in the neck	Does your neck hurt	Are you experiencing pain in your lower back	Are you experiencing hurt in your lower back	allowed, questionable
-hurt	pain	Does your neck hurt	What a pain in the neck	Are you experiencing hurt in your lower back	Are you experiencing pain in your lower back	reversed
-better	help	Does anything make the pain better	Does anything help	What makes it better	What makes it help	ungrammatical, good align
-help	better	Does anything help	Does anything make the pain better	What makes it help	What makes it better	reversed
-help	lessen	Does anything help	Does anything lessen the pain	Does anything help	Does anything lessen	ungrammatical, good align
-lessen	help	Does anything lessen the pain	Does anything help	Does anything lessen	Does anything help	reversed
-helps	lessens	What helps	Can you tell me what lessens the pain	What helps the pain	What lessens the pain	perfect
-lessens	helps	Can you tell me what lessens the pain	What helps	What lessens the pain	What helps the pain	reversed
-help	lessen	Does anything help	Does anything lessen the pain	I think we can help you	I think we can lessen you	word sense off (in swap)
-lessen	help	Does anything lessen the pain	Does anything help	I think we can lessen you	I think we can help you	reversed
-lesson	help	Was the lesson hard	That was good help	How was the lesson	How was the help	Just wrong
-help	lesson	That was good help	Was the lesson hard	How was the help	How was the lesson	reversed
+swappable	swap	src	aligned	orig	para	Notes:	okay/perf/bad	align issue
+bug	illness	i ‘m coming down with a bug	i think i have an illness	i have a bug	i have a illness	allowed, ungrammatical	o	n
+illness	bug	i think i have an illness	i ‘m coming down with a bug	i have an illness	i have an bug	reversed	o	n
+bug	illness	i ‘m coming down with a bug	i think i have an illness	i have a bug	i have an illness	perfect	p	n
+illness	bug	i think i have an illness	i ‘m coming down with a bug	i have an illness	i have a bug	reversed	p	n
+bug	sick	my program has a bug	my code is not so sick	i have a bug	i have a sick	word sense off (in original alignment)	o	y
+sick	bug	my code is not so sick	my program has a bug	i have a sick	i have a bug	reversed	o	y
+bugs	insects	i like bugs	insects are cool	do you like bugs	do you like insects	perfect	p	n
+insects	bugs	insects are cool	i like bugs	do you like insects	do you like bugs	reversed	p	n
+pain	hurt	what a pain in the neck	does your neck hurt	are you experiencing pain in your lower back	are you experiencing hurt in your lower back	allowed, questionable	o	y
+hurt	pain	does your neck hurt	what a pain in the neck	are you experiencing hurt in your lower back	are you experiencing pain in your lower back	reversed	o	y
+better	help	does anything make the pain better	does anything help	what makes it better	what makes it help	ungrammatical, good align	b	n
+help	better	does anything help	does anything make the pain better	is your back better	is your back help	reversed	b	n
+help	lessen	does anything help	does anything lessen the pain	does anything help	does anything lessen	ungrammatical, good align	b	n
+lessen	help	does anything lessen the pain	does anything help	the pain did not lessen	the pain did not help	reversed	b	n
+helps	lessens	what helps	can you tell me what lessens the pain	what helps the pain	what lessens the pain	perfect	p	n
+lessens	helps	can you tell me what lessens the pain	what helps	what lessens the pain	what helps the pain	reversed	p	n
+help	lessen	does anything help	does anything lessen the pain	i think we can help you	i think we can lessen you	word sense off (in swap)	b	n
+lessen	help	does anything lessen the pain	does anything help	the pain will lessen	the pain will help	reversed	b	n
+lesson	help	that was the hard lesson	thanks for all the help	how was the lesson	how was the help	just wrong	b	y
+help	lesson	thanks for all the help	that was the hard lesson	the lesson is now over	the help is now over	reversed	b	y
