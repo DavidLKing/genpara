@@ -86,9 +86,11 @@ class Score:
     def elmo_word_diff(self, model, src, para, src_idx, para_idx):#, src_vec, para_vec):
         # src_vecs = model(batch_to_ids([src]))
         # elmo(batch_to_ids([src]))['elmo_representations'][2]
-        src_word_vec = np.asarray(model(batch_to_ids([src]))['elmo_representations'][2][0][src_idx].detach())
+        src_word_vec = np.asarray([2][0][src_idx].detach())
+        # src_word_vec = np.asarray(model(batch_to_ids([src]))['elmo_representations'][2][0][src_idx].detach())
         # para_vecs = model(batch_to_ids([para]))
         para_word_vec = np.asarray(model(batch_to_ids([para]))['elmo_representations'][2][0][para_idx].detach())
+        # para_word_vec = np.asarray(model(batch_to_ids([para]))['elmo_representations'][2][0][para_idx].detach())
         # pdb.set_trace()
         dist = np.linalg.norm(src_word_vec - para_word_vec)
         cos = self.sim(src_word_vec, para_word_vec)
@@ -104,7 +106,7 @@ class Score:
 
     def score(self, line, word2vec, glove, elmo_src, elmo_aligned, elmo_orig, elmo_para):
         # defunct
-        line = line.strip().split('\t')
+        line = line.lower().strip().split('\t')
         swappable = line[0]
         # swapped = line[1]
         para_word = line[1]
@@ -113,41 +115,132 @@ class Score:
         orig = line[4].split(' ')
         para = line[5].split(' ')
         # src_word = line[0]
-        orig_idx = orig.index(para_word)
+        src_idx = src.index(swappable)
+        align_idx = aligned.index(para_word)
+        orig_idx = orig.index(swappable)
         para_idx = para.index(para_word)
-        # ELMO
-        elmo_src_vec = elmo_src[src_idx]
-        elmo_para_vec = elmo_para[para_idx]
-        elmo_sim, elmo_dist, elmo_david = self.score_list(elmo_src_vec, elmo_para_vec)
+        elmo_src_vec = np.asarray(elmo_src[src_idx].detach())
+        elmo_align_vec = np.asarray(elmo_aligned[align_idx].detach())
+        elmo_orig_vec = np.asarray(elmo_orig[orig_idx].detach())
+        elmo_para_vec = np.asarray(elmo_para[para_idx].detach())
+        # ELMO SRC -> PARA
+        elmo_src_para_sim, elmo_src_para_dist, elmo_src_para_david = self.score_list(elmo_src_vec, elmo_para_vec)
+        # ELMO SRC -> ORIG
+        elmo_src_orig_sim, elmo_src_orig_dist, elmo_src_orig_david = self.score_list(elmo_src_vec, elmo_orig_vec)
+        # ELMO ORIG -> PARA
+        elmo_orig_para_sim, elmo_orig_para_dist, elmo_orig_para_david = self.score_list(elmo_orig_vec, elmo_para_vec)
+        # ELMO ALIGN -> PARA
+        elmo_align_para_sim, elmo_align_para_dist, elmo_align_para_david = self.score_list(elmo_align_vec, elmo_para_vec)
         # GLOVE
-        glove_para =self.mean_maker(para, glove)
-        glove_para =self.mean_maker(para, glove)
-        glove_para =self.mean_maker(para, glove)
+        glove_src = self.mean_maker(src, glove)
+        glove_aligned = self.mean_maker(aligned, glove)
+        glove_orig = self.mean_maker(orig, glove)
+        glove_para = self.mean_maker(para, glove)
         # W2V
+        w2v_src = self.mean_maker(src, word2vec)
+        w2v_align = self.mean_maker(aligned, word2vec)
+        w2v_orig = self.mean_maker(orig, word2vec)
         w2v_para = self.mean_maker(para, word2vec)
-        w2v_sent = self.mean_maker(sent, word2vec)
-        # pdb.set_trace()
-        if not np.isnan(glove_para[0]) and not np.isnan(glove_sent[0]) and \
-           not np.isnan(w2v_para[0]) and not np.isnan(w2v_sent[0]):
+        # TODO is this enought checks or should I check EVERY vector?
+        if not np.isnan(glove_para[0]) and not np.isnan(glove_src[0]) and \
+                not np.isnan(w2v_para[0]) and not np.isnan(w2v_src[0]):
             # pdb.set_trace()
-            glove_sim = self.sim(glove_sent, glove_para)
-            w2v_sim = self.sim(w2v_sent, w2v_para)
-            glove_dist = np.linalg.norm(glove_sent - glove_para)
-            w2v_dist = np.linalg.norm(w2v_sent - w2v_para)
-            glove_david = self.david_metric(glove_sim, glove_dist)
-            w2v_david = self.david_metric(w2v_sim, w2v_dist)
-            return w2v_sim, glove_sim, elmo_sim, w2v_dist, glove_dist, elmo_dist, w2v_david, glove_david, elmo_david
+            # GLOVE SRC -> PARA
+            glove_src_para_sim = self.sim(glove_src, glove_para)
+            glove_src_para_dist = np.linalg.norm(glove_src - glove_para)
+            glove_src_para_david = self.david_metric(glove_src_para_sim, glove_src_para_dist)
+            # GLOVE SRC -> ORIG
+            glove_src_orig_sim = self.sim(glove_src, glove_orig)
+            glove_src_orig_dist = np.linalg.norm(glove_src - glove_orig)
+            glove_src_orig_david = self.david_metric(glove_src_orig_sim, glove_src_orig_dist)
+            # GLOVE ORIG -> PARA
+            glove_orig_para_sim = self.sim(glove_orig, glove_para)
+            glove_orig_para_dist = np.linalg.norm(glove_orig - glove_para)
+            glove_orig_para_david = self.david_metric(glove_orig_para_sim, glove_orig_para_dist)
+            # GLOVE ALIGN -> PARA
+            glove_align_para_sim = self.sim(glove_aligned, glove_para)
+            glove_align_para_dist = np.linalg.norm(glove_aligned - glove_para)
+            glove_align_para_david = self.david_metric(glove_align_para_sim, glove_align_para_dist)
+            # W2V SRC -> PARA
+            w2v_src_para_sim = self.sim(w2v_src, w2v_para)
+            w2v_src_para_dist = np.linalg.norm(w2v_src - w2v_para)
+            w2v_src_para_david = self.david_metric(w2v_src_para_sim, w2v_src_para_dist)
+            # W2V SRC -> ORIG
+            w2v_src_orig_sim = self.sim(w2v_src, w2v_orig)
+            w2v_src_orig_dist = np.linalg.norm(w2v_src - w2v_orig)
+            w2v_src_orig_david = self.david_metric(w2v_src_orig_sim, w2v_src_orig_dist)
+            # W2V ORIG -> PARA
+            w2v_orig_para_sim = self.sim(w2v_orig, w2v_para)
+            w2v_orig_para_dist = np.linalg.norm(w2v_orig - w2v_para)
+            w2v_orig_para_david = self.david_metric(w2v_orig_para_sim, w2v_orig_para_dist)
+            # W2V ALIGN -> PARA
+            w2v_align_para_sim = self.sim(w2v_align, w2v_para)
+            w2v_align_para_dist = np.linalg.norm(w2v_align - w2v_para)
+            w2v_align_para_david = self.david_metric(w2v_align_para_sim, w2v_align_para_dist)
+            # pdb.set_trace()
+            return (glove_src_para_sim,
+                glove_src_para_dist,
+                glove_src_para_david,
+                glove_src_orig_sim,
+                glove_src_orig_dist,
+                glove_src_orig_david,
+                glove_orig_para_sim,
+                glove_orig_para_dist,
+                glove_orig_para_david,
+                glove_align_para_sim,
+                glove_align_para_dist,
+                glove_align_para_david,
+                w2v_src_para_sim,
+                w2v_src_para_dist,
+                w2v_src_para_david,
+                w2v_src_orig_sim,
+                w2v_src_orig_dist,
+                w2v_src_orig_david,
+                w2v_orig_para_sim,
+                w2v_orig_para_dist,
+                w2v_orig_para_david,
+                w2v_align_para_sim,
+                w2v_align_para_dist,
+                w2v_align_para_david,
+                elmo_src_para_sim, 
+                elmo_src_para_dist, 
+                elmo_src_para_david,
+                elmo_src_orig_sim, 
+                elmo_src_orig_dist, 
+                elmo_src_orig_david,
+                elmo_orig_para_sim, 
+                elmo_orig_para_dist, 
+                elmo_orig_para_david,
+                elmo_align_para_sim, 
+                elmo_align_para_dist, 
+                elmo_align_para_david)
 
 
-# w2v = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=True)
-# glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[3], binary=False)
-# infile = open(sys.argv[1], 'r').readlines()
-#
-# for line in infile:
-#     w2v_sim, glove_sim, w2v_dist, glove_dist, w2v_david, glove_david = score(line, w2v, glove)
-#     print('\t'.join([str(w2v_sim), str(glove_sim), str(w2v_dist), str(glove_dist), str(w2v_david), str(glove_david)] + line.split('\t')))
 
 s = Score()
+
+### ELMO ###
+print("loading ELMo...")
+options_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_options.json"
+weight_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
+elmo = Elmo(options_file, weight_file, 3, dropout=0)
+# elmo_src = h5py.File(sys.argv[3], 'r')
+# elmo_src = h5py.File('elmo_singular_swap.src.h5py', 'r')
+# elmo_tgt = h5py.File(sys.argv[4], 'r')
+# elmo_para = h5py.File('elmo_singular_swap.tgt.h5py', 'r')
+
+swap_txt = open(sys.argv[3], 'r').readlines()
+print("extracting ELMo representations...")
+swap_csv = pandas.read_csv(sys.argv[3] ,delimiter='\t')
+srcs = [x.split() for x in swap_csv['src'].tolist()]
+aligns = [x.split() for x in swap_csv['aligned'].tolist()]
+origs = [x.split() for x in swap_csv['orig'].tolist()]
+paras = [x.split() for x in swap_csv['para'].tolist()]
+elmo_src = elmo(batch_to_ids(srcs))['elmo_representations'][2]
+elmo_align = elmo(batch_to_ids(aligns))['elmo_representations'][2]
+elmo_orig = elmo(batch_to_ids(origs))['elmo_representations'][2]
+elmo_para = elmo(batch_to_ids(paras))['elmo_representations'][2]
+
 
 ### W2V ###
 print("loading W2V vectors")
@@ -163,26 +256,67 @@ glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=Fals
 # glove = gensim.models.KeyedVectors.load_word2vec_format('../data/glove.6B.300d.txt.word2vec', binary=False)
 # glove = ''
 
-### ELMO ###
-print("loading ELMo...")
-options_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_options.json"
-weight_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
-elmo = Elmo(options_file, weight_file, 3, dropout=0)
-# elmo_src = h5py.File(sys.argv[3], 'r')
-# elmo_src = h5py.File('elmo_singular_swap.src.h5py', 'r')
-# elmo_tgt = h5py.File(sys.argv[4], 'r')
-# elmo_para = h5py.File('elmo_singular_swap.tgt.h5py', 'r')
 
-swap_csv = open(sys.argv[3], 'r').readlines()
-pdb.set_trace()
+# pdb.set_trace()
 # swap_csv = open('elmo_singular_swap.tsv', 'r').readlines()
 # swap_csv = open(sys.argv[5], 'r').readlines()
 
+# TODO This works for scoring, but we should be able to do it programatically
+
+header = swap_txt[0].strip().split('\t')
+
+header = ['glove_src_para_sim',
+            'glove_src_para_dist',
+            'glove_src_para_david',
+            'glove_src_orig_sim',
+            'glove_src_orig_dist',
+            'glove_src_orig_david',
+            'glove_orig_para_sim',
+            'glove_orig_para_dist',
+            'glove_orig_para_david',
+            'glove_align_para_sim',
+            'glove_align_para_dist',
+            'glove_align_para_david',
+            'w2v_src_para_sim',
+            'w2v_src_para_dist',
+            'w2v_src_para_david',
+            'w2v_src_orig_sim',
+            'w2v_src_orig_dist',
+            'w2v_src_orig_david',
+            'w2v_orig_para_sim',
+            'w2v_orig_para_dist',
+            'w2v_orig_para_david',
+            'w2v_align_para_sim',
+            'w2v_align_para_dist',
+            'w2v_align_para_david',
+            'elmo_src_para_sim', 
+            'elmo_src_para_dist', 
+            'elmo_src_para_david',
+            'elmo_src_orig_sim', 
+            'elmo_src_orig_dist', 
+            'elmo_src_orig_david',
+            'elmo_orig_para_sim', 
+            'elmo_orig_para_dist', 
+            'elmo_orig_para_david',
+            'elmo_align_para_sim', 
+            'elmo_align_para_dist', 
+            'elmo_align_para_david'] + header
+print('\t'.join(header))
+
+
 line_nmr = 0
 # TODO add sanity check to make sure lengths are all correct
-for line in swap_csv:
+# TODO figure out how to get Pandas to output something I can iterate through
+for line in swap_txt[1:]:
+    line = line.lower()
     # w2v_sim, glove_sim, elmo_sim, w2v_dist, glove_dist, elmo_dist, w2v_david, glove_david, elmo_david = s.score(line, w2v, glove, elmo_src[str(line_nmr)], elmo_para[str(line_nmr)])
-    sims = s.score(line, w2v, glove, elmo)
+    sims = s.score(line, w2v, glove, 
+                   elmo_src[line_nmr], 
+                   elmo_align[line_nmr], 
+                   elmo_orig[line_nmr], 
+                   elmo_para[line_nmr])
+    # print('sims', sims)
+    # print('line', line)
     print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
     line_nmr += 1
 
@@ -237,4 +371,8 @@ torch.Size([1, 14, 1024])
 (Pdb) single_sent_elmo("This is a test")['elmo_representations'][2].shape
 *** IndexError: list index out of range
 (Pdb) 
+VE SRC -> ORIG
+            # GLOVE ORIG -> PARA
+                        # GLOVE ALIGN -> PARA
+                        
 '''
