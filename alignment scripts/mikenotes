@@ -1,0 +1,37 @@
+GloVe orig -> para is quite bad
+
+ELMo src -> para is okay
+	my metric has bads after 3.0
+
+	src -> orig sim has the same 0.9
+	dist is questionable again
+	joint ~0.3
+	
+	orig -> para sim 0.58
+	orig -> para joint 2.5
+	
+	align -> para sim 0.9
+	align -> para dist 5.0
+	align -> para joint 0.4
+	
+OLDs
+
+
+look at sim and dist metrics for:
+	src
+	tgt/aligned
+	swappable
+	para
+	
+sanity check:
+	build artificial examples (bug, plank, etc.)
+	half good, half bad
+	condition on number of occurances the swap has been seen
+	
+double check w2v and glove comparisons
+
+build pos-tag and lemmatize gigaword to build lookup table for Sarah
+
+Look at hard attention morph model: check srst papers (Binlin system)
+
+Ask Brett about restrictions about NSF funding when in Saarbrucken
