@@ -9,6 +9,8 @@ import pandas
 import allennlp
 from allennlp.modules.elmo import Elmo, batch_to_ids
 
+from amad_batcher import MiniBatch
+
 class Score:
 
     def __init__(self):
@@ -112,8 +114,8 @@ class Score:
         para_word = line[1]
         src = line[2].split(' ')
         aligned = line[3].split(' ')
-        orig = line[4].split(' ')
-        para = line[5].split(' ')
+        orig = line[5].split(' ')
+        para = line[4].split(' ')
         # src_word = line[0]
         src_idx = src.index(swappable)
         align_idx = aligned.index(para_word)
@@ -224,22 +226,41 @@ print("loading ELMo...")
 options_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_options.json"
 weight_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
 elmo = Elmo(options_file, weight_file, 3, dropout=0)
+m = MiniBatch(options_file,
+              weight_file,
+              3,
+              device=0)
 # elmo_src = h5py.File(sys.argv[3], 'r')
 # elmo_src = h5py.File('elmo_singular_swap.src.h5py', 'r')
 # elmo_tgt = h5py.File(sys.argv[4], 'r')
 # elmo_para = h5py.File('elmo_singular_swap.tgt.h5py', 'r')
+# testing minibatching
+# test_sents = [x.strip().split(' ') for x in open('elmo_singular_swap.src', 'r').readlines()]
+# test_extract = m.extract(test_sents, 3, 32)
 
 swap_txt = open(sys.argv[3], 'r').readlines()
 print("extracting ELMo representations...")
 swap_csv = pandas.read_csv(sys.argv[3] ,delimiter='\t')
+# pdb.set_trace()
 srcs = [x.split() for x in swap_csv['src'].tolist()]
-aligns = [x.split() for x in swap_csv['aligned'].tolist()]
+aligns = [x.split() for x in swap_csv['align'].tolist()]
 origs = [x.split() for x in swap_csv['orig'].tolist()]
 paras = [x.split() for x in swap_csv['para'].tolist()]
-elmo_src = elmo(batch_to_ids(srcs))['elmo_representations'][2]
-elmo_align = elmo(batch_to_ids(aligns))['elmo_representations'][2]
-elmo_orig = elmo(batch_to_ids(origs))['elmo_representations'][2]
-elmo_para = elmo(batch_to_ids(paras))['elmo_representations'][2]
+# Non-minibatched
+# elmo_src = elmo(batch_to_ids(srcs))['elmo_representations'][2]
+# elmo_align = elmo(batch_to_ids(aligns))['elmo_representations'][2]
+# elmo_orig = elmo(batch_to_ids(origs))['elmo_representations'][2]
+# elmo_para = elmo(batch_to_ids(paras))['elmo_representations'][2]
+# mini-batched
+# TODO make 3rd arg, batch size, an option
+print("Extracting ELMo rep for srcs")
+elmo_src = m.extract(srcs, 2, 16)
+print("Extracting ELMo rep for aligns")
+elmo_align = m.extract(aligns, 2, 16)
+print("Extracting ELMo rep for origs")
+elmo_orig = m.extract(origs, 2, 16)
+print("Extracting ELMo rep for paras")
+elmo_para = m.extract(paras, 2, 16)
 
 
 ### W2V ###
@@ -257,11 +278,8 @@ glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=Fals
 # glove = ''
 
 
-# pdb.set_trace()
-# swap_csv = open('elmo_singular_swap.tsv', 'r').readlines()
-# swap_csv = open(sys.argv[5], 'r').readlines()
-
-# TODO This works for scoring, but we should be able to do it programatically
+# TODO make this an option or get logging to a different file
+outfile = open('scored.tsv', 'w')
 
 header = swap_txt[0].strip().split('\t')
 
@@ -301,7 +319,8 @@ header = ['glove_src_para_sim',
             'elmo_align_para_sim', 
             'elmo_align_para_dist', 
             'elmo_align_para_david'] + header
-print('\t'.join(header))
+# print('\t'.join(header))
+outfile.write('\t'.join(header) + '\n')
 
 
 line_nmr = 0
@@ -317,7 +336,8 @@ for line in swap_txt[1:]:
                    elmo_para[line_nmr])
     # print('sims', sims)
     # print('line', line)
-    print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
+    # print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
+    outfile.write('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
     line_nmr += 1
 
 

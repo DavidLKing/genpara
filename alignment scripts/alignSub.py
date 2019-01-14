@@ -4,6 +4,7 @@ import sys
 import gensim
 import pdb
 import random
+import pickle as pkl
 from combineGold import Combine
 from build_phrase_table import PhraseTable
 # from score import Score
@@ -32,6 +33,7 @@ def get_align(groups, phrases):
         src = group[0]
         tgt = group[1]
         idxes = group[2]
+        # pdb.set_trace()
         if idxes != '':
             idxes = p.str2idx(idxes)
             phrases = p.align(src, tgt, idxes, phrases)
@@ -44,11 +46,11 @@ def get_range_align(groups, phrases):
         idxes = group[2]
         if idxes != '':
             idxes = p.str2idx(idxes)
-            if use_phrase:
-                idxes = p.conv2range(idxes)
-            else:
-                # get analgous output to above
-                idxes = [[[i[0]], [i[1]]] for i in idxes]
+            # if use_phrase:
+            idxes = p.conv2range(idxes)
+            # else:
+            #     # get analgous output to above
+            #     idxes = [[[i[0]], [i[1]]] for i in idxes]
             phrases = p.align(src, tgt, idxes, phrases)
     # pdb.set_trace()
     return phrases
@@ -104,17 +106,37 @@ def swap(sents, swap_dict):
     total = 0
     sum_multiple = 0
     sum_all = 0
+    header = [
+        'swappable',
+        'swap',
+        'src',
+        'align',
+        'para',
+        'orig',
+        'label',
+        'response',
+        'cs guess',
+        'cs correct',
+        'color code 1',
+        'color code 2'
+    ]
+    paraphrases.append(header)
     for line in sents:
+        # pdb.set_trace()
         total += 1
         sent = line[0]
         for swappable in swap_dict:
             # TODO temp hack to stop history + i > we = hwestory
+            # TODO there has to be a better way to do this: tokenization?
             if ' ' + swappable + ' ' in sent:
                 for swap in swap_dict[swappable]:
-                    src = random.choice(swap_dict[swappable][swap])
+                    src = random.choice(swap_dict[swappable][swap]['src'])
+                    align = random.choice(swap_dict[swappable][swap]['align'])
                     para = sent.replace(swappable, swap)
                     # pdb.set_trace()
-                    paraphrases.append([swappable, swap, src, para] + line)
+                    new_array = [swappable, swap, src, align, para] + line
+                    assert(len(new_array) == len(header))
+                    paraphrases.append(new_array)
     return paraphrases
 
 def writeout(name, lines):
@@ -163,14 +185,20 @@ print("f1", f1)
 
 # PHRASES
 gold_phrases = {}
-gold_phrases = get_align(golds, gold_phrases)# , use_phrase = True)
+gold_phrases = get_range_align(golds, gold_phrases)# , use_phrase = True)
 
 # elmos = open(sys.argv[2], 'r').readlines()
 # elmos = [x.strip().split('\t') for x in elmos]
 # elmos = elmo_clean(elmos)
 
 elmo_phrases = {}
-elmo_phrases = get_align(elmos, elmo_phrases)#  , use_phrase = True)
+elmo_phrases = get_range_align(elmos, elmo_phrases)#  , use_phrase = True)
+
+# save them
+pkl.dump(gold_singles, open('gold_singles.pkl', 'wb'))
+pkl.dump(elmo_singles, open('elmo_singles.pkl', 'wb'))
+pkl.dump(gold_phrases, open('gold_phrases.pkl', 'wb'))
+pkl.dump(elmo_phrases, open('elmo_phrases.pkl', 'wb'))
 
 prec = rec_prec(elmo_phrases, gold_phrases)
 rec = rec_prec(gold_phrases, elmo_phrases)

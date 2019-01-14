@@ -81,8 +81,11 @@ class PhraseTable:
             if src_phrase not in phrase_table:
                 phrase_table[src_phrase] = {}
             if tgt_phrase not in phrase_table[src_phrase]:
-                phrase_table[src_phrase][tgt_phrase] = []
-            phrase_table[src_phrase][tgt_phrase].append(' '.join(tgt))
+                phrase_table[src_phrase][tgt_phrase] = {}
+                phrase_table[src_phrase][tgt_phrase]['src'] = []
+                phrase_table[src_phrase][tgt_phrase]['align'] = []
+            phrase_table[src_phrase][tgt_phrase]['src'].append(' '.join(src))
+            phrase_table[src_phrase][tgt_phrase]['align'].append(' '.join(tgt))
         '''
         other idea:
         swap = (src_phrase, tgt_phrase)
@@ -118,6 +121,7 @@ class PhraseTable:
     def align(self, src, tgt, indexes, phrase_table):
         src = src.split()
         tgt = tgt.split()
+        # pdb.set_trace()
         for pair in indexes:
             # pdb.set_trace()
             src_phrase = self.gen_phrase(src, pair[0])

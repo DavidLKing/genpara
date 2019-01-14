@@ -1,3 +1,13 @@
+# my stuff
+.*
+*.tsv
+*.pkl
+*.src
+*.tgt
+*.h5py
+*.backup
+*.tar.*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
