@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -l walltime=12:00:00
+#PBS -l nodes=1:ppn=12:gpus=1
+#PBS -l mem=48G
+#PBS -N SCORING
+#PBS -oe
+#PBS -m abe
+#PBS -M king.2138@osu.edu
+
+cd /users/PAS0418/osu8940/genpara/alignment\ scripts/
+module load python/3.6-conda5.2
+module load cuda/9.1.85
+source activate genpara
+echo "Building datasets"
+./alignSub.py ../data/Amad\ Alignments/elmoWilkinsFull.tsv ../data/goldalign-repo/data/users/arbit/demo-user-1_demo-user-2/complete/vpd-corpus/batch_0*
+echo "Starting golds"
+./score.py ../data/vectors.300.bin ../data/glove.6B.300d.txt.word2vec gold_singular_swap.tsv
+mv scored.tsv gold_scored.tsv
+echo "Starting elmos"
+./score.py ../data/vectors.300.bin ../data/glove.6B.300d.txt.word2vec elmo_singular_swap.tsv
+mv scored.tsv elmo_scored.tsv
+
