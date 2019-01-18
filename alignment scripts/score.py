@@ -121,10 +121,17 @@ class Score:
         align_idx = aligned.index(para_word)
         orig_idx = orig.index(swappable)
         para_idx = para.index(para_word)
-        elmo_src_vec = np.asarray(elmo_src[src_idx].detach())
-        elmo_align_vec = np.asarray(elmo_aligned[align_idx].detach())
-        elmo_orig_vec = np.asarray(elmo_orig[orig_idx].detach())
-        elmo_para_vec = np.asarray(elmo_para[para_idx].detach())
+        # try:
+        # elmo_src_vec = np.asarray(elmo_src[src_idx].detach())
+        # elmo_align_vec = np.asarray(elmo_aligned[align_idx].detach())
+        # elmo_orig_vec = np.asarray(elmo_orig[orig_idx].detach())
+        # elmo_para_vec = np.asarray(elmo_para[para_idx].detach())
+        elmo_src_vec = elmo_src[src_idx]
+        elmo_align_vec = elmo_aligned[align_idx]
+        elmo_orig_vec = elmo_orig[orig_idx]
+        elmo_para_vec = elmo_para[para_idx]
+        # except:
+        #     pdb.set_trace()
         # ELMO SRC -> PARA
         elmo_src_para_sim, elmo_src_para_dist, elmo_src_para_david = self.score_list(elmo_src_vec, elmo_para_vec)
         # ELMO SRC -> ORIG
@@ -329,11 +336,11 @@ line_nmr = 0
 for line in swap_txt[1:]:
     line = line.lower()
     # w2v_sim, glove_sim, elmo_sim, w2v_dist, glove_dist, elmo_dist, w2v_david, glove_david, elmo_david = s.score(line, w2v, glove, elmo_src[str(line_nmr)], elmo_para[str(line_nmr)])
-    sims = s.score(line, w2v, glove, 
-                   elmo_src[line_nmr], 
-                   elmo_align[line_nmr], 
-                   elmo_orig[line_nmr], 
-                   elmo_para[line_nmr])
+    sims = s.score(line, w2v, glove,
+               elmo_src[line_nmr],
+               elmo_align[line_nmr],
+               elmo_orig[line_nmr],
+               elmo_para[line_nmr])
     # print('sims', sims)
     # print('line', line)
     # print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))

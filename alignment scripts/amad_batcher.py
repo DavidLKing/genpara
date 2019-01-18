@@ -19,8 +19,8 @@ class MiniBatch:
         # batchSize = 128
         batchLoc = 0
         # i = 0
-        while batchLoc < total:
-            print("On batch", batchLoc + 1, "of", total)
+        while batchLoc <= total:
+            print("On batch", batchLoc, "of", total)
             # print("batchLoc", batchLoc)
             # print("batchLoc * batchSize", batchLoc * batchSize)
             # print("(batchLoc + 1) * batchSize", (batchLoc + 1) * batchSize)
