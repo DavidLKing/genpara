@@ -383,7 +383,11 @@ for line in swap_txt[1:]:
         for nums in dialog_turn_nums[original]:
             dial_num = nums[0]
             turn_num = nums[1]
-            outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+            outline = '\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n'
+            if 'nan nan' in outline:
+                pdb.set_trace()
+            else:
+                outfile.write(outline)
     else:
         lost.append('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
         missing += 1
