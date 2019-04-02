@@ -6,6 +6,7 @@ import h5py
 import numpy as np
 import gensim
 import pandas
+import kenlm
 import allennlp
 from allennlp.modules.elmo import Elmo, batch_to_ids
 
@@ -138,6 +139,7 @@ class Score:
         # elmo_align_vec = np.asarray(elmo_aligned[align_idx].detach())
         # elmo_orig_vec = np.asarray(elmo_orig[orig_idx].detach())
         # elmo_para_vec = np.asarray(elmo_para[para_idx].detach())
+        # only pull non variable words
         elmo_src_vec = elmo_src[src_idx]
         elmo_align_vec = elmo_aligned[align_idx]
         elmo_orig_vec = elmo_orig[orig_idx]

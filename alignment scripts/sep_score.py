@@ -99,6 +99,10 @@ elmo_orig_para_david = [x for x in scored_csv['elmo_orig_para_david'].tolist()]
 elmo_align_para_sim = [x for x in scored_csv['elmo_align_para_sim'].tolist()]
 elmo_align_para_dist = [x for x in scored_csv['elmo_align_para_dist'].tolist()]
 elmo_align_para_david = [x for x in scored_csv['elmo_align_para_david'].tolist()]
+ng_src_para = [x for x in scored_csv['ng_src_para'].tolist()]
+ng_src_orig = [x for x in scored_csv['ng_src_orig'].tolist()]
+ng_orig_para = [x for x in scored_csv['ng_orig_para'].tolist()]
+ng_align_para = [x for x in scored_csv['ng_align_para'].tolist()]
 src = [x for x in scored_csv['src'].tolist()]
 align = [x for x in scored_csv['align'].tolist()]
 para = [x for x in scored_csv['para'].tolist()]
@@ -139,9 +143,16 @@ metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize_and_invert(elmo_orig_para_david), 'elmo_orig_para_david'),
     (normalize(elmo_align_para_sim), 'elmo_align_para_sim'),
     (normalize_and_invert(elmo_align_para_dist), 'elmo_align_para_dist'),
-    (normalize_and_invert(elmo_align_para_david), 'elmo_align_para_david')]
+    (normalize_and_invert(elmo_align_para_david), 'elmo_align_para_david'),
+    (normalize(ng_src_para), 'ng_src_para'),
+    (normalize(ng_src_orig), 'ng_src_orig'),
+    (normalize(ng_orig_para), 'ng_orig_para'),
+    (normalize(ng_align_para), 'ng_align_para')]
+
 
 os.mkdir(newdir)
+
+pdb.set_trace()
 
 for values in metrics:
     scores = values[0]
