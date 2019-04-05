@@ -6,6 +6,7 @@ import h5py
 import numpy as np
 import gensim
 import pandas
+import kenlm
 import allennlp
 from allennlp.modules.elmo import Elmo, batch_to_ids
 
@@ -82,7 +83,19 @@ class Score:
             # pdb.set_trace()
         return newdata
 
-
+    def rebuild_dialogs(self, corrected):
+        dialog = 0
+        turn = 0
+        num_src = {}
+        for sent in [x.split('\t')[0] for x in corrected]:
+            turn += 1
+            if sent.startswith("#START"):
+                dialog += 1
+                turn = 0
+            if sent not in num_src:
+                num_src[sent] = []
+            num_src[sent].append([dialog - 1, turn - 1])
+        return num_src
 
 
     def elmo_word_diff(self, model, src, para, src_idx, para_idx):#, src_vec, para_vec):
@@ -126,6 +139,7 @@ class Score:
         # elmo_align_vec = np.asarray(elmo_aligned[align_idx].detach())
         # elmo_orig_vec = np.asarray(elmo_orig[orig_idx].detach())
         # elmo_para_vec = np.asarray(elmo_para[para_idx].detach())
+        # only pull non variable words
         elmo_src_vec = elmo_src[src_idx]
         elmo_align_vec = elmo_aligned[align_idx]
         elmo_orig_vec = elmo_orig[orig_idx]
@@ -228,6 +242,32 @@ class Score:
 
 s = Score()
 
+print("""
+    hacky arguments:
+    1 = w2v binary file
+    2 = glove text file in w2v format
+    3 = tsv to score
+    4 = original corrected.tsv (2016 VP data)
+        """)
+
+corrected = open(sys.argv[4], 'r').readlines()
+dialog_turn_nums = s.rebuild_dialogs(corrected)
+
+### W2V ###
+print("loading W2V vectors")
+# currently commented out for processing time
+w2v = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[1], binary=True)
+# w2v = gensim.models.KeyedVectors.load_word2vec_format('../data/vectors.300.bin', binary=True)
+# w2v = ''
+
+### GloVe ###
+print("loading GloVe vectors")
+# currently commented out for processing time
+glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=False)
+# glove = gensim.models.KeyedVectors.load_word2vec_format('../data/glove.6B.300d.txt.word2vec', binary=False)
+# glove = ''
+
+
 ### ELMO ###
 print("loading ELMo...")
 options_file = "../data/elmo_2x4096_512_2048cnn_2xhighway_options.json"
@@ -260,29 +300,17 @@ paras = [x.split() for x in swap_csv['para'].tolist()]
 # elmo_para = elmo(batch_to_ids(paras))['elmo_representations'][2]
 # mini-batched
 # TODO make 3rd arg, batch size, an option
+
+batch_size = 128
+
 print("Extracting ELMo rep for srcs")
-elmo_src = m.extract(srcs, 2, 16)
+elmo_src = m.extract(srcs, 2, batch_size)
 print("Extracting ELMo rep for aligns")
-elmo_align = m.extract(aligns, 2, 16)
+elmo_align = m.extract(aligns, 2, batch_size)
 print("Extracting ELMo rep for origs")
-elmo_orig = m.extract(origs, 2, 16)
+elmo_orig = m.extract(origs, 2, batch_size)
 print("Extracting ELMo rep for paras")
-elmo_para = m.extract(paras, 2, 16)
-
-
-### W2V ###
-print("loading W2V vectors")
-# currently commented out for processing time
-w2v = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[1], binary=True)
-# w2v = gensim.models.KeyedVectors.load_word2vec_format('../data/vectors.300.bin', binary=True)
-# w2v = ''
-
-### GloVe ###
-print("loading GloVe vectors")
-# currently commented out for processing time
-glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=False)
-# glove = gensim.models.KeyedVectors.load_word2vec_format('../data/glove.6B.300d.txt.word2vec', binary=False)
-# glove = ''
+elmo_para = m.extract(paras, 2, batch_size)
 
 
 # TODO make this an option or get logging to a different file
@@ -290,7 +318,9 @@ outfile = open('scored.tsv', 'w')
 
 header = swap_txt[0].strip().split('\t')
 
-header = ['glove_src_para_sim',
+header = ['dialog',
+            'turn',
+            'glove_src_para_sim',
             'glove_src_para_dist',
             'glove_src_para_david',
             'glove_src_orig_sim',
@@ -331,9 +361,15 @@ outfile.write('\t'.join(header) + '\n')
 
 
 line_nmr = 0
+missing = 0
+total = 0
+
+lost = []
+
 # TODO add sanity check to make sure lengths are all correct
 # TODO figure out how to get Pandas to output something I can iterate through
 for line in swap_txt[1:]:
+    total += 1
     line = line.lower()
     # w2v_sim, glove_sim, elmo_sim, w2v_dist, glove_dist, elmo_dist, w2v_david, glove_david, elmo_david = s.score(line, w2v, glove, elmo_src[str(line_nmr)], elmo_para[str(line_nmr)])
     sims = s.score(line, w2v, glove,
@@ -344,10 +380,22 @@ for line in swap_txt[1:]:
     # print('sims', sims)
     # print('line', line)
     # print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
-    outfile.write('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+    original = line.split('\t')[5]
+    if original in dialog_turn_nums:
+        for nums in dialog_turn_nums[original]:
+            dial_num = nums[0]
+            turn_num = nums[1]
+            outline = '\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n'
+            if 'nan nan' in outline:
+                pdb.set_trace()
+            else:
+                outfile.write(outline)
+    else:
+        lost.append('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+        missing += 1
     line_nmr += 1
 
-
+print("missing", missing, "of", total)
 
 
 
