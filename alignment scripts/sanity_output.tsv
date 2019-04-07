@@ -1,116 +1,200 @@
-> /home/david/bin/git/genpara/alignment scripts/score_noclass.py(196)<module>()
--> tupes.reverse()
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) --KeyboardInterrupt--
-(Pdb) 
+metric:	glove_src_para_sim	block:	1	prec:	0.29333333333333333	rec:	0.08494208494208494	f1:	0.1317365269461078
+metric:	glove_src_para_sim	block:	2	prec:	0.5570469798657718	rec:	0.3204633204633205	f1:	0.40686274509803927
+metric:	glove_src_para_sim	block:	3	prec:	0.452914798206278	rec:	0.38996138996138996	f1:	0.4190871369294606
+metric:	glove_src_para_sim	block:	4	prec:	0.39730639730639733	rec:	0.4555984555984556	f1:	0.4244604316546763
+metric:	glove_src_para_sim	block:	5	prec:	0.3881401617250674	rec:	0.555984555984556	f1:	0.4571428571428572
+metric:	glove_src_para_dist	block:	1	prec:	0.3333333333333333	rec:	0.09652509652509653	f1:	0.14970059880239522
+metric:	glove_src_para_dist	block:	2	prec:	0.2348993288590604	rec:	0.13513513513513514	f1:	0.1715686274509804
+metric:	glove_src_para_dist	block:	3	prec:	0.2600896860986547	rec:	0.22393822393822393	f1:	0.24066390041493774
+metric:	glove_src_para_dist	block:	4	prec:	0.3063973063973064	rec:	0.35135135135135137	f1:	0.3273381294964029
+metric:	glove_src_para_dist	block:	5	prec:	0.31536388140161725	rec:	0.4517374517374517	f1:	0.37142857142857144
+metric:	glove_src_para_david	block:	1	prec:	0.29333333333333333	rec:	0.08494208494208494	f1:	0.1317365269461078
+metric:	glove_src_para_david	block:	2	prec:	0.2684563758389262	rec:	0.15444015444015444	f1:	0.19607843137254902
+metric:	glove_src_para_david	block:	3	prec:	0.26905829596412556	rec:	0.23166023166023167	f1:	0.24896265560165978
+metric:	glove_src_para_david	block:	4	prec:	0.3164983164983165	rec:	0.36293436293436293	f1:	0.33812949640287765
+metric:	glove_src_para_david	block:	5	prec:	0.30727762803234504	rec:	0.44015444015444016	f1:	0.36190476190476195
+metric:	glove_src_orig_sim	block:	1	prec:	0.5866666666666667	rec:	0.16988416988416988	f1:	0.2634730538922156
+metric:	glove_src_orig_sim	block:	2	prec:	0.5503355704697986	rec:	0.3166023166023166	f1:	0.4019607843137255
+metric:	glove_src_orig_sim	block:	3	prec:	0.4260089686098655	rec:	0.3667953667953668	f1:	0.39419087136929454
+metric:	glove_src_orig_sim	block:	4	prec:	0.40404040404040403	rec:	0.46332046332046334	f1:	0.4316546762589928
+metric:	glove_src_orig_sim	block:	5	prec:	0.37735849056603776	rec:	0.5405405405405406	f1:	0.4444444444444445
+metric:	glove_src_orig_dist	block:	1	prec:	0.30666666666666664	rec:	0.0888030888030888	f1:	0.1377245508982036
+metric:	glove_src_orig_dist	block:	2	prec:	0.28187919463087246	rec:	0.16216216216216217	f1:	0.20588235294117646
+metric:	glove_src_orig_dist	block:	3	prec:	0.29596412556053814	rec:	0.2548262548262548	f1:	0.27385892116182575
+metric:	glove_src_orig_dist	block:	4	prec:	0.3265993265993266	rec:	0.3745173745173745	f1:	0.3489208633093525
+metric:	glove_src_orig_dist	block:	5	prec:	0.31536388140161725	rec:	0.4517374517374517	f1:	0.37142857142857144
+metric:	glove_src_orig_david	block:	1	prec:	0.32	rec:	0.09266409266409266	f1:	0.1437125748502994
+metric:	glove_src_orig_david	block:	2	prec:	0.2684563758389262	rec:	0.15444015444015444	f1:	0.19607843137254902
+metric:	glove_src_orig_david	block:	3	prec:	0.30493273542600896	rec:	0.2625482625482625	f1:	0.2821576763485477
+metric:	glove_src_orig_david	block:	4	prec:	0.3265993265993266	rec:	0.3745173745173745	f1:	0.3489208633093525
+metric:	glove_src_orig_david	block:	5	prec:	0.32075471698113206	rec:	0.4594594594594595	f1:	0.37777777777777777
+metric:	glove_orig_para_sim	block:	1	prec:	0.41333333333333333	rec:	0.11969111969111969	f1:	0.18562874251497005
+metric:	glove_orig_para_sim	block:	2	prec:	0.3422818791946309	rec:	0.1969111969111969	f1:	0.25
+metric:	glove_orig_para_sim	block:	3	prec:	0.336322869955157	rec:	0.28957528957528955	f1:	0.3112033195020747
+metric:	glove_orig_para_sim	block:	4	prec:	0.3333333333333333	rec:	0.38223938223938225	f1:	0.356115107913669
+metric:	glove_orig_para_sim	block:	5	prec:	0.30727762803234504	rec:	0.44015444015444016	f1:	0.36190476190476195
+metric:	glove_orig_para_dist	block:	1	prec:	0.14666666666666667	rec:	0.04247104247104247	f1:	0.0658682634730539
+metric:	glove_orig_para_dist	block:	2	prec:	0.2751677852348993	rec:	0.1583011583011583	f1:	0.20098039215686275
+metric:	glove_orig_para_dist	block:	3	prec:	0.43946188340807174	rec:	0.3783783783783784	f1:	0.40663900414937754
+metric:	glove_orig_para_dist	block:	4	prec:	0.3939393939393939	rec:	0.4517374517374517	f1:	0.420863309352518
+metric:	glove_orig_para_dist	block:	5	prec:	0.38274932614555257	rec:	0.5482625482625483	f1:	0.4507936507936508
+metric:	glove_orig_para_david	block:	1	prec:	0.21333333333333335	rec:	0.06177606177606178	f1:	0.09580838323353294
+metric:	glove_orig_para_david	block:	2	prec:	0.2483221476510067	rec:	0.14285714285714285	f1:	0.18137254901960784
+metric:	glove_orig_para_david	block:	3	prec:	0.4125560538116592	rec:	0.3552123552123552	f1:	0.38174273858921165
+metric:	glove_orig_para_david	block:	4	prec:	0.4107744107744108	rec:	0.47104247104247104	f1:	0.43884892086330934
+metric:	glove_orig_para_david	block:	5	prec:	0.3908355795148248	rec:	0.5598455598455598	f1:	0.46031746031746024
+metric:	glove_align_para_sim	block:	1	prec:	0.4666666666666667	rec:	0.13513513513513514	f1:	0.2095808383233533
+metric:	glove_align_para_sim	block:	2	prec:	0.5033557046979866	rec:	0.28957528957528955	f1:	0.3676470588235294
+metric:	glove_align_para_sim	block:	3	prec:	0.4349775784753363	rec:	0.3745173745173745	f1:	0.40248962655601656
+metric:	glove_align_para_sim	block:	4	prec:	0.4175084175084175	rec:	0.47876447876447875	f1:	0.44604316546762585
+metric:	glove_align_para_sim	block:	5	prec:	0.39892183288409705	rec:	0.5714285714285714	f1:	0.46984126984126984
+metric:	glove_align_para_dist	block:	1	prec:	0.14666666666666667	rec:	0.04247104247104247	f1:	0.0658682634730539
+metric:	glove_align_para_dist	block:	2	prec:	0.1476510067114094	rec:	0.08494208494208494	f1:	0.10784313725490195
+metric:	glove_align_para_dist	block:	3	prec:	0.28699551569506726	rec:	0.2471042471042471	f1:	0.26556016597510373
+metric:	glove_align_para_dist	block:	4	prec:	0.30976430976430974	rec:	0.3552123552123552	f1:	0.33093525179856115
+metric:	glove_align_para_dist	block:	5	prec:	0.29110512129380056	rec:	0.416988416988417	f1:	0.34285714285714286
+metric:	glove_align_para_david	block:	1	prec:	0.21333333333333335	rec:	0.06177606177606178	f1:	0.09580838323353294
+metric:	glove_align_para_david	block:	2	prec:	0.16778523489932887	rec:	0.09652509652509653	f1:	0.12254901960784315
+metric:	glove_align_para_david	block:	3	prec:	0.25112107623318386	rec:	0.21621621621621623	f1:	0.23236514522821577
+metric:	glove_align_para_david	block:	4	prec:	0.3063973063973064	rec:	0.35135135135135137	f1:	0.3273381294964029
+metric:	glove_align_para_david	block:	5	prec:	0.30727762803234504	rec:	0.44015444015444016	f1:	0.36190476190476195
+metric:	w2v_src_para_sim	block:	1	prec:	0.30666666666666664	rec:	0.0888030888030888	f1:	0.1377245508982036
+metric:	w2v_src_para_sim	block:	2	prec:	0.5234899328859061	rec:	0.30115830115830117	f1:	0.3823529411764707
+metric:	w2v_src_para_sim	block:	3	prec:	0.43946188340807174	rec:	0.3783783783783784	f1:	0.40663900414937754
+metric:	w2v_src_para_sim	block:	4	prec:	0.3872053872053872	rec:	0.444015444015444	f1:	0.4136690647482014
+metric:	w2v_src_para_sim	block:	5	prec:	0.3611859838274933	rec:	0.5173745173745173	f1:	0.4253968253968254
+metric:	w2v_src_para_dist	block:	1	prec:	0.37333333333333335	rec:	0.10810810810810811	f1:	0.16766467065868265
+metric:	w2v_src_para_dist	block:	2	prec:	0.28187919463087246	rec:	0.16216216216216217	f1:	0.20588235294117646
+metric:	w2v_src_para_dist	block:	3	prec:	0.3183856502242152	rec:	0.27413127413127414	f1:	0.2946058091286307
+metric:	w2v_src_para_dist	block:	4	prec:	0.32996632996632996	rec:	0.3783783783783784	f1:	0.3525179856115108
+metric:	w2v_src_para_dist	block:	5	prec:	0.3045822102425876	rec:	0.4362934362934363	f1:	0.35873015873015873
+metric:	w2v_src_para_david	block:	1	prec:	0.38666666666666666	rec:	0.11196911196911197	f1:	0.17365269461077845
+metric:	w2v_src_para_david	block:	2	prec:	0.28187919463087246	rec:	0.16216216216216217	f1:	0.20588235294117646
+metric:	w2v_src_para_david	block:	3	prec:	0.3094170403587444	rec:	0.26640926640926643	f1:	0.28630705394190875
+metric:	w2v_src_para_david	block:	4	prec:	0.31986531986531985	rec:	0.3667953667953668	f1:	0.34172661870503596
+metric:	w2v_src_para_david	block:	5	prec:	0.33423180592991913	rec:	0.47876447876447875	f1:	0.39365079365079364
+metric:	w2v_src_orig_sim	block:	1	prec:	0.5866666666666667	rec:	0.16988416988416988	f1:	0.2634730538922156
+metric:	w2v_src_orig_sim	block:	2	prec:	0.5503355704697986	rec:	0.3166023166023166	f1:	0.4019607843137255
+metric:	w2v_src_orig_sim	block:	3	prec:	0.4260089686098655	rec:	0.3667953667953668	f1:	0.39419087136929454
+metric:	w2v_src_orig_sim	block:	4	prec:	0.39730639730639733	rec:	0.4555984555984556	f1:	0.4244604316546763
+metric:	w2v_src_orig_sim	block:	5	prec:	0.3611859838274933	rec:	0.5173745173745173	f1:	0.4253968253968254
+metric:	w2v_src_orig_dist	block:	1	prec:	0.21333333333333335	rec:	0.06177606177606178	f1:	0.09580838323353294
+metric:	w2v_src_orig_dist	block:	2	prec:	0.3624161073825503	rec:	0.2084942084942085	f1:	0.2647058823529412
+metric:	w2v_src_orig_dist	block:	3	prec:	0.3542600896860987	rec:	0.305019305019305	f1:	0.32780082987551873
+metric:	w2v_src_orig_dist	block:	4	prec:	0.3367003367003367	rec:	0.3861003861003861	f1:	0.3597122302158273
+metric:	w2v_src_orig_dist	block:	5	prec:	0.33423180592991913	rec:	0.47876447876447875	f1:	0.39365079365079364
+metric:	w2v_src_orig_david	block:	1	prec:	0.37333333333333335	rec:	0.10810810810810811	f1:	0.16766467065868265
+metric:	w2v_src_orig_david	block:	2	prec:	0.2751677852348993	rec:	0.1583011583011583	f1:	0.20098039215686275
+metric:	w2v_src_orig_david	block:	3	prec:	0.3273542600896861	rec:	0.28185328185328185	f1:	0.30290456431535273
+metric:	w2v_src_orig_david	block:	4	prec:	0.3400673400673401	rec:	0.38996138996138996	f1:	0.36330935251798563
+metric:	w2v_src_orig_david	block:	5	prec:	0.33962264150943394	rec:	0.4864864864864865	f1:	0.39999999999999997
+metric:	w2v_orig_para_sim	block:	1	prec:	0.3466666666666667	rec:	0.10038610038610038	f1:	0.155688622754491
+metric:	w2v_orig_para_sim	block:	2	prec:	0.31543624161073824	rec:	0.18146718146718147	f1:	0.23039215686274508
+metric:	w2v_orig_para_sim	block:	3	prec:	0.3542600896860987	rec:	0.305019305019305	f1:	0.32780082987551873
+metric:	w2v_orig_para_sim	block:	4	prec:	0.36363636363636365	rec:	0.416988416988417	f1:	0.38848920863309355
+metric:	w2v_orig_para_sim	block:	5	prec:	0.3288409703504043	rec:	0.47104247104247104	f1:	0.3873015873015873
+metric:	w2v_orig_para_dist	block:	1	prec:	0.4	rec:	0.11583011583011583	f1:	0.17964071856287425
+metric:	w2v_orig_para_dist	block:	2	prec:	0.5167785234899329	rec:	0.2972972972972973	f1:	0.37745098039215685
+metric:	w2v_orig_para_dist	block:	3	prec:	0.3811659192825112	rec:	0.3281853281853282	f1:	0.35269709543568467
+metric:	w2v_orig_para_dist	block:	4	prec:	0.37373737373737376	rec:	0.42857142857142855	f1:	0.3992805755395683
+metric:	w2v_orig_para_dist	block:	5	prec:	0.3584905660377358	rec:	0.5135135135135135	f1:	0.42222222222222217
+metric:	w2v_orig_para_david	block:	1	prec:	0.5466666666666666	rec:	0.1583011583011583	f1:	0.2455089820359281
+metric:	w2v_orig_para_david	block:	2	prec:	0.4899328859060403	rec:	0.28185328185328185	f1:	0.35784313725490197
+metric:	w2v_orig_para_david	block:	3	prec:	0.3991031390134529	rec:	0.3436293436293436	f1:	0.36929460580912854
+metric:	w2v_orig_para_david	block:	4	prec:	0.3569023569023569	rec:	0.4092664092664093	f1:	0.38129496402877694
+metric:	w2v_orig_para_david	block:	5	prec:	0.3692722371967655	rec:	0.528957528957529	f1:	0.43492063492063493
+metric:	w2v_align_para_sim	block:	1	prec:	0.5866666666666667	rec:	0.16988416988416988	f1:	0.2634730538922156
+metric:	w2v_align_para_sim	block:	2	prec:	0.5033557046979866	rec:	0.28957528957528955	f1:	0.3676470588235294
+metric:	w2v_align_para_sim	block:	3	prec:	0.45739910313901344	rec:	0.3938223938223938	f1:	0.42323651452282157
+metric:	w2v_align_para_sim	block:	4	prec:	0.4276094276094276	rec:	0.49034749034749037	f1:	0.4568345323741007
+metric:	w2v_align_para_sim	block:	5	prec:	0.3908355795148248	rec:	0.5598455598455598	f1:	0.46031746031746024
+metric:	w2v_align_para_dist	block:	1	prec:	0.09333333333333334	rec:	0.02702702702702703	f1:	0.04191616766467066
+metric:	w2v_align_para_dist	block:	2	prec:	0.1476510067114094	rec:	0.08494208494208494	f1:	0.10784313725490195
+metric:	w2v_align_para_dist	block:	3	prec:	0.24663677130044842	rec:	0.21235521235521235	f1:	0.22821576763485477
+metric:	w2v_align_para_dist	block:	4	prec:	0.29292929292929293	rec:	0.3359073359073359	f1:	0.3129496402877698
+metric:	w2v_align_para_dist	block:	5	prec:	0.2884097035040431	rec:	0.41312741312741313	f1:	0.33968253968253964
+metric:	w2v_align_para_david	block:	1	prec:	0.12	rec:	0.03474903474903475	f1:	0.05389221556886228
+metric:	w2v_align_para_david	block:	2	prec:	0.15436241610738255	rec:	0.0888030888030888	f1:	0.1127450980392157
+metric:	w2v_align_para_david	block:	3	prec:	0.23318385650224216	rec:	0.20077220077220076	f1:	0.21576763485477177
+metric:	w2v_align_para_david	block:	4	prec:	0.2962962962962963	rec:	0.33976833976833976	f1:	0.31654676258992803
+metric:	w2v_align_para_david	block:	5	prec:	0.3045822102425876	rec:	0.4362934362934363	f1:	0.35873015873015873
+metric:	elmo_src_para_sim	block:	1	prec:	0.3333333333333333	rec:	0.09652509652509653	f1:	0.14970059880239522
+metric:	elmo_src_para_sim	block:	2	prec:	0.47651006711409394	rec:	0.27413127413127414	f1:	0.3480392156862745
+metric:	elmo_src_para_sim	block:	3	prec:	0.4663677130044843	rec:	0.4015444015444015	f1:	0.43153526970954353
+metric:	elmo_src_para_sim	block:	4	prec:	0.4107744107744108	rec:	0.47104247104247104	f1:	0.43884892086330934
+metric:	elmo_src_para_sim	block:	5	prec:	0.38005390835579517	rec:	0.5444015444015444	f1:	0.4476190476190476
+metric:	elmo_src_para_dist	block:	1	prec:	0.28	rec:	0.08108108108108109	f1:	0.125748502994012
+metric:	elmo_src_para_dist	block:	2	prec:	0.2348993288590604	rec:	0.13513513513513514	f1:	0.1715686274509804
+metric:	elmo_src_para_dist	block:	3	prec:	0.242152466367713	rec:	0.2084942084942085	f1:	0.22406639004149378
+metric:	elmo_src_para_dist	block:	4	prec:	0.2996632996632997	rec:	0.3436293436293436	f1:	0.3201438848920863
+metric:	elmo_src_para_dist	block:	5	prec:	0.2991913746630728	rec:	0.42857142857142855	f1:	0.35238095238095235
+metric:	elmo_src_para_david	block:	1	prec:	0.26666666666666666	rec:	0.07722007722007722	f1:	0.11976047904191615
+metric:	elmo_src_para_david	block:	2	prec:	0.28859060402684567	rec:	0.16602316602316602	f1:	0.2107843137254902
+metric:	elmo_src_para_david	block:	3	prec:	0.2914798206278027	rec:	0.25096525096525096	f1:	0.2697095435684647
+metric:	elmo_src_para_david	block:	4	prec:	0.30303030303030304	rec:	0.3474903474903475	f1:	0.3237410071942446
+metric:	elmo_src_para_david	block:	5	prec:	0.3018867924528302	rec:	0.43243243243243246	f1:	0.3555555555555556
+metric:	elmo_src_orig_sim	block:	1	prec:	0.3466666666666667	rec:	0.10038610038610038	f1:	0.155688622754491
+metric:	elmo_src_orig_sim	block:	2	prec:	0.3221476510067114	rec:	0.18532818532818532	f1:	0.23529411764705882
+metric:	elmo_src_orig_sim	block:	3	prec:	0.28699551569506726	rec:	0.2471042471042471	f1:	0.26556016597510373
+metric:	elmo_src_orig_sim	block:	4	prec:	0.26936026936026936	rec:	0.3088803088803089	f1:	0.28776978417266186
+metric:	elmo_src_orig_sim	block:	5	prec:	0.2668463611859838	rec:	0.38223938223938225	f1:	0.3142857142857143
+metric:	elmo_src_orig_dist	block:	1	prec:	0.49333333333333335	rec:	0.14285714285714285	f1:	0.22155688622754488
+metric:	elmo_src_orig_dist	block:	2	prec:	0.5369127516778524	rec:	0.3088803088803089	f1:	0.39215686274509803
+metric:	elmo_src_orig_dist	block:	3	prec:	0.4798206278026906	rec:	0.41312741312741313	f1:	0.4439834024896266
+metric:	elmo_src_orig_dist	block:	4	prec:	0.4478114478114478	rec:	0.5135135135135135	f1:	0.4784172661870504
+metric:	elmo_src_orig_dist	block:	5	prec:	0.40700808625336926	rec:	0.583011583011583	f1:	0.4793650793650793
+metric:	elmo_src_orig_david	block:	1	prec:	0.56	rec:	0.16216216216216217	f1:	0.251497005988024
+metric:	elmo_src_orig_david	block:	2	prec:	0.5369127516778524	rec:	0.3088803088803089	f1:	0.39215686274509803
+metric:	elmo_src_orig_david	block:	3	prec:	0.4663677130044843	rec:	0.4015444015444015	f1:	0.43153526970954353
+metric:	elmo_src_orig_david	block:	4	prec:	0.42424242424242425	rec:	0.4864864864864865	f1:	0.45323741007194246
+metric:	elmo_src_orig_david	block:	5	prec:	0.41778975741239893	rec:	0.5984555984555985	f1:	0.4920634920634921
+metric:	elmo_orig_para_sim	block:	1	prec:	0.24	rec:	0.0694980694980695	f1:	0.10778443113772455
+metric:	elmo_orig_para_sim	block:	2	prec:	0.2550335570469799	rec:	0.14671814671814673	f1:	0.1862745098039216
+metric:	elmo_orig_para_sim	block:	3	prec:	0.26905829596412556	rec:	0.23166023166023167	f1:	0.24896265560165978
+metric:	elmo_orig_para_sim	block:	4	prec:	0.29292929292929293	rec:	0.3359073359073359	f1:	0.3129496402877698
+metric:	elmo_orig_para_sim	block:	5	prec:	0.29110512129380056	rec:	0.416988416988417	f1:	0.34285714285714286
+metric:	elmo_orig_para_dist	block:	1	prec:	0.6933333333333334	rec:	0.20077220077220076	f1:	0.311377245508982
+metric:	elmo_orig_para_dist	block:	2	prec:	0.5906040268456376	rec:	0.33976833976833976	f1:	0.4313725490196078
+metric:	elmo_orig_para_dist	block:	3	prec:	0.47533632286995514	rec:	0.4092664092664093	f1:	0.43983402489626555
+metric:	elmo_orig_para_dist	block:	4	prec:	0.42424242424242425	rec:	0.4864864864864865	f1:	0.45323741007194246
+metric:	elmo_orig_para_dist	block:	5	prec:	0.39892183288409705	rec:	0.5714285714285714	f1:	0.46984126984126984
+metric:	elmo_orig_para_david	block:	1	prec:	0.7733333333333333	rec:	0.22393822393822393	f1:	0.3473053892215569
+metric:	elmo_orig_para_david	block:	2	prec:	0.6174496644295302	rec:	0.3552123552123552	f1:	0.4509803921568628
+metric:	elmo_orig_para_david	block:	3	prec:	0.49327354260089684	rec:	0.4247104247104247	f1:	0.45643153526970953
+metric:	elmo_orig_para_david	block:	4	prec:	0.4377104377104377	rec:	0.5019305019305019	f1:	0.4676258992805755
+metric:	elmo_orig_para_david	block:	5	prec:	0.3935309973045822	rec:	0.5637065637065637	f1:	0.46349206349206346
+metric:	elmo_align_para_sim	block:	1	prec:	0.38666666666666666	rec:	0.11196911196911197	f1:	0.17365269461077845
+metric:	elmo_align_para_sim	block:	2	prec:	0.44966442953020136	rec:	0.25868725868725867	f1:	0.32843137254901955
+metric:	elmo_align_para_sim	block:	3	prec:	0.45739910313901344	rec:	0.3938223938223938	f1:	0.42323651452282157
+metric:	elmo_align_para_sim	block:	4	prec:	0.43097643097643096	rec:	0.4942084942084942	f1:	0.460431654676259
+metric:	elmo_align_para_sim	block:	5	prec:	0.4123989218328841	rec:	0.5907335907335908	f1:	0.4857142857142857
+metric:	elmo_align_para_dist	block:	1	prec:	0.17333333333333334	rec:	0.05019305019305019	f1:	0.0778443113772455
+metric:	elmo_align_para_dist	block:	2	prec:	0.18791946308724833	rec:	0.10810810810810811	f1:	0.13725490196078433
+metric:	elmo_align_para_dist	block:	3	prec:	0.242152466367713	rec:	0.2084942084942085	f1:	0.22406639004149378
+metric:	elmo_align_para_dist	block:	4	prec:	0.2962962962962963	rec:	0.33976833976833976	f1:	0.31654676258992803
+metric:	elmo_align_para_dist	block:	5	prec:	0.3045822102425876	rec:	0.4362934362934363	f1:	0.35873015873015873
+metric:	elmo_align_para_david	block:	1	prec:	0.2	rec:	0.05791505791505792	f1:	0.08982035928143713
+metric:	elmo_align_para_david	block:	2	prec:	0.19463087248322147	rec:	0.11196911196911197	f1:	0.14215686274509803
+metric:	elmo_align_para_david	block:	3	prec:	0.21524663677130046	rec:	0.18532818532818532	f1:	0.19917012448132776
+metric:	elmo_align_para_david	block:	4	prec:	0.26262626262626265	rec:	0.30115830115830117	f1:	0.28057553956834536
+metric:	elmo_align_para_david	block:	5	prec:	0.30727762803234504	rec:	0.44015444015444016	f1:	0.36190476190476195
+metric:	ng_src_para	block:	1	prec:	0.4	rec:	0.11583011583011583	f1:	0.17964071856287425
+metric:	ng_src_para	block:	2	prec:	0.40939597315436244	rec:	0.23552123552123552	f1:	0.29901960784313725
+metric:	ng_src_para	block:	3	prec:	0.3721973094170404	rec:	0.3204633204633205	f1:	0.3443983402489627
+metric:	ng_src_para	block:	4	prec:	0.31313131313131315	rec:	0.3590733590733591	f1:	0.33453237410071945
+metric:	ng_src_para	block:	5	prec:	0.3045822102425876	rec:	0.4362934362934363	f1:	0.35873015873015873
+metric:	ng_src_orig	block:	1	prec:	0.22666666666666666	rec:	0.06563706563706563	f1:	0.10179640718562874
+metric:	ng_src_orig	block:	2	prec:	0.28187919463087246	rec:	0.16216216216216217	f1:	0.20588235294117646
+metric:	ng_src_orig	block:	3	prec:	0.336322869955157	rec:	0.28957528957528955	f1:	0.3112033195020747
+metric:	ng_src_orig	block:	4	prec:	0.3838383838383838	rec:	0.44015444015444016	f1:	0.4100719424460431
+metric:	ng_src_orig	block:	5	prec:	0.31536388140161725	rec:	0.4517374517374517	f1:	0.37142857142857144
+metric:	ng_orig_para	block:	1	prec:	0.3333333333333333	rec:	0.09652509652509653	f1:	0.14970059880239522
+metric:	ng_orig_para	block:	2	prec:	0.42953020134228187	rec:	0.2471042471042471	f1:	0.3137254901960784
+metric:	ng_orig_para	block:	3	prec:	0.3721973094170404	rec:	0.3204633204633205	f1:	0.3443983402489627
+metric:	ng_orig_para	block:	4	prec:	0.32996632996632996	rec:	0.3783783783783784	f1:	0.3525179856115108
+metric:	ng_orig_para	block:	5	prec:	0.3261455525606469	rec:	0.4671814671814672	f1:	0.38412698412698415
+metric:	ng_align_para	block:	1	prec:	0.06666666666666667	rec:	0.019305019305019305	f1:	0.02994011976047904
+metric:	ng_align_para	block:	2	prec:	0.10067114093959731	rec:	0.05791505791505792	f1:	0.07352941176470588
+metric:	ng_align_para	block:	3	prec:	0.14349775784753363	rec:	0.12355212355212356	f1:	0.13278008298755187
+metric:	ng_align_para	block:	4	prec:	0.18518518518518517	rec:	0.21235521235521235	f1:	0.19784172661870503
+metric:	ng_align_para	block:	5	prec:	0.1940700808625337	rec:	0.277992277992278	f1:	0.2285714285714286
