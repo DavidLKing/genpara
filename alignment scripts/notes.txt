@@ -1,0 +1,7 @@
+For sanity
+	./score.local.py ../data/GoogleNews-vectors-negative300.bin ../data/glove.6B.300d.txt.word2vec ../data/lexsub.tsv ../data/corrected.tsv ../data/gigaword4.5g.kenlm.bin
+	./normalize.py scored.tsv  testing
+	%s/\t/ /g *.tsvs
+	cat anno tsv > feats
+	cat *.feats | sort -R > maxent.feats
+	then run score_ablation.ipynb
