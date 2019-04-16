@@ -28,13 +28,22 @@ all = subset(sane, percent == 100)
 # plot(x=tens$metric, y=tens$prec)
 
 graphprec <- function(dataset, title){
-  ggplot(data=dataset, aes(x=reorder(metric, -prec),y=prec)) +
+  # ggplot(data=dataset, aes(x=reorder(metric, -prec),y=prec)) +
+  ggplot(data=dataset, aes(x=metric,y=prec)) +
     ggtitle(title) +
     geom_point() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }
 graphrec <- function(dataset, title){
-  ggplot(data=dataset, aes(x=reorder(metric, -rec),y=rec)) +
+  # ggplot(data=dataset, aes(x=reorder(metric, -rec),y=rec)) +
+  ggplot(data=dataset, aes(x=metric,y=rec)) +
+    ggtitle(title) +
+    geom_point() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+}
+graphavg <- function(dataset, title){
+  # ggplot(data=dataset, aes(x=reorder(metric, -AveP),y=AveP)) +
+  ggplot(data=dataset, aes(x=metric,y=AveP)) +
     ggtitle(title) +
     geom_point() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -64,5 +73,16 @@ graphrec(seventy, "Recall at 70%")
 graphrec(eighty, "Recall at 80%")
 graphrec(ninety, "Recall at 90%")
 graphrec(all, "Recall at 100%")
+
+graphrec(tens, "AvgP at 10%")
+graphrec(twenties, "AvgP at 20%")
+graphrec(thirties, "AvgP at 30%")
+graphrec(forties, "AvgP at 40%")
+graphrec(fifties, "AvgP at 50%")
+graphrec(sixty, "AvgP at 60%")
+graphrec(seventy, "AvgP at 70%")
+graphrec(eighty, "AvgP at 80%")
+graphrec(ninety, "AvgP at 90%")
+graphrec(all, "AvgP at 100%")
 
 dev.off()

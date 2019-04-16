@@ -6,7 +6,7 @@
 
 import subprocess
 import pdb
-
+from sklearn.metrics import average_precision_score
 
 # In[2]:
 
@@ -153,10 +153,10 @@ metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize(elmo_align_para_sim), 'elmo_align_para_sim'),
     (normalize_and_invert(elmo_align_para_dist), 'elmo_align_para_dist'),
     (normalize_and_invert(elmo_align_para_joint), 'elmo_align_para_joint'),
-    (normalize(ng_src_para), 'ng_src_para'),
-    (normalize(ng_src_orig), 'ng_src_orig'),
-    (normalize(ng_orig_para), 'ng_orig_para'),
-    (normalize(ng_align_para), 'ng_align_para')]
+    (normalize_and_invert(ng_src_para), 'ng_src_para'),
+    (normalize_and_invert(ng_src_orig), 'ng_src_orig'),
+    (normalize_and_invert(ng_orig_para), 'ng_orig_para'),
+    (normalize_and_invert(ng_align_para), 'ng_align_para')]
 
 
 def prec(data):
@@ -185,7 +185,7 @@ def rec(data, denom):
 def f1(prec, rec):
     return 2 * ( (prec * rec) / (prec + rec) )
 
-header = ["metric", "percent", "prec", "rec", "f1"]
+header = ["metric", "percent", "prec", "rec", "f1", "AveP", "MAP"]
 print('\t'.join(header))
 for met in metrics:
     tupes = []
@@ -205,11 +205,17 @@ for met in metrics:
         precision = prec(tupes[0:upto])
         recall = rec(tupes[0:upto], rec_denom)
         f1_score = f1(precision, recall)
-        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score)]))
+        scores = [x[1] for x in tupes[0:upto]]
+        annos = [int(x[0]) for x in tupes[0:upto]]
+        # pdb.set_trace()
+        aveP = average_precision_score(annos, scores)
+        meanAvg = aveP / (upto - 1)
+        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP), str(meanAvg)]))
     # final block
     precision = prec(tupes)
     recall = rec(tupes, rec_denom)
     f1_score = f1(precision, recall)
-    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score)]))
+    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score), str(aveP), str(meanAvg)]))
+
 
 
