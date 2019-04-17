@@ -6,7 +6,6 @@ library(ggplot2)
 
 setwd("~/bin/git/genpara/alignment scripts")
 sane = read.csv('sanity_output.tsv', header = TRUE, sep = '\t')
-# sane = read.csv('genpara.maxent.nobias.tsv.csv', header = FALSE, sep = ' ')
 
 # EXAMPLE OF HOW TO ORDER
 # test[order(test$sane.glove_src_para_sim),]
