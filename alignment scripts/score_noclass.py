@@ -185,6 +185,31 @@ def rec(data, denom):
 def f1(prec, rec):
     return 2 * ( (prec * rec) / (prec + rec) )
 
+def get_map(annos):
+    aps = []
+    for idx in range(len(annos)):
+        correct = []
+        correct_denom = 0
+        for denoms in range(idx + 1):
+            if annos[denoms] == 0:
+                ap = 0.0
+            else:
+                ap = sum(annos[0: denoms + 1]) / (denoms + 1)
+                correct_denom += 1
+            correct.append(ap)
+            # print('idx', idx, 'denoms', denoms)
+            # print("adding", annos[0: denoms + 1], '/', denoms + 1)
+            # print('ap', ap)
+            # print('correct', correct)
+            # print('aps', aps)
+        if correct_denom == 0:
+            assert(sum(correct) == 0)
+            aps.append(0.0)
+        else:
+            aps.append(sum(correct) / correct_denom)
+    meanap = sum(aps) / len(annos)
+    return meanap
+
 header = ["metric", "percent", "prec", "rec", "f1", "AveP", "MAP"]
 print('\t'.join(header))
 for met in metrics:
@@ -209,7 +234,8 @@ for met in metrics:
         annos = [int(x[0]) for x in tupes[0:upto]]
         # pdb.set_trace()
         aveP = average_precision_score(annos, scores)
-        meanAvg = aveP / (upto - 1)
+        # othermap = aveP / len(annos)
+        meanAvg = get_map(annos)
         print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP), str(meanAvg)]))
     # final block
     precision = prec(tupes)
