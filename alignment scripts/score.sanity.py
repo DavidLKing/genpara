@@ -54,9 +54,9 @@ class Score:
         for word in sent:
             if word in range(len(model)):
                 vecs.append(model[word])
-        if vecs == []:
-            print('vecs = []')
-            pdb.set_trace()
+        # if vecs == []:
+        #     print('vecs = []')
+        #     pdb.set_trace()
         # print(sent)
         # pdb.set_trace()
         mean = np.mean(np.asarray(vecs), axis=0)
@@ -98,6 +98,7 @@ class Score:
         for word in word_list:
                 try:
                     idxs.append(sent.index(word))
+                    # idxs.append(sent.index(word) + 1)
                 except:
                     print('word', word)
                     print('sent', sent)
@@ -111,6 +112,7 @@ class Score:
             if word not in word_list:
                 try:
                     idxs.append(sent.index(word))
+                    # idxs.append(sent.index(word) + 1)
                 except:
                     print('word', word)
                     print('sent', sent)
@@ -124,7 +126,7 @@ class Score:
             swapper = [swapper]
         return swapper
 
-    def score(self, line, word2vec, glove, ng_model, elmo_src, elmo_aligned, elmo_orig, elmo_para):
+    def score(self, line, word2vec, glove, ng_model, composition_type, elmo_src, elmo_aligned, elmo_orig, elmo_para):
         # defunct
         line = line.lower().strip().split('\t')
         swappable = self.list_of_words(line[0])
@@ -150,36 +152,54 @@ class Score:
         # print('para', para)
         # print("doing src")
         # return indexes from word in pattern
-        # src_idxes = self.return_idxs(src, swappable)
-        # averaging... why not?
-        src_idxes = [x for x in range(len(src))]
+        if composition_type == 'average':
+            # averaging... why not?
+            src_idxes = [x for x in range(len(src))]
+        elif composition_type == 'variable':
+            src_idxes = self.return_other_idxs(src, swappable)
+        elif composition_type == 'lexsub':
+            src_idxes = self.return_idxs(src, swappable)
+
 
         # print('src_idxes', src_idxes)
         # pdb.set_trace()
         # src_idx = src.index(swappable)
         # print("doing align")
         # return indexes from word in pattern
-        # align_idxes = self.return_idxs(aligned, para_word)
-        # averaging... why not?
-        align_idxes = [x for x in range(len(aligned))]
+        if composition_type == 'average':
+            # averaging... why not?
+            align_idxes = [x for x in range(len(aligned))]
+        elif composition_type == 'variable':
+            align_idxes = self.return_other_idxs(aligned, para_word)
+        elif composition_type == 'lexsub':
+            align_idxes = self.return_idxs(aligned, para_word)
 
         # print('align_idxes', align_idxes)
         # pdb.set_trace()
         # align_idx = aligned.index(para_word)
         # print("doing orig")
         # return indexes from word not in pattern
-        # orig_idxes = self.return_other_idxs(orig, swappable)
-        # averaging... why not?
-        orig_idxes = [x for x in range(len(orig))]
+        if composition_type == 'average':
+            # averaging... why not?
+            orig_idxes = [x for x in range(len(orig))]
+        elif composition_type == 'variable':
+            orig_idxes = self.return_other_idxs(orig, swappable)
+        elif composition_type == 'lexsub':
+            orig_idxes = self.return_idxs(orig, swappable)
 
         # print('orig_idxes', orig_idxes)
         # pdb.set_trace()
         # orig_idx = orig.index(swappable)
         # print("doing para")
         # return indexes from word not in pattern
-        # para_idxes = self.return_other_idxs(para, para_word)
-        # averaging... why not?
-        para_idxes = [x for x in range(len(para))]
+        if composition_type == 'average':
+            # averaging... why not?
+            para_idxes = [x for x in range(len(para))]
+        elif composition_type == 'variable':
+            para_idxes = self.return_other_idxs(para, para_word)
+        elif composition_type == 'lexsub':
+            para_idxes = self.return_idxs(para, para_word)
+
 
         # print('para_idxes', para_idxes)
         # pdb.set_trace()
@@ -189,13 +209,18 @@ class Score:
         # elmo_align_vec = np.asarray(elmo_aligned[align_idx].detach())
         # elmo_orig_vec = np.asarray(elmo_orig[orig_idx].detach())
         # elmo_para_vec = np.asarray(elmo_para[para_idx].detach())
+        # print("doing src")
+        # pdb.set_trace()
         elmo_src_vec = self.phrasal_mean_maker(src_idxes, elmo_src)
         # pdb.set_trace()
         # elmo_src_vec = elmo_src[src_idx]
+        # print("doing align")
         elmo_align_vec = self.phrasal_mean_maker(align_idxes, elmo_aligned)
         # elmo_align_vec = elmo_aligned[align_idx]
+        # print("doing orig")
         elmo_orig_vec = self.phrasal_mean_maker(orig_idxes, elmo_orig)
         # elmo_orig_vec = elmo_orig[orig_idx]
+        # print("doing para")
         elmo_para_vec = self.phrasal_mean_maker(para_idxes, elmo_para)
         # elmo_para_vec = elmo_para[para_idx]
         # except:
@@ -364,6 +389,9 @@ print('loading kenlm gigaword 5gram model')
 lm = lang_mod()
 lm.load_lm(sys.argv[5])
 
+composition_type = sys.argv[6]
+assert(composition_type in ['lexsub', 'average', 'variable'])
+
 swap_txt = open(sys.argv[3], 'r').readlines()
 print("extracting ELMo representations...")
 swap_csv = pandas.read_csv(sys.argv[3] ,delimiter='\t')
@@ -385,6 +413,14 @@ paras = [x.split() for x in swap_csv['para'].tolist()]
 
 batch_size = 4
 
+# "warm up"
+# TODO during actual run with real data (i.e. no sanity data) only run once
+print('warming up')
+m.extract(srcs, 2, batch_size)
+# m.extract(aligns, 2, batch_size)
+# m.extract(origs, 2, batch_size)
+# m.extract(paras, 2, batch_size)
+
 print("Extracting ELMo rep for srcs")
 elmo_src = m.extract(srcs, 2, batch_size)
 print("Extracting ELMo rep for aligns")
@@ -401,9 +437,7 @@ outfile = open('scored.tsv', 'w')
 header = swap_txt[0].strip().split('\t')
 
 # header = [
-header = ['dialog',
-            'turn',
-            'glove_src_para_sim',
+header = ['glove_src_para_sim',
             'glove_src_para_dist',
             'glove_src_para_david',
             'glove_src_orig_sim',
@@ -461,43 +495,15 @@ for line in swap_txt[1:]:
     line = line.lower()
     # w2v_sim, glove_sim, elmo_sim, w2v_dist, glove_dist, elmo_dist, w2v_david, glove_david, elmo_david = s.score(line, w2v, glove, elmo_src[str(line_nmr)], elmo_para[str(line_nmr)])
     # score(self, line, word2vec, glove, ng_model, elmo_src, elmo_aligned, elmo_orig, elmo_para)
-    sims = s.score(line, w2v, glove, lm,
+    sims = s.score(line, w2v, glove, lm, composition_type,
                    elmo_src[line_nmr],
                    elmo_align[line_nmr],
                    elmo_orig[line_nmr],
                    elmo_para[line_nmr])
+    # pdb.set_trace()
     # print('sims', sims)
     # print('line', line)
     # print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
     split_line = line.strip().split('\t')
-    original = split_line[5]
-    print("original", original)
-    if len(split_line) == 13:
-        dia_turn = split_line[-1]
-        dia_turn = eval(dia_turn)
-        dial_num = dia_turn[0]
-        turn_num = dia_turn[1]
-        outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
-    elif original in dialog_turn_nums:
-        for nums in dialog_turn_nums[original]:
-            dial_num = nums[0]
-            turn_num = nums[1]
-            outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
-    # Sarah's originals are strings that were once arrays
-    # TODO I don't think these have to be converted, but 
-    # double check
-    elif ' '.join(eval(original)) in dialog_turn_nums:
-        original = ' '.join(eval(original))
-        for nums in dialog_turn_nums[original]:
-            dial_num = nums[0]
-            turn_num = nums[1]
-            outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
-    else:
-        pdb.set_trace()
-        lost.append('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
-        missing += 1
+    outfile.write('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
     line_nmr += 1
-
-print("missing", missing, "of", total)
-
-

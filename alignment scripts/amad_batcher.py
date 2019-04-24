@@ -15,13 +15,14 @@ class MiniBatch:
     def extract(self, sentences, layer, batchSize):
         # TODO add multithreading/processing
         total = len(sentences) // batchSize
+
         try:
             [x.insert(0, '<S>') for x in sentences]
         except:
             sentences = [s.split(' ') for s in sentences]
             [x.insert(0, '<S>') for x in sentences]
         [x.append('</S>') for x in sentences]
-        # pdb.set_trace()
+
         tensors = []
         # batchSize = 128
         batchLoc = 0

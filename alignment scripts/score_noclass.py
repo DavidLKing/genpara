@@ -17,6 +17,7 @@ import os; os.getcwd()
 # In[19]:
 
 
+# feats = open('sanity.feats', 'r').readlines()
 feats = open('sanity.feats', 'r').readlines()
 
 
@@ -73,6 +74,12 @@ temp_labels = [x.split('\t')[0] for x in feats]
 
 temp_scores = [x.split('\t')[1].split(' ') for x in feats]
 
+# for x in temp_scores:
+#     print(x)
+#     try:
+#         float(x[0])
+#     except:
+#         pdb.set_trace()
 [float(x[0]) for x in temp_scores]
 
 glove_src_para_sim = [float(x[0]) for x in temp_scores]
@@ -210,7 +217,7 @@ def get_map(annos):
     meanap = sum(aps) / len(annos)
     return meanap
 
-header = ["metric", "percent", "prec", "rec", "f1", "AveP", "MAP"]
+header = ["metric", "percent", "prec", "rec", "f1", "AveP"]
 print('\t'.join(header))
 for met in metrics:
     tupes = []
@@ -235,13 +242,13 @@ for met in metrics:
         # pdb.set_trace()
         aveP = average_precision_score(annos, scores)
         # othermap = aveP / len(annos)
-        meanAvg = get_map(annos)
-        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP), str(meanAvg)]))
+        # meanAvg = get_map(annos)
+        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP)]))
     # final block
     precision = prec(tupes)
     recall = rec(tupes, rec_denom)
     f1_score = f1(precision, recall)
-    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score), str(aveP), str(meanAvg)]))
+    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score), str(aveP)]))
 
 
 

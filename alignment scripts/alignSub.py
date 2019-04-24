@@ -33,6 +33,20 @@ def get_align(groups, phrases):
         src = group[0]
         tgt = group[1]
         idxes = group[2]
+        # todo, how to clean?
+        # thought:
+        # allidxes = group[2].split(' ')
+        # for idx in allidxes:
+        #     for other_idx in allidxes:
+        #         if type(idx) != list:
+        #             idx = idx.split('-')
+        #         if type(other_idx) != list:
+        #             other_idx = other_idx.split('-')
+        #         if idx[0] == other_idx[0] or idx[1] == other_idx[0]:
+        #             if idx != other_idx:
+        #                 allidxes.pop(allidxes.index('-'.join(idx)))
+        # idxes = ' '.join(allidxes)
+        # pdb.set_trace()
         # pdb.set_trace()
         if idxes != '':
             idxes = p.str2idx(idxes)
@@ -170,18 +184,18 @@ elmos = open(sys.argv[1], 'r').readlines()
 elmos = [x.strip().split('\t') for x in elmos]
 elmos = elmo_clean(elmos)
 
-elmo_singles = {}
-elmo_singles = get_align(elmos, elmo_singles)
+# elmo_singles = {}
+# elmo_singles = get_align(elmos, elmo_singles)
 
-prec = rec_prec(elmo_singles, gold_singles)
-rec = rec_prec(gold_singles, elmo_singles)
-f1 = 2 * ((prec * rec) / (prec + rec))
+# prec = rec_prec(elmo_singles, gold_singles)
+# rec = rec_prec(gold_singles, elmo_singles)
+# f1 = 2 * ((prec * rec) / (prec + rec))
 
 
 print("single word alignments")
-print("prec", prec)
-print("rec", rec)
-print("f1", f1)
+# print("prec", prec)
+# print("rec", rec)
+# print("f1", f1)
 
 # PHRASES
 gold_phrases = {}
@@ -191,23 +205,23 @@ gold_phrases = get_range_align(golds, gold_phrases)# , use_phrase = True)
 # elmos = [x.strip().split('\t') for x in elmos]
 # elmos = elmo_clean(elmos)
 
-elmo_phrases = {}
-elmo_phrases = get_range_align(elmos, elmo_phrases)#  , use_phrase = True)
+# elmo_phrases = {}
+# elmo_phrases = get_range_align(elmos, elmo_phrases)#  , use_phrase = True)
 
 # save them
 pkl.dump(gold_singles, open('gold_singles.pkl', 'wb'))
-pkl.dump(elmo_singles, open('elmo_singles.pkl', 'wb'))
+# pkl.dump(elmo_singles, open('elmo_singles.pkl', 'wb'))
 pkl.dump(gold_phrases, open('gold_phrases.pkl', 'wb'))
-pkl.dump(elmo_phrases, open('elmo_phrases.pkl', 'wb'))
+# pkl.dump(elmo_phrases, open('elmo_phrases.pkl', 'wb'))
 
-prec = rec_prec(elmo_phrases, gold_phrases)
-rec = rec_prec(gold_phrases, elmo_phrases)
-f1 = 2 * ((prec * rec) / (prec + rec))
+# prec = rec_prec(elmo_phrases, gold_phrases)
+# rec = rec_prec(gold_phrases, elmo_phrases)
+# f1 = 2 * ((prec * rec) / (prec + rec))
 
 print("phrasal alignments")
-print("prec", prec)
-print("rec", rec)
-print("f1", f1)
+# print("prec", prec)
+# print("rec", rec)
+# print("f1", f1)
 
 # HACKY PROTOTYPING
 sents = open('../data/corrected.tsv', 'r').readlines()
@@ -215,10 +229,10 @@ low_freq = get_low_freq(sents)
 
 # GEN SWAPS
 gold_sg_para = swap(low_freq, gold_singles)
-elmo_sg_para = swap(low_freq, elmo_singles)
+# elmo_sg_para = swap(low_freq, elmo_singles)
 # Not currently being used
 gold_ph_para = swap(low_freq, gold_phrases)
-elmo_ph_para = swap(low_freq, elmo_phrases)
+# elmo_ph_para = swap(low_freq, elmo_phrases)
 
 # s = Score()
 # print("getting gold alignment vectors")
@@ -227,7 +241,8 @@ elmo_ph_para = swap(low_freq, elmo_phrases)
 # elmo_sg_para = s.elmo_diffs(elmo, elmo_sg_para)
 
 writeout('gold_singular_swap.tsv', gold_sg_para)
-writeout('elmo_singular_swap.tsv', elmo_sg_para)
+writeout('gold_phrase_swap.tsv', gold_ph_para)
+# writeout('elmo_singular_swap.tsv', elmo_sg_para)
 
 
 # pdb.set_trace()
