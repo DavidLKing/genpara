@@ -213,7 +213,8 @@ def get_map(annos):
             assert(sum(correct) == 0)
             aps.append(0.0)
         else:
-            aps.append(sum(correct) / correct_denom)
+            # aps.append(sum(correct) / correct_denom)
+            aps.append(sum(correct) / len(correct))
     meanap = sum(aps) / len(annos)
     return meanap
 
