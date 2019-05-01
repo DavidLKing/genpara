@@ -12,16 +12,18 @@ class MiniBatch:
         if device >= 0:
             self.elmo = self.elmo.cuda(device=self.device)
 
-    def extract(self, sentences, layer, batchSize):
+    def extract(self, sentences, layer, batchSize, specials):
         # TODO add multithreading/processing
         total = len(sentences) // batchSize
 
-        try:
-            [x.insert(0, '<S>') for x in sentences]
-        except:
-            sentences = [s.split(' ') for s in sentences]
-            [x.insert(0, '<S>') for x in sentences]
-        [x.append('</S>') for x in sentences]
+        if specials == 'specials':
+            print("Inserting special <S> and </S> characters")
+            try:
+                [x.insert(0, '<S>') for x in sentences]
+            except:
+                sentences = [s.split(' ') for s in sentences]
+                [x.insert(0, '<S>') for x in sentences]
+            [x.append('</S>') for x in sentences]
 
         tensors = []
         # batchSize = 128
@@ -39,18 +41,20 @@ class MiniBatch:
             except:
                print("This should be the last batch")
                toID = sentences[(batchLoc * batchSize) : ]
-            character_ids = batch_to_ids(toID)
-            if self.device >= 0:
-                character_ids = character_ids.cuda(device=self.device)
-            # embeddings = self.elmo(character_ids.cuda())
-            embeddings = self.elmo(character_ids)
-            if self.device >= 0:
-                npTensor = embeddings['elmo_representations'][layer - 1].detach().cpu().numpy()
-            else:
-                npTensor = embeddings['elmo_representations'][layer - 1].detach().numpy()
-            for tns in npTensor:
-                tensors.append(tns)
+            if toID != []:
+                character_ids = batch_to_ids(toID)
+                if self.device >= 0:
+                    character_ids = character_ids.cuda(device=self.device)
+                # embeddings = self.elmo(character_ids.cuda())
+                embeddings = self.elmo(character_ids)
+                if self.device >= 0:
+                    npTensor = embeddings['elmo_representations'][-1].detach().cpu().numpy()
+                else:
+                    npTensor = embeddings['elmo_representations'][-1].detach().numpy()
+                for tns in npTensor:
+                    tensors.append(tns)
             batchLoc += 1
+        assert(len(tensors) == len(sentences))
         tensors = np.asarray(tensors)
         # pdb.set_trace()
         return tensors

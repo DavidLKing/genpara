@@ -233,6 +233,9 @@ class Score:
         elmo_orig_para_sim, elmo_orig_para_dist, elmo_orig_para_david = self.score_list(elmo_orig_vec, elmo_para_vec)
         # ELMO ALIGN -> PARA
         elmo_align_para_sim, elmo_align_para_dist, elmo_align_para_david = self.score_list(elmo_align_vec, elmo_para_vec)
+        elmo_sims = elmo_src_para_sim + elmo_src_orig_sim + elmo_orig_para_sim + elmo_align_para_sim
+        elmo_dist = elmo_src_para_dist + elmo_src_orig_dist + elmo_orig_para_dist + elmo_align_para_dist
+        elmo_david = elmo_src_para_david + elmo_src_orig_david + elmo_orig_para_david + elmo_align_para_david
         # GLOVE
         glove_src = self.mean_maker(src, glove)
         glove_aligned = self.mean_maker(aligned, glove)
@@ -244,14 +247,20 @@ class Score:
         w2v_orig = self.mean_maker(orig, word2vec)
         w2v_para = self.mean_maker(para, word2vec)
         # TODO is this enought checks or should I check EVERY vector?
-        ng_src = ng_model.score(' '.join(src))
-        ng_orig = ng_model.score(' '.join(aligned))
-        ng_align = ng_model.score(' '.join(orig))
-        ng_para = ng_model.score(' '.join(para))
+        # ng_src = ng_model.score(' '.join(src))
+        # ng_orig = ng_model.score(' '.join(aligned))
+        # ng_align = ng_model.score(' '.join(orig))
+        # ng_para = ng_model.score(' '.join(para))
+        ng_src = ng_model.lm.perplexity(' '.join(src))
+        ng_orig = ng_model.lm.perplexity(' '.join(aligned))
+        ng_align = ng_model.lm.perplexity(' '.join(orig))
+        ng_para = ng_model.lm.perplexity(' '.join(para))
         ng_src_para = ng_src - ng_para
         ng_src_orig = ng_src - ng_orig
         ng_orig_para = ng_orig - ng_para
         ng_align_para = ng_align - ng_para
+        ng_sum = ng_src_orig + ng_src_para + ng_orig_para + ng_align_para
+        # pdb.set_trace()
         if not np.isnan(glove_para[0]) and not np.isnan(glove_src[0]) and \
                 not np.isnan(w2v_para[0]) and not np.isnan(w2v_src[0]):
             # pdb.set_trace()
@@ -324,10 +333,14 @@ class Score:
                 elmo_align_para_sim, 
                 elmo_align_para_dist, 
                 elmo_align_para_david,
+                elmo_sims,
+                elmo_dist,
+                elmo_david,
                 ng_src_para,
                 ng_src_orig,
                 ng_orig_para,
-                ng_align_para)
+                ng_align_para,
+                ng_sum)
 
 
 
@@ -341,6 +354,8 @@ print("""
     3 = tsv to score
     4 = original corrected.tsv (2016 VP data)
     5 = Gigaword 5-gram model
+    6 = lexsub/variable/average
+    7 = specials/noSpecials
         """)
 
 
@@ -392,6 +407,9 @@ lm.load_lm(sys.argv[5])
 composition_type = sys.argv[6]
 assert(composition_type in ['lexsub', 'average', 'variable'])
 
+specials = sys.argv[7]
+assert(specials in ['specials', 'noSpecials'])
+
 swap_txt = open(sys.argv[3], 'r').readlines()
 print("extracting ELMo representations...")
 swap_csv = pandas.read_csv(sys.argv[3] ,delimiter='\t')
@@ -411,24 +429,25 @@ paras = [x.split() for x in swap_csv['para'].tolist()]
 # mini-batched
 # TODO make 3rd arg, batch size, an option
 
-batch_size = 4
+batch_size = 1
 
 # "warm up"
 # TODO during actual run with real data (i.e. no sanity data) only run once
 print('warming up')
-m.extract(srcs, 2, batch_size)
-# m.extract(aligns, 2, batch_size)
-# m.extract(origs, 2, batch_size)
-# m.extract(paras, 2, batch_size)
+# pdb.set_trace()
+m.extract(srcs, 2, batch_size, specials)
+m.extract(aligns, 2, batch_size, specials)
+m.extract(origs, 2, batch_size, specials)
+m.extract(paras, 2, batch_size, specials)
 
 print("Extracting ELMo rep for srcs")
-elmo_src = m.extract(srcs, 2, batch_size)
+elmo_src = m.extract(srcs, 2, batch_size, specials)
 print("Extracting ELMo rep for aligns")
-elmo_align = m.extract(aligns, 2, batch_size)
+elmo_align = m.extract(aligns, 2, batch_size, specials)
 print("Extracting ELMo rep for origs")
-elmo_orig = m.extract(origs, 2, batch_size)
+elmo_orig = m.extract(origs, 2, batch_size, specials)
 print("Extracting ELMo rep for paras")
-elmo_para = m.extract(paras, 2, batch_size)
+elmo_para = m.extract(paras, 2, batch_size, specials)
 
 
 # TODO make this an option or get logging to a different file
@@ -473,10 +492,14 @@ header = ['glove_src_para_sim',
             'elmo_align_para_sim', 
             'elmo_align_para_dist', 
             'elmo_align_para_david',
+            'elmo_sims',
+            'elmo_dist',
+            'elmo_david',
             'ng_src_para',
             'ng_src_orig',
             'ng_orig_para',
-            'ng_align_para'] + header
+            'ng_align_para',
+            'ng_sum'] + header
 # print('\t'.join(header))
 outfile.write('\t'.join(header) + '\n')
 

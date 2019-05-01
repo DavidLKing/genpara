@@ -118,10 +118,14 @@ elmo_orig_para_joint = [float(x[32]) for x in temp_scores]
 elmo_align_para_sim = [float(x[33]) for x in temp_scores]
 elmo_align_para_dist = [float(x[34]) for x in temp_scores]
 elmo_align_para_joint = [float(x[35]) for x in temp_scores]
-ng_src_para = [float(x[36]) for x in temp_scores]
-ng_src_orig = [float(x[37]) for x in temp_scores]
-ng_orig_para = [float(x[38]) for x in temp_scores]
-ng_align_para = [float(x[39]) for x in temp_scores]
+elmo_sims = [float(x[36]) for x in temp_scores]
+elmo_dist = [float(x[37]) for x in temp_scores]
+elmo_david = [float(x[38]) for x in temp_scores]
+ng_src_para = [float(x[39]) for x in temp_scores]
+ng_src_orig = [float(x[40]) for x in temp_scores]
+ng_orig_para = [float(x[41]) for x in temp_scores]
+ng_align_para = [float(x[42]) for x in temp_scores]
+ng_sum = [float(x[43]) for x in temp_scores]
 
 
 metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
@@ -160,10 +164,19 @@ metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize(elmo_align_para_sim), 'elmo_align_para_sim'),
     (normalize_and_invert(elmo_align_para_dist), 'elmo_align_para_dist'),
     (normalize_and_invert(elmo_align_para_joint), 'elmo_align_para_joint'),
-    (normalize_and_invert(ng_src_para), 'ng_src_para'),
-    (normalize_and_invert(ng_src_orig), 'ng_src_orig'),
-    (normalize_and_invert(ng_orig_para), 'ng_orig_para'),
-    (normalize_and_invert(ng_align_para), 'ng_align_para')]
+    (normalize(elmo_sims), 'elmo_sims'),
+    (normalize_and_invert(elmo_dist), 'elmo_dist'),
+    (normalize_and_invert(elmo_david), 'elmo_joint'),
+    # (normalize_and_invert(ng_src_para), 'ng_src_para'),
+    # (normalize_and_invert(ng_src_orig), 'ng_src_orig'),
+    # (normalize_and_invert(ng_orig_para), 'ng_orig_para'),
+    # (normalize_and_invert(ng_align_para), 'ng_align_para'),
+    # (normalize_and_invert(ng_sum), 'ng_sum'),]
+    (normalize(ng_src_para), 'ng_src_para'),
+    (normalize(ng_src_orig), 'ng_src_orig'),
+    (normalize(ng_orig_para), 'ng_orig_para'),
+    (normalize(ng_align_para), 'ng_align_para'),
+    (normalize(ng_sum), 'ng_sum'),]
 
 
 def prec(data):
@@ -237,7 +250,13 @@ for met in metrics:
         upto += 1
         precision = prec(tupes[0:upto])
         recall = rec(tupes[0:upto], rec_denom)
-        f1_score = f1(precision, recall)
+        try:
+            f1_score = f1(precision, recall)
+        except:
+            if precision == 0.0 or recall == 0.0:
+                f1_score = 0.0
+            else:
+                pdb.set_trace()
         scores = [x[1] for x in tupes[0:upto]]
         annos = [int(x[0]) for x in tupes[0:upto]]
         # pdb.set_trace()
