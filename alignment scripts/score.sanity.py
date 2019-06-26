@@ -429,16 +429,16 @@ paras = [x.split() for x in swap_csv['para'].tolist()]
 # mini-batched
 # TODO make 3rd arg, batch size, an option
 
-batch_size = 1
+batch_size = 32
 
 # "warm up"
 # TODO during actual run with real data (i.e. no sanity data) only run once
 print('warming up')
 # pdb.set_trace()
 m.extract(srcs, 2, batch_size, specials)
-m.extract(aligns, 2, batch_size, specials)
-m.extract(origs, 2, batch_size, specials)
-m.extract(paras, 2, batch_size, specials)
+# m.extract(aligns, 2, batch_size, specials)
+# m.extract(origs, 2, batch_size, specials)
+# m.extract(paras, 2, batch_size, specials)
 
 print("Extracting ELMo rep for srcs")
 elmo_src = m.extract(srcs, 2, batch_size, specials)
@@ -528,5 +528,37 @@ for line in swap_txt[1:]:
     # print('line', line)
     # print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
     split_line = line.strip().split('\t')
-    outfile.write('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+    # outfile.write('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+    # line_nmr += 1
+
+    original = split_line[5]
+    print("original", original)
+    if len(split_line) == 13:
+        dia_turn = split_line[-1]
+        dia_turn = eval(dia_turn)
+        dial_num = dia_turn[0]
+        turn_num = dia_turn[1]
+        outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+    elif original in dialog_turn_nums:
+        for nums in dialog_turn_nums[original]:
+            dial_num = nums[0]
+            turn_num = nums[1]
+            outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+    # Sarah's originals are strings that were once arrays
+    # TODO I don't think these have to be converted, but 
+    # double check
+    elif ' '.join(eval(original)) in dialog_turn_nums:
+        original = ' '.join(eval(original))
+        for nums in dialog_turn_nums[original]:
+            dial_num = nums[0]
+            turn_num = nums[1]
+            outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+    else:
+    #     pdb.set_trace()
+    #     lost.append('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+        missing += 1
     line_nmr += 1
+
+print("missing", missing, "of", total)
+
+

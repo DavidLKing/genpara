@@ -99,10 +99,14 @@ elmo_orig_para_david = [x for x in scored_csv['elmo_orig_para_david'].tolist()]
 elmo_align_para_sim = [x for x in scored_csv['elmo_align_para_sim'].tolist()]
 elmo_align_para_dist = [x for x in scored_csv['elmo_align_para_dist'].tolist()]
 elmo_align_para_david = [x for x in scored_csv['elmo_align_para_david'].tolist()]
+elmo_sims = [x for x in scored_csv['elmo_sims'].tolist()]
+elmo_dist = [x for x in scored_csv['elmo_dist'].tolist()]
+elmo_david = [x for x in scored_csv['elmo_david'].tolist()]
 ng_src_para = [x for x in scored_csv['ng_src_para'].tolist()]
 ng_src_orig = [x for x in scored_csv['ng_src_orig'].tolist()]
 ng_orig_para = [x for x in scored_csv['ng_orig_para'].tolist()]
 ng_align_para = [x for x in scored_csv['ng_align_para'].tolist()]
+ng_sum = [x for x in scored_csv['ng_sum'].tolist()]
 src = [x for x in scored_csv['src'].tolist()]
 align = [x for x in scored_csv['align'].tolist()]
 para = [x for x in scored_csv['para'].tolist()]
@@ -110,45 +114,53 @@ orig = [x for x in scored_csv['orig'].tolist()]
 
 metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize_and_invert(glove_src_para_dist), 'glove_src_para_dist'),
-    (normalize_and_invert(glove_src_para_david), 'glove_src_para_david'),
+    (normalize_and_invert(glove_src_para_david), 'glove_src_para_joint'),
     (normalize(glove_src_orig_sim), 'glove_src_orig_sim'),
     (normalize_and_invert(glove_src_orig_dist), 'glove_src_orig_dist'),
-    (normalize_and_invert(glove_src_orig_david), 'glove_src_orig_david'),
+    (normalize_and_invert(glove_src_orig_david), 'glove_src_orig_joint'),
     (normalize(glove_orig_para_sim), 'glove_orig_para_sim'),
     (normalize_and_invert(glove_orig_para_dist), 'glove_orig_para_dist'),
-    (normalize_and_invert(glove_orig_para_david), 'glove_orig_para_david'),
+    (normalize_and_invert(glove_orig_para_david), 'glove_orig_para_joint'),
     (normalize(glove_align_para_sim), 'glove_align_para_sim'),
     (normalize_and_invert(glove_align_para_dist), 'glove_align_para_dist'),
-    (normalize_and_invert(glove_align_para_david), 'glove_align_para_david'),
+    (normalize_and_invert(glove_align_para_david), 'glove_align_para_joint'),
     (normalize(w2v_src_para_sim), 'w2v_src_para_sim'),
     (normalize_and_invert(w2v_src_para_dist), 'w2v_src_para_dist'),
-    (normalize_and_invert(w2v_src_para_david), 'w2v_src_para_david'),
+    (normalize_and_invert(w2v_src_para_david), 'w2v_src_para_joint'),
     (normalize(w2v_src_orig_sim), 'w2v_src_orig_sim'),
     (normalize_and_invert(w2v_src_orig_dist), 'w2v_src_orig_dist'),
-    (normalize_and_invert(w2v_src_orig_david), 'w2v_src_orig_david'),
+    (normalize_and_invert(w2v_src_orig_david), 'w2v_src_orig_joint'),
     (normalize(w2v_orig_para_sim), 'w2v_orig_para_sim'),
     (normalize_and_invert(w2v_orig_para_dist), 'w2v_orig_para_dist'),
-    (normalize_and_invert(w2v_orig_para_david), 'w2v_orig_para_david'),
+    (normalize_and_invert(w2v_orig_para_david), 'w2v_orig_para_joint'),
     (normalize(w2v_align_para_sim), 'w2v_align_para_sim'),
     (normalize_and_invert(w2v_align_para_dist), 'w2v_align_para_dist'),
-    (normalize_and_invert(w2v_align_para_david), 'w2v_align_para_david'),
+    (normalize_and_invert(w2v_align_para_david), 'w2v_align_para_joint'),
     (normalize(elmo_src_para_sim), 'elmo_src_para_sim'),
     (normalize_and_invert(elmo_src_para_dist), 'elmo_src_para_dist'),
-    (normalize_and_invert(elmo_src_para_david), 'elmo_src_para_david'),
+    (normalize_and_invert(elmo_src_para_david), 'elmo_src_para_joint'),
     (normalize(elmo_src_orig_sim), 'elmo_src_orig_sim'),
     (normalize_and_invert(elmo_src_orig_dist), 'elmo_src_orig_dist'),
-    (normalize_and_invert(elmo_src_orig_david), 'elmo_src_orig_david'),
+    (normalize_and_invert(elmo_src_orig_david), 'elmo_src_orig_joint'),
     (normalize(elmo_orig_para_sim), 'elmo_orig_para_sim'),
     (normalize_and_invert(elmo_orig_para_dist), 'elmo_orig_para_dist'),
-    (normalize_and_invert(elmo_orig_para_david), 'elmo_orig_para_david'),
+    (normalize_and_invert(elmo_orig_para_david), 'elmo_orig_para_joint'),
     (normalize(elmo_align_para_sim), 'elmo_align_para_sim'),
     (normalize_and_invert(elmo_align_para_dist), 'elmo_align_para_dist'),
-    (normalize_and_invert(elmo_align_para_david), 'elmo_align_para_david'),
+    (normalize_and_invert(elmo_align_para_david), 'elmo_align_para_joint'),
+    (normalize(elmo_sims), 'elmo_sims'),
+    (normalize_and_invert(elmo_dist), 'elmo_dist'),
+    (normalize_and_invert(elmo_david), 'elmo_joint'),
+    # (normalize_and_invert(ng_src_para), 'ng_src_para'),
+    # (normalize_and_invert(ng_src_orig), 'ng_src_orig'),
+    # (normalize_and_invert(ng_orig_para), 'ng_orig_para'),
+    # (normalize_and_invert(ng_align_para), 'ng_align_para'),
+    # (normalize_and_invert(ng_sum), 'ng_sum'),]
     (normalize(ng_src_para), 'ng_src_para'),
     (normalize(ng_src_orig), 'ng_src_orig'),
     (normalize(ng_orig_para), 'ng_orig_para'),
-    (normalize(ng_align_para), 'ng_align_para')]
-
+    (normalize(ng_align_para), 'ng_align_para'),
+    (normalize(ng_sum), 'ng_sum'),]
 
 os.mkdir(newdir)
 
