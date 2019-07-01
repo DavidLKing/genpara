@@ -81,7 +81,8 @@ class Bertify:
     #   self.rank_job(pos)
     scored = []
     for pos in tqdm.tqdm(p.imap_unordered(self.rank_job, possibles), total=total):
-      scored.append(pos)
+      if pos != None:
+        scored.append(pos)
     p.close()
     p.join()
     # pdb.set_trace()
