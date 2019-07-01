@@ -2,6 +2,9 @@
 
 import sys
 import random
+import tqdm
+import os
+import multiprocessing as mp
 import pdb
 import subprocess
 import nltk
@@ -50,20 +53,39 @@ class Bertify:
     sys.stdout.flush()
     return str(score)
 
+  # def rank_job(self, src, tgt, label1, label2, annotation):
+  def rank_job(self, pos):
+    # self.prog_bar.update(1)
+    try:
+      score = bleu(pos[0], pos[1], smoothing_function=self.smoothz)
+      # score = bleu(src, tgt, smoothing_function=self.smoothz)
+      # return score, [src, tgt, label1, label2, annotation]
+      return score, pos
+    except:
+      pass
+
+
   def rank_and_extrace(self, possibles, reverse=False):
     total = len(possibles)
-    current = 0
-    zeros = 0
+    threads = mp.cpu_count() - 1
+
+    # testing
+    # possibles = possibles[0:5000]
+
+    # self.prog_bar = tqdm.tqdm(total=len(possibles))
+    p = mp.Pool(threads)
+    # scored = p.starmap(self.rank_job, possibles)
+    # scored = p.imap(self.rank_job, possibles)
+    # scored2 = tqdm.tqdm(p.imap(self.rank_job, possibles), total=len(possibles))
+    # for pos in tqdm.tqdm(possibles):
+    #   self.rank_job(pos)
     scored = []
-    for pos in possibles:
-      if current % 10000 == 0:
-        print('scoring {} of {}'.format(current, total))
-      try:
-        score = bleu(pos[0], pos[1], smoothing_function=self.smoothz)
-        scored.append((score, pos))
-      except:
-        zeros += 1
-      current += 1
+    for pos in tqdm.tqdm(p.imap_unordered(self.rank_job, possibles), total=total):
+      scored.append(pos)
+    p.close()
+    p.join()
+    # pdb.set_trace()
+
     sorted(scored, key=lambda x: x[0])
     if reverse:
       scored.reverse()
@@ -115,10 +137,11 @@ class Bertify:
           labels[label].append(sent)
     print("Total duplicates {} of {} total".format(duplicates, total))
     positives = self.gen_pos(labels)
-    limit = int(self.cutoff) * len(positives)
+    limit = int(self.cutoff * len(positives))
     posses = positives[0:limit]
     negs = self.gen_neg(labels)
     chosen_negs = negs[0:limit]
+    # pdb.set_trace()
     # currently sampling without replacement randomly with uniform dist. 
     # TODO make more sophisticated later
     # chosen_negs = random.sample(negs, k=len(posses))
@@ -178,7 +201,7 @@ class Bertify:
     train, dev = self.gen_corrected(corrs)
     test = self.gen_annos(annos)
     train, dev, test = self.clean(train, dev, test)
-    pdb.set_trace()
+    # pdb.set_trace()
     index = 0
     with open('train.tsv', 'w') as of:
       of.write(header)
