@@ -14,10 +14,10 @@ import numpy as np
 
 class Bertify:
 
-  def __init__(self, corrs, annos, binary=True, dev_p=0.1):
+  def __init__(self, corrs, annos, cutoff, binary=True, dev_p=0.1):
     self.binary = binary
     self.dev_p = dev_p
-    self.cutoff = 0.2
+    self.cutoff = cutoff
     # assert(self.annos == True or self.corrs == True)
     # assert(self.annos != self.corrs)
     # Borrowed
@@ -79,6 +79,9 @@ class Bertify:
     # scored2 = tqdm.tqdm(p.imap(self.rank_job, possibles), total=len(possibles))
     # for pos in tqdm.tqdm(possibles):
     #   self.rank_job(pos)
+
+    print("Scoring")
+
     scored = []
     for pos in tqdm.tqdm(p.imap_unordered(self.rank_job, possibles), total=total):
       if pos != None:
@@ -86,6 +89,8 @@ class Bertify:
     p.close()
     p.join()
     # pdb.set_trace()
+
+    print("Sorting")
 
     sorted(scored, key=lambda x: x[0])
     if reverse:
@@ -137,9 +142,11 @@ class Bertify:
             duplicates += 1
           labels[label].append(sent)
     print("Total duplicates {} of {} total".format(duplicates, total))
+    print("Getting true paraphrases")
     positives = self.gen_pos(labels)
     limit = int(self.cutoff * len(positives))
     posses = positives[0:limit]
+    print("Getting false paraphrases")
     negs = self.gen_neg(labels)
     chosen_negs = negs[0:limit]
     # pdb.set_trace()
@@ -223,6 +230,6 @@ class Bertify:
         index += 1
 
 
-Bertify(sys.argv[1], sys.argv[2])
+Bertify(sys.argv[1], sys.argv[2], float(sys.argv[3]))
 
 
