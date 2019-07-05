@@ -9,8 +9,12 @@ import pandas
 import kenlm
 import allennlp
 from allennlp.modules.elmo import Elmo, batch_to_ids
+import torch
+import pdb
+from pytorch_pretrained_bert import BertTokenizer, BertModel, BertForMaskedLM
 
 from amad_batcher import MiniBatch
+from bert import BertBatch
 
 class lang_mod:
 
@@ -321,6 +325,15 @@ print("""
 
 # temp test
 
+swap_csv = pandas.read_csv(sys.argv[3] ,delimiter='\t')
+srcs = [x.split() for x in swap_csv['src'].tolist()]
+
+b = BertBatch(device=1)
+test = b.extract(srcs, 32)
+
+pdb.set_trace()
+
+
 corrected = open(sys.argv[4], 'r').readlines()
 dialog_turn_nums = s.rebuild_dialogs(corrected)
 
@@ -338,6 +351,10 @@ glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=Fals
 # glove = gensim.models.KeyedVectors.load_word2vec_format('../data/glove.6B.300d.txt.word2vec', binary=False)
 # glove = ''
 
+
+# If you have a GPU, put everything on cuda
+tokens_tensor = tokens_tensor.to('cuda')
+segments_tensors = segments_tensors.to('cuda')
 
 
 ### ELMO ###
