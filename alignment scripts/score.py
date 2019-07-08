@@ -547,6 +547,7 @@ header = ['dialog',
             'ng_orig_para',
             'ng_align_para',
             'ng_sum'] + header
+
 # print('\t'.join(header))
 outfile.write('\t'.join(header) + '\n')
 
