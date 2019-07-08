@@ -429,7 +429,8 @@ paras = [x.split() for x in swap_csv['para'].tolist()]
 # mini-batched
 # TODO make 3rd arg, batch size, an option
 
-batch_size = 32
+batch_size = 4
+
 
 # "warm up"
 # TODO during actual run with real data (i.e. no sanity data) only run once

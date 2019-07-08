@@ -12,19 +12,21 @@ class MiniBatch:
         if device >= 0:
             self.elmo = self.elmo.cuda(device=self.device)
 
-    def extract(self, sentences, layer, batchSize, specials):
+    def extract(self, sents, layer, batchSize, specials):
         # TODO add multithreading/processing
+
+        sentences = []
+        for sent in sents:
+            if specials == 'specials':
+                # print("Inserting special <S> and </S> characters")
+                try:
+                    sent.insert(0, '<S>')
+                except:
+                    sent = sent.split(' ')
+                    sent.insert(0, '<S>')
+                sent.append('</S>')
+            sentences.append(sent)
         total = len(sentences) // batchSize
-
-        if specials == 'specials':
-            print("Inserting special <S> and </S> characters")
-            try:
-                [x.insert(0, '<S>') for x in sentences]
-            except:
-                sentences = [s.split(' ') for s in sentences]
-                [x.insert(0, '<S>') for x in sentences]
-            [x.append('</S>') for x in sentences]
-
         tensors = []
         # batchSize = 128
         batchLoc = 0

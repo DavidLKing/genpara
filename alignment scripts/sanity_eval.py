@@ -59,7 +59,12 @@ for metric in ['glove_src_para_sim', 'glove_src_para_dist', 'glove_src_para_davi
        'elmo_src_para_david', 'elmo_src_orig_sim', 'elmo_src_orig_dist',
        'elmo_src_orig_david', 'elmo_orig_para_sim', 'elmo_orig_para_dist',
        'elmo_orig_para_david', 'elmo_align_para_sim', 'elmo_align_para_dist',
-       'elmo_align_para_david']:
+       'elmo_align_para_david', #]:
+       'bert_src_para_sim', 'bert_src_para_dist',
+       'bert_src_para_david', 'bert_src_orig_sim', 'bert_src_orig_dist',
+       'bert_src_orig_david', 'bert_orig_para_sim', 'bert_orig_para_dist',
+       'bert_orig_para_david', 'bert_align_para_sim', 'bert_align_para_dist',
+       'bert_align_para_david']:
     # print("Metric:", metric)
     if metric[-3] == 'sim':
         sanity = sanity.sort_values(by=[metric], ascending=False)

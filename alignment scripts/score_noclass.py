@@ -6,6 +6,8 @@
 
 import subprocess
 import pdb
+import pandas
+import sys
 from sklearn.metrics import average_precision_score
 
 # In[2]:
@@ -18,7 +20,7 @@ import os; os.getcwd()
 
 
 # feats = open('sanity.feats', 'r').readlines()
-feats = open('sanity.feats', 'r').readlines()
+feats = open(sys.argv[1],  'r').readlines()
 
 
 # In[20]:
@@ -70,103 +72,134 @@ def normalize(dist):
     # pdb.set_trace()
     return new_dist
 
-temp_labels = [x.split('\t')[0] for x in feats]
 
-temp_scores = [x.split('\t')[1].split(' ') for x in feats]
+# temp_scores = [x.split('\t')[1].split(' ') for x in feats]
 
-# for x in temp_scores:
-#     print(x)
-#     try:
-#         float(x[0])
-#     except:
-#         pdb.set_trace()
-[float(x[0]) for x in temp_scores]
+scored_csv = pandas.read_csv(sys.argv[1], delimiter='\t')
 
-glove_src_para_sim = [float(x[0]) for x in temp_scores]
-glove_src_para_dist = [float(x[1]) for x in temp_scores]
-glove_src_para_joint = [float(x[2]) for x in temp_scores]
-glove_src_orig_sim = [float(x[3]) for x in temp_scores]
-glove_src_orig_dist = [float(x[4]) for x in temp_scores]
-glove_src_orig_joint = [float(x[5]) for x in temp_scores]
-glove_orig_para_sim = [float(x[6]) for x in temp_scores]
-glove_orig_para_dist = [float(x[7]) for x in temp_scores]
-glove_orig_para_joint = [float(x[8]) for x in temp_scores]
-glove_align_para_sim = [float(x[9]) for x in temp_scores]
-glove_align_para_dist = [float(x[10]) for x in temp_scores]
-glove_align_para_joint = [float(x[11]) for x in temp_scores]
-w2v_src_para_sim = [float(x[12]) for x in temp_scores]
-w2v_src_para_dist = [float(x[13]) for x in temp_scores]
-w2v_src_para_joint = [float(x[14]) for x in temp_scores]
-w2v_src_orig_sim = [float(x[15]) for x in temp_scores]
-w2v_src_orig_dist = [float(x[16]) for x in temp_scores]
-w2v_src_orig_joint = [float(x[17]) for x in temp_scores]
-w2v_orig_para_sim = [float(x[18]) for x in temp_scores]
-w2v_orig_para_dist = [float(x[19]) for x in temp_scores]
-w2v_orig_para_joint = [float(x[20]) for x in temp_scores]
-w2v_align_para_sim = [float(x[21]) for x in temp_scores]
-w2v_align_para_dist = [float(x[22]) for x in temp_scores]
-w2v_align_para_joint = [float(x[23]) for x in temp_scores]
-elmo_src_para_sim = [float(x[24]) for x in temp_scores]
-elmo_src_para_dist = [float(x[25]) for x in temp_scores]
-elmo_src_para_joint = [float(x[26]) for x in temp_scores]
-elmo_src_orig_sim = [float(x[27]) for x in temp_scores]
-elmo_src_orig_dist = [float(x[28]) for x in temp_scores]
-elmo_src_orig_joint = [float(x[29]) for x in temp_scores]
-elmo_orig_para_sim = [float(x[30]) for x in temp_scores]
-elmo_orig_para_dist = [float(x[31]) for x in temp_scores]
-elmo_orig_para_joint = [float(x[32]) for x in temp_scores]
-elmo_align_para_sim = [float(x[33]) for x in temp_scores]
-elmo_align_para_dist = [float(x[34]) for x in temp_scores]
-elmo_align_para_joint = [float(x[35]) for x in temp_scores]
-elmo_sims = [float(x[36]) for x in temp_scores]
-elmo_dist = [float(x[37]) for x in temp_scores]
-elmo_david = [float(x[38]) for x in temp_scores]
-ng_src_para = [float(x[39]) for x in temp_scores]
-ng_src_orig = [float(x[40]) for x in temp_scores]
-ng_orig_para = [float(x[41]) for x in temp_scores]
-ng_align_para = [float(x[42]) for x in temp_scores]
-ng_sum = [float(x[43]) for x in temp_scores]
+#ntemp_labels = [x.split('\t')[0] for x in feats]
+temp_labels = scored_csv['annotation'].tolist()
+
+dialog = [x for x in scored_csv['dialog'].tolist()]
+turn = [x for x in scored_csv['turn'].tolist()]
+glove_src_para_sim = [x for x in scored_csv['glove_src_para_sim'].tolist()]
+glove_src_para_dist = [x for x in scored_csv['glove_src_para_dist'].tolist()]
+glove_src_para_david = [x for x in scored_csv['glove_src_para_david'].tolist()]
+glove_src_orig_sim = [x for x in scored_csv['glove_src_orig_sim'].tolist()]
+glove_src_orig_dist = [x for x in scored_csv['glove_src_orig_dist'].tolist()]
+glove_src_orig_david = [x for x in scored_csv['glove_src_orig_david'].tolist()]
+glove_orig_para_sim = [x for x in scored_csv['glove_orig_para_sim'].tolist()]
+glove_orig_para_dist = [x for x in scored_csv['glove_orig_para_dist'].tolist()]
+glove_orig_para_david = [x for x in scored_csv['glove_orig_para_david'].tolist()]
+glove_align_para_sim = [x for x in scored_csv['glove_align_para_sim'].tolist()]
+glove_align_para_dist = [x for x in scored_csv['glove_align_para_dist'].tolist()]
+glove_align_para_david = [x for x in scored_csv['glove_align_para_david'].tolist()]
+w2v_src_para_sim = [x for x in scored_csv['w2v_src_para_sim'].tolist()]
+w2v_src_para_dist = [x for x in scored_csv['w2v_src_para_dist'].tolist()]
+w2v_src_para_david = [x for x in scored_csv['w2v_src_para_david'].tolist()]
+w2v_src_orig_sim = [x for x in scored_csv['w2v_src_orig_sim'].tolist()]
+w2v_src_orig_dist = [x for x in scored_csv['w2v_src_orig_dist'].tolist()]
+w2v_src_orig_david = [x for x in scored_csv['w2v_src_orig_david'].tolist()]
+w2v_orig_para_sim = [x for x in scored_csv['w2v_orig_para_sim'].tolist()]
+w2v_orig_para_dist = [x for x in scored_csv['w2v_orig_para_dist'].tolist()]
+w2v_orig_para_david = [x for x in scored_csv['w2v_orig_para_david'].tolist()]
+w2v_align_para_sim = [x for x in scored_csv['w2v_align_para_sim'].tolist()]
+w2v_align_para_dist = [x for x in scored_csv['w2v_align_para_dist'].tolist()]
+w2v_align_para_david = [x for x in scored_csv['w2v_align_para_david'].tolist()]
+elmo_src_para_sim = [x for x in scored_csv['elmo_src_para_sim'].tolist()]
+elmo_src_para_dist = [x for x in scored_csv['elmo_src_para_dist'].tolist()]
+elmo_src_para_david = [x for x in scored_csv['elmo_src_para_david'].tolist()]
+elmo_src_orig_sim = [x for x in scored_csv['elmo_src_orig_sim'].tolist()]
+elmo_src_orig_dist = [x for x in scored_csv['elmo_src_orig_dist'].tolist()]
+elmo_src_orig_david = [x for x in scored_csv['elmo_src_orig_david'].tolist()]
+elmo_orig_para_sim = [x for x in scored_csv['elmo_orig_para_sim'].tolist()]
+elmo_orig_para_dist = [x for x in scored_csv['elmo_orig_para_dist'].tolist()]
+elmo_orig_para_david = [x for x in scored_csv['elmo_orig_para_david'].tolist()]
+elmo_align_para_sim = [x for x in scored_csv['elmo_align_para_sim'].tolist()]
+elmo_align_para_dist = [x for x in scored_csv['elmo_align_para_dist'].tolist()]
+elmo_align_para_david = [x for x in scored_csv['elmo_align_para_david'].tolist()]
+elmo_sims = [x for x in scored_csv['elmo_sims'].tolist()]
+elmo_dist = [x for x in scored_csv['elmo_dist'].tolist()]
+elmo_david = [x for x in scored_csv['elmo_david'].tolist()]
+bert_src_para_sim = [x for x in scored_csv['bert_src_para_sim'].tolist()]
+bert_src_para_dist = [x for x in scored_csv['bert_src_para_dist'].tolist()]
+bert_src_para_david = [x for x in scored_csv['bert_src_para_david'].tolist()]
+bert_src_orig_sim = [x for x in scored_csv['bert_src_orig_sim'].tolist()]
+bert_src_orig_dist = [x for x in scored_csv['bert_src_orig_dist'].tolist()]
+bert_src_orig_david = [x for x in scored_csv['bert_src_orig_david'].tolist()]
+bert_orig_para_sim = [x for x in scored_csv['bert_orig_para_sim'].tolist()]
+bert_orig_para_dist = [x for x in scored_csv['bert_orig_para_dist'].tolist()]
+bert_orig_para_david = [x for x in scored_csv['bert_orig_para_david'].tolist()]
+bert_align_para_sim = [x for x in scored_csv['bert_align_para_sim'].tolist()]
+bert_align_para_dist = [x for x in scored_csv['bert_align_para_dist'].tolist()]
+bert_align_para_david = [x for x in scored_csv['bert_align_para_david'].tolist()]
+bert_sims = [x for x in scored_csv['bert_sims'].tolist()]
+bert_dist = [x for x in scored_csv['bert_dist'].tolist()]
+bert_david = [x for x in scored_csv['bert_david'].tolist()]
+ng_src_para = [x for x in scored_csv['ng_src_para'].tolist()]
+ng_src_orig = [x for x in scored_csv['ng_src_orig'].tolist()]
+ng_orig_para = [x for x in scored_csv['ng_orig_para'].tolist()]
+ng_align_para = [x for x in scored_csv['ng_align_para'].tolist()]
+ng_sum = [x for x in scored_csv['ng_sum'].tolist()]
+src = [x for x in scored_csv['src'].tolist()]
+align = [x for x in scored_csv['align'].tolist()]
+para = [x for x in scored_csv['para'].tolist()]
+orig = [x for x in scored_csv['orig'].tolist()]
+
+
+
+
+
+
 
 
 metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize_and_invert(glove_src_para_dist), 'glove_src_para_dist'),
-    (normalize_and_invert(glove_src_para_joint), 'glove_src_para_joint'),
+    (normalize_and_invert(glove_src_para_david), 'glove_src_para_joint'),
     (normalize(glove_src_orig_sim), 'glove_src_orig_sim'),
     (normalize_and_invert(glove_src_orig_dist), 'glove_src_orig_dist'),
-    (normalize_and_invert(glove_src_orig_joint), 'glove_src_orig_joint'),
+    (normalize_and_invert(glove_src_orig_david), 'glove_src_orig_joint'),
     (normalize(glove_orig_para_sim), 'glove_orig_para_sim'),
     (normalize_and_invert(glove_orig_para_dist), 'glove_orig_para_dist'),
-    (normalize_and_invert(glove_orig_para_joint), 'glove_orig_para_joint'),
+    (normalize_and_invert(glove_orig_para_david), 'glove_orig_para_joint'),
     (normalize(glove_align_para_sim), 'glove_align_para_sim'),
     (normalize_and_invert(glove_align_para_dist), 'glove_align_para_dist'),
-    (normalize_and_invert(glove_align_para_joint), 'glove_align_para_joint'),
+    (normalize_and_invert(glove_align_para_david), 'glove_align_para_joint'),
     (normalize(w2v_src_para_sim), 'w2v_src_para_sim'),
     (normalize_and_invert(w2v_src_para_dist), 'w2v_src_para_dist'),
-    (normalize_and_invert(w2v_src_para_joint), 'w2v_src_para_joint'),
+    (normalize_and_invert(w2v_src_para_david), 'w2v_src_para_joint'),
     (normalize(w2v_src_orig_sim), 'w2v_src_orig_sim'),
     (normalize_and_invert(w2v_src_orig_dist), 'w2v_src_orig_dist'),
-    (normalize_and_invert(w2v_src_orig_joint), 'w2v_src_orig_joint'),
+    (normalize_and_invert(w2v_src_orig_david), 'w2v_src_orig_joint'),
     (normalize(w2v_orig_para_sim), 'w2v_orig_para_sim'),
     (normalize_and_invert(w2v_orig_para_dist), 'w2v_orig_para_dist'),
-    (normalize_and_invert(w2v_orig_para_joint), 'w2v_orig_para_joint'),
+    (normalize_and_invert(w2v_orig_para_david), 'w2v_orig_para_joint'),
     (normalize(w2v_align_para_sim), 'w2v_align_para_sim'),
     (normalize_and_invert(w2v_align_para_dist), 'w2v_align_para_dist'),
-    (normalize_and_invert(w2v_align_para_joint), 'w2v_align_para_joint'),
+    (normalize_and_invert(w2v_align_para_david), 'w2v_align_para_joint'),
     (normalize(elmo_src_para_sim), 'elmo_src_para_sim'),
     (normalize_and_invert(elmo_src_para_dist), 'elmo_src_para_dist'),
-    (normalize_and_invert(elmo_src_para_joint), 'elmo_src_para_joint'),
+    (normalize_and_invert(elmo_src_para_david), 'elmo_src_para_joint'),
     (normalize(elmo_src_orig_sim), 'elmo_src_orig_sim'),
     (normalize_and_invert(elmo_src_orig_dist), 'elmo_src_orig_dist'),
-    (normalize_and_invert(elmo_src_orig_joint), 'elmo_src_orig_joint'),
+    (normalize_and_invert(elmo_src_orig_david), 'elmo_src_orig_joint'),
     (normalize(elmo_orig_para_sim), 'elmo_orig_para_sim'),
     (normalize_and_invert(elmo_orig_para_dist), 'elmo_orig_para_dist'),
-    (normalize_and_invert(elmo_orig_para_joint), 'elmo_orig_para_joint'),
+    (normalize_and_invert(elmo_orig_para_david), 'elmo_orig_para_joint'),
     (normalize(elmo_align_para_sim), 'elmo_align_para_sim'),
     (normalize_and_invert(elmo_align_para_dist), 'elmo_align_para_dist'),
-    (normalize_and_invert(elmo_align_para_joint), 'elmo_align_para_joint'),
+    (normalize_and_invert(elmo_align_para_david), 'elmo_align_para_joint'),
     (normalize(elmo_sims), 'elmo_sims'),
     (normalize_and_invert(elmo_dist), 'elmo_dist'),
     (normalize_and_invert(elmo_david), 'elmo_joint'),
+    (normalize_and_invert(bert_orig_para_dist), 'bert_orig_para_dist'),
+    (normalize_and_invert(bert_orig_para_david), 'bert_orig_para_joint'),
+    (normalize(bert_align_para_sim), 'bert_align_para_sim'),
+    (normalize_and_invert(bert_align_para_dist), 'bert_align_para_dist'),
+    (normalize_and_invert(bert_align_para_david), 'bert_align_para_joint'),
+    (normalize(bert_sims), 'bert_sims'),
+    (normalize_and_invert(bert_dist), 'bert_dist'),
+    (normalize_and_invert(bert_david), 'bert_joint'),
     # (normalize_and_invert(ng_src_para), 'ng_src_para'),
     # (normalize_and_invert(ng_src_orig), 'ng_src_orig'),
     # (normalize_and_invert(ng_orig_para), 'ng_orig_para'),
@@ -184,21 +217,21 @@ def prec(data):
     num = 0
     for datum in data:
         total += 1
-        if datum[0] == '1':
+        if datum[0] == 1:
             num += 1
     return num / total
 
 def all_pos(data):
     total = 0
     for datum in data:
-        if datum[0] == '1':
+        if datum[0] == 1:
             total += 1
     return total
 
 def rec(data, denom):
     num = 0
     for datum in data:
-        if datum[0] == '1':
+        if datum[0] == 1:
             num += 1
     return num / denom
 
@@ -259,7 +292,6 @@ for met in metrics:
                 pdb.set_trace()
         scores = [x[1] for x in tupes[0:upto]]
         annos = [int(x[0]) for x in tupes[0:upto]]
-        # pdb.set_trace()
         aveP = average_precision_score(annos, scores)
         # othermap = aveP / len(annos)
         # meanAvg = get_map(annos)

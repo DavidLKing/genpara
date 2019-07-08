@@ -102,6 +102,21 @@ elmo_align_para_david = [x for x in scored_csv['elmo_align_para_david'].tolist()
 elmo_sims = [x for x in scored_csv['elmo_sims'].tolist()]
 elmo_dist = [x for x in scored_csv['elmo_dist'].tolist()]
 elmo_david = [x for x in scored_csv['elmo_david'].tolist()]
+bert_src_para_sim = [x for x in scored_csv['bert_src_para_sim'].tolist()]
+bert_src_para_dist = [x for x in scored_csv['bert_src_para_dist'].tolist()]
+bert_src_para_david = [x for x in scored_csv['bert_src_para_david'].tolist()]
+bert_src_orig_sim = [x for x in scored_csv['bert_src_orig_sim'].tolist()]
+bert_src_orig_dist = [x for x in scored_csv['bert_src_orig_dist'].tolist()]
+bert_src_orig_david = [x for x in scored_csv['bert_src_orig_david'].tolist()]
+bert_orig_para_sim = [x for x in scored_csv['bert_orig_para_sim'].tolist()]
+bert_orig_para_dist = [x for x in scored_csv['bert_orig_para_dist'].tolist()]
+bert_orig_para_david = [x for x in scored_csv['bert_orig_para_david'].tolist()]
+bert_align_para_sim = [x for x in scored_csv['bert_align_para_sim'].tolist()]
+bert_align_para_dist = [x for x in scored_csv['bert_align_para_dist'].tolist()]
+bert_align_para_david = [x for x in scored_csv['bert_align_para_david'].tolist()]
+bert_sims = [x for x in scored_csv['bert_sims'].tolist()]
+bert_dist = [x for x in scored_csv['bert_dist'].tolist()]
+bert_david = [x for x in scored_csv['bert_david'].tolist()]
 ng_src_para = [x for x in scored_csv['ng_src_para'].tolist()]
 ng_src_orig = [x for x in scored_csv['ng_src_orig'].tolist()]
 ng_orig_para = [x for x in scored_csv['ng_orig_para'].tolist()]
@@ -151,6 +166,21 @@ metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize(elmo_sims), 'elmo_sims'),
     (normalize_and_invert(elmo_dist), 'elmo_dist'),
     (normalize_and_invert(elmo_david), 'elmo_joint'),
+    (normalize(bert_src_para_sim), 'bert_src_para_sim'),
+    (normalize_and_invert(bert_src_para_dist), 'bert_src_para_dist'),
+    (normalize_and_invert(bert_src_para_david), 'bert_src_para_joint'),
+    (normalize(bert_src_orig_sim), 'bert_src_orig_sim'),
+    (normalize_and_invert(bert_src_orig_dist), 'bert_src_orig_dist'),
+    (normalize_and_invert(bert_src_orig_david), 'bert_src_orig_joint'),
+    (normalize(bert_orig_para_sim), 'bert_orig_para_sim'),
+    (normalize_and_invert(bert_orig_para_dist), 'bert_orig_para_dist'),
+    (normalize_and_invert(bert_orig_para_david), 'bert_orig_para_joint'),
+    (normalize(bert_align_para_sim), 'bert_align_para_sim'),
+    (normalize_and_invert(bert_align_para_dist), 'bert_align_para_dist'),
+    (normalize_and_invert(bert_align_para_david), 'bert_align_para_joint'),
+    (normalize(bert_sims), 'bert_sims'),
+    (normalize_and_invert(bert_dist), 'bert_dist'),
+    (normalize_and_invert(bert_david), 'bert_joint'),
     # (normalize_and_invert(ng_src_para), 'ng_src_para'),
     # (normalize_and_invert(ng_src_orig), 'ng_src_orig'),
     # (normalize_and_invert(ng_orig_para), 'ng_orig_para'),

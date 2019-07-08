@@ -49,17 +49,22 @@ class BertBatch:
                print("This should be the last batch")
                toID = sentences[(batchLoc * batchSize) : ]
             if toID != []:
-               sents = [self.tokenizer.convert_tokens_to_ids(
-                      x
-                  )
-                  for x in toID]
+               sents = [ 
+                   [ tokenizer.vocab.get(
+                     x, tokenizer.vocab['[UNK]']
+                     ) for x in sent 
+                     ] for sent in toID 
+                   ]
+               # sents = [self.tokenizer.convert_tokens_to_ids(
+               #        x
+               #    )
+               #    for x in toID]
                padded_sents = self.pad(sents)
-               try:
-                 embeddings, _ = self.bert(padded_sents)
-               except:
-                 embeddings, _ = self.bert(padded_sents.to('cuda'))
-               [tensors.append(x.tolist()) for x in embeddings[-1]]
-               pdb.set_trace()
+               if self.device >= 0:
+                  padded_sents = padded_sents.to('cuda')
+               embeddings, _ = self.bert(padded_sents)
+               [tensors.append(np.asarray(x.tolist())) for x in embeddings[-1]]
+               # pdb.set_trace()
             batchLoc += 1
 
         assert(len(tensors) == len(sentences))

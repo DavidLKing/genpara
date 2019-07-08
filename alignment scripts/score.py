@@ -128,7 +128,7 @@ class Score:
             swapper = [swapper]
         return swapper
 
-    def score(self, line, word2vec, glove, ng_model, elmo_src, elmo_aligned, elmo_orig, elmo_para):
+    def score(self, line, word2vec, glove, ng_model, elmo_src, elmo_aligned, elmo_orig, elmo_para, bert_src, bert_aligned, bert_orig, bert_para):
         # defunct
         line = line.lower().strip().split('\t')
         swappable = self.list_of_words(line[0])
@@ -212,6 +212,40 @@ class Score:
         elmo_orig_para_sim, elmo_orig_para_dist, elmo_orig_para_david = self.score_list(elmo_orig_vec, elmo_para_vec)
         # ELMO ALIGN -> PARA
         elmo_align_para_sim, elmo_align_para_dist, elmo_align_para_david = self.score_list(elmo_align_vec, elmo_para_vec)
+        
+        elmo_sims = elmo_src_para_sim + elmo_src_orig_sim + elmo_orig_para_sim + elmo_align_para_sim
+        elmo_dist = elmo_src_para_dist + elmo_src_orig_dist + elmo_orig_para_dist + elmo_align_para_dist
+        elmo_david = elmo_src_para_david + elmo_src_orig_david + elmo_orig_para_david + elmo_align_para_david
+        
+        # BERT
+        # bert_src_vec = np.asarray(bert_src[src_idx].detach())
+        # bert_align_vec = np.asarray(bert_aligned[align_idx].detach())
+        # bert_orig_vec = np.asarray(bert_orig[orig_idx].detach())
+        # bert_para_vec = np.asarray(bert_para[para_idx].detach())
+        bert_src_vec = self.phrasal_mean_maker(src_idxes, bert_src)
+        # pdb.set_trace()
+        # bert_src_vec = bert_src[src_idx]
+        bert_align_vec = self.phrasal_mean_maker(align_idxes, bert_aligned)
+        # bert_align_vec = bert_aligned[align_idx]
+        bert_orig_vec = self.phrasal_mean_maker(orig_idxes, bert_orig)
+        # bert_orig_vec = bert_orig[orig_idx]
+        bert_para_vec = self.phrasal_mean_maker(para_idxes, bert_para)
+        # bert_para_vec = bert_para[para_idx]
+        # except:
+        # pdb.set_trace()
+        # BERT SRC -> PARA
+        bert_src_para_sim, bert_src_para_dist, bert_src_para_david = self.score_list(bert_src_vec, bert_para_vec)
+        # BERT SRC -> ORIG
+        bert_src_orig_sim, bert_src_orig_dist, bert_src_orig_david = self.score_list(bert_src_vec, bert_orig_vec)
+        # BERT ORIG -> PARA
+        bert_orig_para_sim, bert_orig_para_dist, bert_orig_para_david = self.score_list(bert_orig_vec, bert_para_vec)
+        # BERT ALIGN -> PARA
+        bert_align_para_sim, bert_align_para_dist, bert_align_para_david = self.score_list(bert_align_vec, bert_para_vec)
+        
+        bert_sims = bert_src_para_sim + bert_src_orig_sim + bert_orig_para_sim + bert_align_para_sim
+        bert_dist = bert_src_para_dist + bert_src_orig_dist + bert_orig_para_dist + bert_align_para_dist
+        bert_david = bert_src_para_david + bert_src_orig_david + bert_orig_para_david + bert_align_para_david
+        
         # GLOVE
         glove_src = self.mean_maker(src, glove)
         glove_aligned = self.mean_maker(aligned, glove)
@@ -231,6 +265,7 @@ class Score:
         ng_src_orig = ng_src - ng_orig
         ng_orig_para = ng_orig - ng_para
         ng_align_para = ng_align - ng_para
+        ng_sum = ng_src_orig + ng_src_para + ng_orig_para + ng_align_para
         if not np.isnan(glove_para[0]) and not np.isnan(glove_src[0]) and \
                 not np.isnan(w2v_para[0]) and not np.isnan(w2v_src[0]):
             # pdb.set_trace()
@@ -303,10 +338,29 @@ class Score:
                 elmo_align_para_sim, 
                 elmo_align_para_dist, 
                 elmo_align_para_david,
+                elmo_sims,
+                elmo_dist,
+                elmo_david,
+                bert_src_para_sim, 
+                bert_src_para_dist, 
+                bert_src_para_david,
+                bert_src_orig_sim, 
+                bert_src_orig_dist, 
+                bert_src_orig_david,
+                bert_orig_para_sim, 
+                bert_orig_para_dist, 
+                bert_orig_para_david,
+                bert_align_para_sim, 
+                bert_align_para_dist, 
+                bert_align_para_david,
+                bert_sims,
+                bert_dist,
+                bert_david,
                 ng_src_para,
                 ng_src_orig,
                 ng_orig_para,
-                ng_align_para)
+                ng_align_para,
+                ng_sum)
 
 
 
@@ -325,13 +379,6 @@ print("""
 
 # temp test
 
-swap_csv = pandas.read_csv(sys.argv[3] ,delimiter='\t')
-srcs = [x.split() for x in swap_csv['src'].tolist()]
-
-b = BertBatch(device=1)
-test = b.extract(srcs, 32)
-
-pdb.set_trace()
 
 
 corrected = open(sys.argv[4], 'r').readlines()
@@ -352,9 +399,6 @@ glove = gensim.models.KeyedVectors.load_word2vec_format(sys.argv[2], binary=Fals
 # glove = ''
 
 
-# If you have a GPU, put everything on cuda
-tokens_tensor = tokens_tensor.to('cuda')
-segments_tensors = segments_tensors.to('cuda')
 
 
 ### ELMO ###
@@ -400,24 +444,48 @@ paras = [x.split() for x in swap_csv['para'].tolist()]
 # mini-batched
 # TODO make 3rd arg, batch size, an option
 
-batch_size = 4
+batch_size = 8
+
+warmup = srcs + aligns + origs + paras
+# m.extract(warmup, 2, batch_size, 'specials')
+m.extract(warmup, 2, batch_size, 'no')
 
 print("Extracting ELMo rep for srcs")
-elmo_src = m.extract(srcs, 2, batch_size)
+elmo_src = m.extract(srcs, 2, batch_size, 'no')
 print("Extracting ELMo rep for aligns")
-elmo_align = m.extract(aligns, 2, batch_size)
+elmo_align = m.extract(aligns, 2, batch_size, 'no')
 print("Extracting ELMo rep for origs")
-elmo_orig = m.extract(origs, 2, batch_size)
+elmo_orig = m.extract(origs, 2, batch_size, 'no')
 print("Extracting ELMo rep for paras")
-elmo_para = m.extract(paras, 2, batch_size)
+elmo_para = m.extract(paras, 2, batch_size, 'no')
 
+
+
+# # # BERT # # # 
+
+b = BertBatch(device=0)
+
+b.extract(warmup, batch_size)
+
+print("Extracting BERT rep for srcs")
+bert_src = b.extract(srcs, batch_size)
+print("Extracting BERT rep for aligns")
+bert_align = b.extract(aligns, batch_size)
+print("Extracting BERT rep for origs")
+bert_orig = b.extract(origs, batch_size)
+print("Extracting BERT rep for paras")
+bert_para = b.extract(paras, batch_size)
+
+# If you have a GPU, put everything on cuda
+# tokens_tensor = tokens_tensor.to('cuda')
+# segments_tensors = segments_tensors.to('cuda')
+# pdb.set_trace()
 
 # TODO make this an option or get logging to a different file
-outfile = open('scored.tsv', 'w')
+outfile = open(sys.argv[6], 'w')
 
 header = swap_txt[0].strip().split('\t')
 
-# header = [
 header = ['dialog',
             'turn',
             'glove_src_para_sim',
@@ -456,10 +524,29 @@ header = ['dialog',
             'elmo_align_para_sim', 
             'elmo_align_para_dist', 
             'elmo_align_para_david',
+            'elmo_sims',
+            'elmo_dist',
+            'elmo_david',
+            'bert_src_para_sim', 
+            'bert_src_para_dist', 
+            'bert_src_para_david',
+            'bert_src_orig_sim', 
+            'bert_src_orig_dist', 
+            'bert_src_orig_david',
+            'bert_orig_para_sim', 
+            'bert_orig_para_dist', 
+            'bert_orig_para_david',
+            'bert_align_para_sim', 
+            'bert_align_para_dist', 
+            'bert_align_para_david',
+            'bert_sims',
+            'bert_dist',
+            'bert_david',
             'ng_src_para',
             'ng_src_orig',
             'ng_orig_para',
-            'ng_align_para'] + header
+            'ng_align_para',
+            'ng_sum'] + header
 # print('\t'.join(header))
 outfile.write('\t'.join(header) + '\n')
 
@@ -469,6 +556,8 @@ missing = 0
 total = 0
 
 lost = []
+
+SANITY = True
 
 # TODO add sanity check to make sure lengths are all correct
 # TODO figure out how to get Pandas to output something I can iterate through
@@ -482,7 +571,11 @@ for line in swap_txt[1:]:
                    elmo_src[line_nmr],
                    elmo_align[line_nmr],
                    elmo_orig[line_nmr],
-                   elmo_para[line_nmr])
+                   elmo_para[line_nmr],
+                   bert_src[line_nmr],
+                   bert_align[line_nmr],
+                   bert_orig[line_nmr],
+                   bert_para[line_nmr])
     # print('sims', sims)
     # print('line', line)
     # print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
@@ -503,14 +596,15 @@ for line in swap_txt[1:]:
     # Sarah's originals are strings that were once arrays
     # TODO I don't think these have to be converted, but 
     # double check
-    elif ' '.join(eval(original)) in dialog_turn_nums:
+    elif '[' in original and ' '.join(eval(original)) in dialog_turn_nums:
         original = ' '.join(eval(original))
         for nums in dialog_turn_nums[original]:
             dial_num = nums[0]
             turn_num = nums[1]
             outfile.write('\t'.join([str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
     else:
-        pdb.set_trace()
+        outfile.write('\t'.join([str(999), str(999)] + list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
+        # pdb.set_trace()
         lost.append('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')) + '\n')
         missing += 1
     line_nmr += 1
