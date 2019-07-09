@@ -549,6 +549,7 @@ header = ['dialog',
             'ng_sum'] + header
 
 # print('\t'.join(header))
+pdb.set_trace()
 outfile.write('\t'.join(header) + '\n')
 
 
@@ -557,6 +558,8 @@ missing = 0
 total = 0
 
 lost = []
+
+
 
 SANITY = True
 
