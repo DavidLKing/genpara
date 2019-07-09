@@ -114,6 +114,15 @@ def get_low_freq(corrected):
             return_sents.append(line)
     return return_sents
 
+def get_labels(corrected):
+    labels = set()
+    for line in corrected:
+        line = line.strip().split('\t')
+        if len(line) > 1:
+            label = line[3]
+            labels.add(label)
+    return labels
+
 def swap(sents, swap_dict):
     paraphrases = []
     mltplsrc = 0
@@ -225,6 +234,7 @@ print("phrasal alignments")
 
 # HACKY PROTOTYPING
 sents = open('../data/corrected.tsv', 'r').readlines()
+labels = get_labels(sents)
 low_freq = get_low_freq(sents)
 
 # GEN SWAPS
