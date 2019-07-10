@@ -30,10 +30,14 @@ def normalize_and_invert(dist):
     max = 0
     min = 1
     for float_value in dist:
-        if float_value > max:
-            max = float_value
-        elif float_value < min:
-            min = float_value
+        float_value = float(float_value)
+        try:
+            if float_value > max:
+                max = float_value
+            elif float_value < min:
+                min = float_value
+        except:
+            pdb.set_trace()
     # normalize
     new_dist = []
     for old_score in dist:
@@ -47,10 +51,14 @@ def normalize(dist):
     max = 0
     min = 1
     for float_value in dist:
-        if float_value > max:
-            max = float_value
-        elif float_value < min:
-            min = float_value
+        float_value = float(float_value)
+        try:
+            if float_value > max:
+                max = float_value
+            elif float_value < min:
+                min = float_value
+        except:
+            pdb.set_trace()
     # normalize
     new_dist = []
     for old_score in dist:
@@ -127,6 +135,7 @@ align = [x for x in scored_csv['align'].tolist()]
 para = [x for x in scored_csv['para'].tolist()]
 orig = [x for x in scored_csv['orig'].tolist()]
 
+
 metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize_and_invert(glove_src_para_dist), 'glove_src_para_dist'),
     (normalize_and_invert(glove_src_para_david), 'glove_src_para_joint'),
@@ -194,7 +203,7 @@ metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
 
 os.mkdir(newdir)
 
-pdb.set_trace()
+# pdb.set_trace()
 
 for values in metrics:
     scores = values[0]

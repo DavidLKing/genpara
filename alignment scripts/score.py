@@ -6,8 +6,11 @@ import h5py
 import numpy as np
 import gensim
 import pandas
+import pickle
 import kenlm
 import allennlp
+from queue import Queue
+from threading import Thread
 from allennlp.modules.elmo import Elmo, batch_to_ids
 import torch
 import pdb
@@ -411,7 +414,7 @@ elmo = Elmo(options_file, weight_file, 3, dropout=0)
 m = MiniBatch(options_file,
               weight_file,
               3,
-              device=0)
+              device=1)
 # elmo_src = h5py.File(sys.argv[3], 'r')
 # elmo_src = h5py.File('elmo_singular_swap.src.h5py', 'r')
 # elmo_tgt = h5py.File(sys.argv[4], 'r')
@@ -419,6 +422,12 @@ m = MiniBatch(options_file,
 # testing minibatching
 # test_sents = [x.strip().split(' ') for x in open('elmo_singular_swap.src', 'r').readlines()]
 # test_extract = m.extract(test_sents, 3, 32)
+
+
+### BERT INIT ###
+# TODO bert isn't reading device id
+b = BertBatch(device=0)
+
 
 # KENLM
 print('loading kenlm gigaword 5gram model')
@@ -446,35 +455,101 @@ paras = [x.split() for x in swap_csv['para'].tolist()]
 
 batch_size = 8
 
-warmup = srcs + aligns + origs + paras
-# m.extract(warmup, 2, batch_size, 'specials')
-m.extract(warmup, 2, batch_size, 'no')
 
-print("Extracting ELMo rep for srcs")
-elmo_src = m.extract(srcs, 2, batch_size, 'no')
-print("Extracting ELMo rep for aligns")
-elmo_align = m.extract(aligns, 2, batch_size, 'no')
-print("Extracting ELMo rep for origs")
-elmo_orig = m.extract(origs, 2, batch_size, 'no')
-print("Extracting ELMo rep for paras")
-elmo_para = m.extract(paras, 2, batch_size, 'no')
+
+warmup = srcs + aligns + origs + paras
+
+# ray.init()
+
+# @ray.remote
+def get_elmo(srcs, aligns, origs, paras, queue):
+    # m.extract(warmup, 2, batch_size, 'specials')
+    # m.extract(warmup, 2, batch_size, 'no')
+    m.extract(srcs, 2, batch_size, 'no')
+    print("Extracting ELMo rep for srcs")
+    elmo_src = m.extract(srcs, 2, batch_size, 'no')
+    # elmo_src_file = pickle.dump(elmo_src, open('elmo_src.pkl', 'wb'))
+    # elmo_src = None
+    print("Extracting ELMo rep for aligns")
+    elmo_align = m.extract(aligns, 2, batch_size, 'no')
+    # elmo_align_file = pickle.dump(elmo_align, open('elmo_align.pkl', 'wb'))
+    # elmo_align = None
+    print("Extracting ELMo rep for origs")
+    elmo_orig = m.extract(origs, 2, batch_size, 'no')
+    # elmo_orig_file = pickle.dump(elmo_orig, open('elmo_orig.pkl', 'wb'))
+    # elmo_orig = None
+    print("Extracting ELMo rep for paras")
+    elmo_para = m.extract(paras, 2, batch_size, 'no')
+    # elmo_para_file = pickle.dump(elmo_para, open('elmo_para.pkl', 'wb'))
+    # elmo_para = None
+    # return elmo_src, elmo_align, elmo_orig, elmo_para
+    queue.put(('elmo', elmo_src, elmo_align, elmo_orig, elmo_para))
 
 
 
 # # # BERT # # # 
 
-b = BertBatch(device=0)
 
-b.extract(warmup, batch_size)
 
-print("Extracting BERT rep for srcs")
-bert_src = b.extract(srcs, batch_size)
-print("Extracting BERT rep for aligns")
-bert_align = b.extract(aligns, batch_size)
-print("Extracting BERT rep for origs")
-bert_orig = b.extract(origs, batch_size)
-print("Extracting BERT rep for paras")
-bert_para = b.extract(paras, batch_size)
+# @ray.remote
+def get_bert(srcs, aligns, origs, paras, queue):
+    # b.extract(warmup, batch_size)
+    b.extract(srcs, batch_size)
+    print("Extracting BERT rep for srcs")
+    bert_src = b.extract(srcs, batch_size)
+    # bert_src_file = pickle.dump(bert_src, open('bert_src.pkl', 'wb'))
+    # bert_src = None
+    print("Extracting BERT rep for aligns")
+    bert_align = b.extract(aligns, batch_size)
+    # bert_align_file = pickle.dump(bert_align, open('bert_align.pkl', 'wb'))
+    # bert_align = None
+    print("Extracting BERT rep for origs")
+    bert_orig = b.extract(origs, batch_size)
+    # bert_orig_file = pickle.dump(bert_orig, open('bert_orig.pkl', 'wb'))
+    # bert_orig = None
+    print("Extracting BERT rep for paras")
+    bert_para = b.extract(paras, batch_size)
+    # bert_para_file = pickle.dump(bert_para, open('bert_para.pkl', 'wb'))
+    # bert_para = None
+    # return bert_src, bert_align, bert_orig, bert_para
+    queue.put(('bert', bert_src, bert_align, bert_orig, bert_para))
+
+
+results = Queue()
+
+elmo_id = Thread(target=get_elmo, args=(srcs, aligns, origs, paras, results))
+bert_id = Thread(target=get_bert, args=(srcs, aligns, origs, paras, results))
+
+elmo_id.start()
+bert_id.start()
+
+elmo_id.join()
+bert_id.join()
+
+print("eh?o")
+pdb.set_trace()
+
+# elmos, berts = ray.get([elmo_id, bert_id]) 
+
+while not results.empty():
+    res = results.get()
+    if res[0] == 'elmo':
+        elmo_src = res[1]
+        elmo_align = res[2]
+        elmo_orig = res[3]
+        elmo_para = res[4]
+    elif res[0] == 'bert':
+        bert_src = res[1]
+        bert_align = res[2]
+        bert_orig = res[3]
+        bert_para = res[4]
+    else:
+        print("error")
+        pdb.set_trace()
+
+print("should be good to go")
+pdb.set_trace()
+
 
 # If you have a GPU, put everything on cuda
 # tokens_tensor = tokens_tensor.to('cuda')
@@ -549,7 +624,6 @@ header = ['dialog',
             'ng_sum'] + header
 
 # print('\t'.join(header))
-pdb.set_trace()
 outfile.write('\t'.join(header) + '\n')
 
 
@@ -559,7 +633,17 @@ total = 0
 
 lost = []
 
+# print("Attempting to load everything")
 
+# elmo_src =  pickle.load(open('elmo_src.pkl', 'rb'))
+# elmo_align =  pickle.load(open('elmo_align.pkl', 'rb'))
+# elmo_orig =  pickle.load(open('elmo_orig.pkl', 'rb'))
+# elmo_para =  pickle.load(open('elmo_para.pkl', 'rb'))
+# bert_src =  pickle.load(open('bert_src.pkl', 'rb'))
+# bert_align =  pickle.load(open('bert_align.pkl', 'rb'))
+# bert_orig =  pickle.load(open('bert_orig.pkl', 'rb'))
+# bert_para =  pickle.load(open('bert_para.pkl', 'rb'))
+ 
 
 SANITY = True
 
