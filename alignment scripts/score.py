@@ -414,7 +414,7 @@ elmo = Elmo(options_file, weight_file, 3, dropout=0)
 m = MiniBatch(options_file,
               weight_file,
               3,
-              device=1)
+              device=-1)
 # elmo_src = h5py.File(sys.argv[3], 'r')
 # elmo_src = h5py.File('elmo_singular_swap.src.h5py', 'r')
 # elmo_tgt = h5py.File(sys.argv[4], 'r')
@@ -426,7 +426,7 @@ m = MiniBatch(options_file,
 
 ### BERT INIT ###
 # TODO bert isn't reading device id
-b = BertBatch(device=0)
+b = BertBatch(device=-1)
 
 
 # KENLM
@@ -482,8 +482,8 @@ def get_elmo(srcs, aligns, origs, paras, queue):
     elmo_para = m.extract(paras, 2, batch_size, 'no')
     # elmo_para_file = pickle.dump(elmo_para, open('elmo_para.pkl', 'wb'))
     # elmo_para = None
-    # return elmo_src, elmo_align, elmo_orig, elmo_para
-    queue.put(('elmo', elmo_src, elmo_align, elmo_orig, elmo_para))
+    return ['elmo', elmo_src, elmo_align, elmo_orig, elmo_para]
+    # queue.put(('elmo', elmo_src, elmo_align, elmo_orig, elmo_para))
 
 
 
@@ -511,23 +511,29 @@ def get_bert(srcs, aligns, origs, paras, queue):
     bert_para = b.extract(paras, batch_size)
     # bert_para_file = pickle.dump(bert_para, open('bert_para.pkl', 'wb'))
     # bert_para = None
-    # return bert_src, bert_align, bert_orig, bert_para
-    queue.put(('bert', bert_src, bert_align, bert_orig, bert_para))
+    return ['bert', bert_src, bert_align, bert_orig, bert_para]
+    # queue.put(('bert', bert_src, bert_align, bert_orig, bert_para))
 
+# MULTI-GPU CODE
 
-results = Queue()
+# results = Queue()
 
-elmo_id = Thread(target=get_elmo, args=(srcs, aligns, origs, paras, results))
-bert_id = Thread(target=get_bert, args=(srcs, aligns, origs, paras, results))
+# elmo_id = Thread(target=get_elmo, args=(srcs, aligns, origs, paras, results))
+# bert_id = Thread(target=get_bert, args=(srcs, aligns, origs, paras, results))
 
-elmo_id.start()
-bert_id.start()
+# elmo_id.start()
+# bert_id.start()
 
-elmo_id.join()
-bert_id.join()
+# elmo_id.join()
+# bert_id.join()
 
-print("eh?o")
-pdb.set_trace()
+# SINGLE GPU CODE
+
+results = []
+results += get_elmo(srcs, aligns, origs, paras, results)
+results += get_bert(srcs, aligns, origs, paras, results)
+
+print("eho")
 
 # elmos, berts = ray.get([elmo_id, bert_id]) 
 
@@ -548,7 +554,6 @@ while not results.empty():
         pdb.set_trace()
 
 print("should be good to go")
-pdb.set_trace()
 
 
 # If you have a GPU, put everything on cuda
