@@ -266,7 +266,7 @@ def get_map(annos):
     meanap = sum(aps) / len(annos)
     return meanap
 
-header = ["metric", "percent", "prec", "rec", "f1", "AveP", "MAP"]
+header = ["metric", "percent", "prec", "rec", "f1", "AveP", "MAP", "weightedAveP"]
 print('\t'.join(header))
 label_names = set(labels)
 for met in metrics:
@@ -295,21 +295,29 @@ for met in metrics:
                 pdb.set_trace()
         scores = [x[1] for x in tupes[0:upto]]
         annos = [int(x[0]) for x in tupes[0:upto]]
+
+        weight_denom = len(annos)
+
         aveP = average_precision_score(annos, scores)
         aps = []
+        weighted_aps = []
         for label in label_names:
             map_tupes = []
             for anno, score, item_label in zip(temp_labels, met[0], labels):
                 if item_label == label:
                     map_tupes.append((anno, score))
-            ap = average_precision_score([int(x[0]) for x in map_tupes], [x[1] for x in map_tupes])
-            if np.isnan(ap):
-                ap = 0.0
-            aps.append(ap)
+            ap_annos = [int(x[0]) for x in map_tupes]
+            ap_scores = [x[1] for x in map_tupes]
+            if 1 in ap_annos and 0 in ap_annos:
+                ap = average_precision_score(ap_annos, ap_scores)
+                weight_numer = len(ap_annos)
+                weight = weight_numer / weight_denom
+                aps.append(ap)
+                weighted_aps.append(ap * weight)
         maveP = sum(aps) / len(aps)
         # othermap = aveP / len(annos)
         # meanAvg = get_map(annos)
-        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP), str(maveP)]))
+        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP), str(maveP), str(sum(weighted_aps))]))
     # final block
     precision = prec(tupes)
     recall = rec(tupes, rec_denom)
@@ -319,17 +327,25 @@ for met in metrics:
     aveP = average_precision_score(annos, scores)
     # repeated from above
     aps = []
+    weighted_aps = []
     for label in label_names:
         map_tupes = []
         for anno, score, item_label in zip(temp_labels, met[0], labels):
             if item_label == label:
                 map_tupes.append((anno, score))
-        ap = average_precision_score([int(x[0]) for x in map_tupes], [x[1] for x in map_tupes])
-        if np.isnan(ap):
-            ap = 0.0
-        aps.append(ap)
+        ap_annos = [int(x[0]) for x in map_tupes]
+        ap_scores = [x[1] for x in map_tupes]
+
+        weight_denom = len(annos)
+
+        if 1 in ap_annos and 0 in ap_annos:
+            weight_numer = len(ap_annos)
+            weight = weight_numer / weight_denom
+            ap = average_precision_score(ap_annos, ap_scores)
+            aps.append(ap)
+            weighted_aps.append(ap * weight)
     maveP = sum(aps) / len(aps)
-    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score), str(aveP), str(maveP)]))
+    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score), str(aveP), str(maveP), str(sum(weighted_aps))]))
 
 
 
