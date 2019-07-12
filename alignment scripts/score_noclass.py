@@ -7,6 +7,7 @@
 import subprocess
 import pdb
 import pandas
+import numpy as np
 import sys
 from sklearn.metrics import average_precision_score
 
@@ -145,6 +146,7 @@ src = [x for x in scored_csv['src'].tolist()]
 align = [x for x in scored_csv['align'].tolist()]
 para = [x for x in scored_csv['para'].tolist()]
 orig = [x for x in scored_csv['orig'].tolist()]
+labels = [x for x in scored_csv['label'].tolist()]
 
 
 
@@ -264,8 +266,9 @@ def get_map(annos):
     meanap = sum(aps) / len(annos)
     return meanap
 
-header = ["metric", "percent", "prec", "rec", "f1", "AveP"]
+header = ["metric", "percent", "prec", "rec", "f1", "AveP", "MAP"]
 print('\t'.join(header))
+label_names = set(labels)
 for met in metrics:
     tupes = []
     met_label = met[1]
@@ -293,14 +296,40 @@ for met in metrics:
         scores = [x[1] for x in tupes[0:upto]]
         annos = [int(x[0]) for x in tupes[0:upto]]
         aveP = average_precision_score(annos, scores)
+        aps = []
+        for label in label_names:
+            map_tupes = []
+            for anno, score, item_label in zip(temp_labels, met[0], labels):
+                if item_label == label:
+                    map_tupes.append((anno, score))
+            ap = average_precision_score([int(x[0]) for x in map_tupes], [x[1] for x in map_tupes])
+            if np.isnan(ap):
+                ap = 0.0
+            aps.append(ap)
+        maveP = sum(aps) / len(aps)
         # othermap = aveP / len(annos)
         # meanAvg = get_map(annos)
-        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP)]))
+        print('\t'.join([met_label, str(num * 10), str(precision), str(recall), str(f1_score), str(aveP), str(maveP)]))
     # final block
     precision = prec(tupes)
     recall = rec(tupes, rec_denom)
     f1_score = f1(precision, recall)
-    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score), str(aveP)]))
+    scores = [x[1] for x in tupes]
+    annos = [int(x[0]) for x in tupes]
+    aveP = average_precision_score(annos, scores)
+    # repeated from above
+    aps = []
+    for label in label_names:
+        map_tupes = []
+        for anno, score, item_label in zip(temp_labels, met[0], labels):
+            if item_label == label:
+                map_tupes.append((anno, score))
+        ap = average_precision_score([int(x[0]) for x in map_tupes], [x[1] for x in map_tupes])
+        if np.isnan(ap):
+            ap = 0.0
+        aps.append(ap)
+    maveP = sum(aps) / len(aps)
+    print('\t'.join([met_label, str(100), str(precision), str(recall), str(f1_score), str(aveP), str(maveP)]))
 
 
 
