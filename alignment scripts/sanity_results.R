@@ -34,10 +34,17 @@ graphmap <- function(dataset, title){
     geom_point() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }
+graphwap <- function(dataset, title){
+  ggplot(data=dataset, aes(x=reorder(metric, -weightedAveP),y=weightedAveP)) +
+    # ggplot(data=dataset, aes(x=metric,y=MAP)) +
+    ggtitle(title) +
+    geom_point() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+}
 
 
 setwd("~/bin/git/genpara/alignment scripts")
-sane = read.csv('sanity_output_noarrays.tsv', header = TRUE, sep = '\t')
+sane = read.csv('sanity_output_noarraysWeightTesting.tsv', header = TRUE, sep = '\t')
 # sane = read.csv('genpara.maxent.nobias.tsv.csv', header = FALSE, sep = ' ')
 
 # EXAMPLE OF HOW TO ORDER
@@ -94,6 +101,9 @@ graphrec(all, "Recall at 100%")
 # graphavg(seventy, "AvgP at 70%")
 # graphavg(eighty, "AvgP at 80%")
 # graphavg(ninety, "AvgP at 90%")
-graphavg(all, "AvgP at 100%")
+graphavg(all, "AvgP")
+
+graphmap(all, "MAP by label")
+graphwap(all, "Weighted AveP by label")
 
 dev.off()
