@@ -464,8 +464,8 @@ warmup = srcs + aligns + origs + paras
 # @ray.remote
 def get_elmo(srcs, aligns, origs, paras, queue):
     # m.extract(warmup, 2, batch_size, 'specials')
-    # m.extract(warmup, 2, batch_size, 'no')
-    m.extract(srcs, 2, batch_size, 'no')
+    m.extract(warmup, 2, batch_size, 'no')
+    # m.extract(srcs, 2, batch_size, 'no')
     print("Extracting ELMo rep for srcs")
     elmo_src = m.extract(srcs, 2, batch_size, 'no')
     # elmo_src_file = pickle.dump(elmo_src, open('elmo_src.pkl', 'wb'))
@@ -493,8 +493,8 @@ def get_elmo(srcs, aligns, origs, paras, queue):
 
 # @ray.remote
 def get_bert(srcs, aligns, origs, paras, queue):
-    # b.extract(warmup, batch_size)
-    b.extract(srcs, batch_size)
+    b.extract(warmup, batch_size)
+    # b.extract(srcs, batch_size)
     print("Extracting BERT rep for srcs")
     bert_src = b.extract(srcs, batch_size)
     # bert_src_file = pickle.dump(bert_src, open('bert_src.pkl', 'wb'))
@@ -530,15 +530,16 @@ def get_bert(srcs, aligns, origs, paras, queue):
 # SINGLE GPU CODE
 
 results = []
-results += get_elmo(srcs, aligns, origs, paras, results)
-results += get_bert(srcs, aligns, origs, paras, results)
+results.append(get_elmo(srcs, aligns, origs, paras, results))
+results.append(get_bert(srcs, aligns, origs, paras, results))
 
 print("eho")
-
+pdb.set_trace()
 # elmos, berts = ray.get([elmo_id, bert_id]) 
 
-while not results.empty():
-    res = results.get()
+# while not results.empty():
+#     res = results.get()
+for res in results:
     if res[0] == 'elmo':
         elmo_src = res[1]
         elmo_align = res[2]
@@ -553,7 +554,9 @@ while not results.empty():
         print("error")
         pdb.set_trace()
 
+
 print("should be good to go")
+pdb.set_trace()
 
 
 # If you have a GPU, put everything on cuda

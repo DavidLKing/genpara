@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import pdb
+import tqdm
 import numpy as np
 import pandas as pd
 import seaborn as sb
@@ -15,6 +16,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import ShuffleSplit
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GroupKFold
+from sklearn.metrics import average_precision_score as avp
 from sklearn import metrics 
 from sklearn.metrics import classification_report
 
@@ -51,31 +53,63 @@ names = [
 
 results = []
 
-for nam in names:
+for nam in tqdm.tqdm(names):
     embed = nam[0].split('_')
     embed_type = embed[0]
-    composition = embed[-1].replace('david', 'joint')
+    composition = embed[-1].replace('david', 'joint').replace('para', 'n/a')
 
     X = metrics[nam].values
     y = metrics['annotation'].values
     groups = np.asarray([labels.get(x, labels['unk']) for x in metrics['label'].values])
-    gkf = GroupKFold(n_splits=10)
+    # gkf = GroupKFold(n_splits=2)
+    total = len(set(groups))
+    gkf = GroupKFold(n_splits=total)
 
     fold_accs = []
+    fold_aps = []
+    fold_waps = []
+
+    whole_y = []
+    whole_score = []
 
     for train, test in gkf.split(X, y, groups=groups):
-        clf = LogisticRegression(random_state=0, solver='lbfgs', n_jobs=16, verbose=0, max_iter=1000)
+        # print("Currently on {}".format(current))
+        clf = LogisticRegression(random_state=0, solver='lbfgs', n_jobs=32, verbose=0, max_iter=1000)
         train_X = np.asarray([X[x] for x in train])
         train_y = np.asarray([y[x] for x in train])
         test_X = np.asarray([X[x] for x in test])
         test_y = np.asarray([y[x] for x in test])
         clf.fit(train_X, train_y)
+        probas = clf.predict_proba(test_X)
+        is_para_prob = [x[1] for x in probas]
+        is_not_para_prob = [x[1] for x in probas]
+        whole_y += test_y.tolist()
+        whole_score += is_para_prob
+        if 1 in test_y and 0 in test_y:
+            fold_aps.append(avp(test_y, is_para_prob))
+            avg_prec = avp(test_y, is_para_prob)
+            fold_aps.append(avg_prec)
+            weight = test_y.shape[0] / y.shape[0]
+            fold_waps.append(avg_prec * weight)
         fold_accs.append(clf.score(test_X, test_y))
+        # current += 1
 
-    results.append((embed_type, composition, str(np.mean(fold_accs))))
+    whole_ap = avp(whole_y, whole_score)
+    results.append((embed_type,
+                    composition,
+                    str(np.mean(fold_accs)),
+                    str(whole_ap),
+                    str(np.mean(fold_aps)),
+                    str(sum(fold_waps))))
+    # print("fold_aps:", fold_apsn)
 
+outfile = open('acc_avp_and_map.tsv', 'w')
+
+print('\t'.join(['embed', 'comp', 'acc', 'aveP', 'map', '% * map']))
+outfile.write('\t'.join(['embed', 'comp', 'acc', 'aveP', 'map', '% * map']) + '\n')
 for res in results:
     print('\t'.join(res))
+    outfile.write('\t'.join(res) + '\n')
 
 
 
