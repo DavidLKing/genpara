@@ -1,0 +1,6 @@
+python V3_unsupervised.py edinburgh_POSS.tsv 0 0.3 > ./V3_Results/0_0.3
+
+arg[1]: file
+arg[2]: the layer chosen (0 is the last one, 11 is the first one)
+arg[3]: the discriminative boundary (using cosine distance, < boundary means aligned)
+then I used optional cat operation
