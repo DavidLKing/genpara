@@ -1,0 +1,7 @@
+python V2.py edinburgh_POSS_TRAINING.tsv 1 256 edinburgh_POSS_DEV.tsv > ./Results/V2_edinburgh_dep_multi_trial_1_256
+
+argv[1]: training file
+argv[2]: # of hidden layers in the middle
+argv[3]: # of dimensions in middle layers
+argv[4]: testing/dev file
+then I used optional cat operation
