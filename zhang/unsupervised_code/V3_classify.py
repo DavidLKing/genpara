@@ -122,7 +122,7 @@ class UnsupervisedTraining():
                         sentSet.add(combo)
                         self.trials.append([])
                         
-        batch_size = 10
+        batch_size = 64
         # pdb.set_trace()
         i = 0
         batch_loc = 0
@@ -186,10 +186,7 @@ class UnsupervisedTraining():
                     score = scores[row][col]
                     """以下条件式先去掉吧 还没想到更好的替代"""
                     alignString = str(row) + "-" + str(col)
-                    try:
-                        alignWords = str(sent1[row]) + " | " + str(sent2[col])
-                    except:
-                        pdb.set_trace()
+                    alignWords = str(sent1[row]) + " | " + str(sent2[col])
 
                     """The row and col in cell matches the two sentences"""
                     print("Involved index: ")
