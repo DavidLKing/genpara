@@ -94,132 +94,136 @@ class PredictingData():
                         sentSet.add(combo)
                         self.trials.append([])
                         
-        batch_size = 128
-        
+        batch_size = 10
+        # pdb.set_trace()
         i = 0
         batch_loc = 0
-        while batch_loc < len(self.sentences):
-            batches = self.sentences[batch_loc : (batch_loc + batch_size)]
-            
+        # while batch_loc < len(self.sentences):
+        #     pdb.set_trace()
+        # batches = self.sentences[batch_loc : (batch_loc + batch_size)]
+
+        if torch.cuda.is_available():
+            b = BertBatch(device=0)
+        else:
             b = BertBatch(device=-1)
+
+        embeddings = b.extract(self.sentences, batch_size, self.layer)
+        
+        j = 0
+        while (j+1) < len(embeddings):
             
-            embeddings = b.extract(batches, 1)     
+            gold = self.goldScores[int(i/2)]
             
-            j = 0
-            while (j+1) < len(embeddings):
-                
-                gold = self.goldScores[int(i/2)]
-                
-                sent1 = list(self.sentences[i])
-                sent2 = list(self.sentences[i+1])
-                
-                left = embeddings[j]
-                right = embeddings[j+1]
-                
-                left_num_words = len(left)
-                right_num_words = len(right)
-                
-                print("sent1: ")
-                print(sent1)
-                print("sent2： ")
-                print(sent2)
-                
-                """左右句分别的num of words！！！！"""
-                lNumWords = len(sent1)
-                rNumWords = len(sent2)
-                
-                alignments = []
-                alignsRead = []
-                
-                avg_alignments = []
-                avg_alignsRead = []
-                
-                """Record the larger of the sentence length"""
-                sent_len = max([len(sent1), len(sent2)])
-                
-                lTOr = {}
-                rTOl = {}
-                aligned_set = set()
-                print("Reach before single alignment")
-                
-                
-                
-                for row in range(left_num_words):
-                    for col in range(right_num_words):
-                        left_vector = left[row]
-                        right_vector = right[col]
-                        """以下条件式先去掉吧 还没想到更好的替代"""
-                        written = str(row) + '-' + str(col)
-                        sent_distance = self.processing.getIndexDistanceNormalized(written, sent_len)
-                        
-                        """Extra Feature: Any feature beyond two embeddings"""
-                        num_extra_features = 0
-                        self.input_size = (2 * self.dimension) + num_extra_features
-                        
-                        input_value = np.zeros((1, self.input_size))
-                        feedVectorToInput(input_value, left_vector, 0, self.dimension, which='left')
-                        feedVectorToInput(input_value, right_vector, 0, self.dimension, which='right')
-                        pred_value = self.model.predict(input_value)
-                        
-                        alignString = str(row) + "-" + str(col)
-                        alignWords = str(sent1[row]) + " | " + str(sent2[col])
-                        
-                        print("Involved index: ")
-                        print(alignString)
-                        print("Involved words: ")
-                        print(alignWords)
-                        print("Currently in single alignment")
-                        print("Neural Prediction is [single]: ")
-                        print(pred_value)
-                        
-                        
-                        if pred_value > 0.5 and sent1[row] not in self.punctuation and sent2[col] not in self.punctuation:
-                            """The row and col in cell matches the two sentences"""
-                            print("Oh Yeah! Singly Aligned!")
-                            """下面的重新考虑"""
+            sent1 = list(self.sentences[i])
+            sent2 = list(self.sentences[i+1])
+            
+            left = embeddings[j]
+            right = embeddings[j+1]
+            
+            left_num_words = len(sent1)
+            right_num_words = len(sent2)
+            
+            print("sent1: ")
+            print(sent1)
+            print("sent2： ")
+            print(sent2)
+            
+            """左右句分别的num of words！！！！"""
+            lNumWords = len(sent1)
+            rNumWords = len(sent2)
+            
+            alignments = []
+            alignsRead = []
+            
+            avg_alignments = []
+            avg_alignsRead = []
+            
+            """Record the larger of the sentence length"""
+            sent_len = max([len(sent1), len(sent2)])
+            
+            lTOr = {}
+            rTOl = {}
+            aligned_set = set()
+            print("Reach before single alignment")
+            
+            
+            
+            for row in range(left_num_words):
+                for col in range(right_num_words):
+                    left_vector = left[row]
+                    right_vector = right[col]
+                    """以下条件式先去掉吧 还没想到更好的替代"""
+                    written = str(row) + '-' + str(col)
+                    sent_distance = self.processing.getIndexDistanceNormalized(written, sent_len)
+                    
+                    """Extra Feature: Any feature beyond two embeddings"""
+                    num_extra_features = 0
+                    self.input_size = (2 * self.dimension) + num_extra_features
+                    
+                    input_value = np.zeros((1, self.input_size))
+                    feedVectorToInput(input_value, left_vector, 0, self.dimension, which='left')
+                    feedVectorToInput(input_value, right_vector, 0, self.dimension, which='right')
+                    pred_value = self.model.predict(input_value)
+                    
+                    alignString = str(row) + "-" + str(col)
+                    alignWords = str(sent1[row]) + " | " + str(sent2[col])
+                    
+                    print("Involved index: ")
+                    print(alignString)
+                    print("Involved words: ")
+                    print(alignWords)
+                    print("Currently in single alignment")
+                    print("Neural Prediction is [single]: ")
+                    print(pred_value)
+                    
+                    
+                    if pred_value > 0.5 and sent1[row] not in self.punctuation and sent2[col] not in self.punctuation:
+                        """The row and col in cell matches the two sentences"""
+                        print("Oh Yeah! Singly Aligned!")
+                        """下面的重新考虑"""
 #                            alignedCols.add(col)
 #                            alignedRows.add(row)
-                            aligned_set.add(alignString)
-                            
-                            lTOr[row] = col
-                            rTOl[col] = row
-                            
-                            alignments.append(alignString)
-                            alignsRead.append(alignWords)
-                            
-                            avg_alignments.append(alignString)
-                            avg_alignsRead.append(alignWords)
-                            
-                        print("-------------Single Alignment Separator----------------")
-                    
+                        aligned_set.add(alignString)
+                        
+                        lTOr[row] = col
+                        rTOl[col] = row
+                        
+                        alignments.append(alignString)
+                        alignsRead.append(alignWords)
+                        
+                        avg_alignments.append(alignString)
+                        avg_alignsRead.append(alignWords)
+                        
+                    print("-------------Single Alignment Separator----------------")
+                
+        
+            nulls = self.processing.hasNull(alignments, lNumWords, rNumWords)
             
-                nulls = self.processing.hasNull(alignments, lNumWords, rNumWords)
-                
-                allAligns = self.processing.alignsToRead(alignments, sent1, sent2)
-                alignments = allAligns[0]
-                alignsRead = allAligns[1]
-                
-                print(alignments)
-                print(alignsRead)
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+            allAligns = self.processing.alignsToRead(alignments, sent1, sent2)
+            alignments = allAligns[0]
+            alignsRead = allAligns[1]
+            
+            print(alignments)
+            print(alignsRead)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 #                """以下为multi部分，如果出现bug就在这里检查"""
 #                
 #                l_branch = self.processing.depAnalyze(' '.join(sent1), alignments, nulls[0], self.nlp, which='left')
@@ -298,39 +302,39 @@ class PredictingData():
 #                
 #                
 #                """以上为multi部分，如果出现bug就在这里检查"""
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                """allAligns的[0]是word-word版本，[1]是index-index版本"""
-                avg_allAligns = self.processing.alignsToRead(avg_alignments, sent1, sent2)
-                avg_alignments = avg_allAligns[0]
-                avg_alignsRead = avg_allAligns[1]
-                
-                """每次除以2再取整就能保证trails中同样的index包含同一对句子的两个不同的alignment pair"""
-                self.trials[int(i/2)].append(allAligns)
-                self.trials[int(i/2)].append(avg_allAligns)
-                print(self.trials[int(i/2)])
-                
-                i += 2
-                j += 2
-                
-            batch_loc += batch_size
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            """allAligns的[0]是word-word版本，[1]是index-index版本"""
+            avg_allAligns = self.processing.alignsToRead(avg_alignments, sent1, sent2)
+            avg_alignments = avg_allAligns[0]
+            avg_alignsRead = avg_allAligns[1]
+            
+            """每次除以2再取整就能保证trails中同样的index包含同一对句子的两个不同的alignment pair"""
+            self.trials[int(i/2)].append(allAligns)
+            self.trials[int(i/2)].append(avg_allAligns)
+            print(self.trials[int(i/2)])
+            
+            i += 2
+            j += 2
+            
+#        batch_loc += batch_size
             
     def evaluate(self):
         TP_single = 0

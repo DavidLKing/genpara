@@ -118,35 +118,37 @@ class TrainingData():
                         sentSet.add(combo)
                         trials.append([])
                         
-        batch_size = 128
-        batch_loc = 0
+        batch_size = 10
+        # pdb.set_trace()
         i = 0
-        while batch_loc < len(sentences):
-            batches = sentences[batch_loc : (batch_loc + batch_size)]
-            
+        batch_loc = 0
+        # while batch_loc < len(self.sentences):
+        #     pdb.set_trace()
+        # batches = self.sentences[batch_loc : (batch_loc + batch_size)]
+
+        if torch.cuda.is_available():
+            b = BertBatch(device=0)
+        else:
             b = BertBatch(device=-1)
+
+        embeddings = b.extract(self.sentences, batch_size, self.layer)
+
+        j = 0
+        while (j+1) < len(embeddings):
             
-            embeddings = b.extract(batches, 1)
+            gold = goldScores[int(i/2)]
             
-#            print(len(embeddings))
-#            print(len(batches))
+            sent1 = list(sentences[i])
+            sent2 = list(sentences[i+1])
             
-            j = 0
-            while (j+1) < len(embeddings):
-                
-                gold = goldScores[int(i/2)]
-                
-                sent1 = list(sentences[i])
-                sent2 = list(sentences[i+1])
-                
-                """★★★★注意检查：left和right到底是不是正确代表了左右句？？？？"""
-                
-                left = embeddings[j]
-                right = embeddings[j+1]
-                
-                left_num_words = len(left)
-                right_num_words = len(right)
-                
+            """★★★★注意检查：left和right到底是不是正确代表了左右句？？？？"""
+            
+            left = embeddings[j]
+            right = embeddings[j+1]
+            
+            left_num_words = len(sent1)
+            right_num_words = len(sent2)
+            
 #                print("sent1: ")
 #                print(sent1)
 #                print("sent2： ")
@@ -157,91 +159,91 @@ class TrainingData():
 #                
 #                print(left.shape)
 #                print(right.shape)
-                
-                assert (left_num_words, right_num_words) == (len(sent1), len(sent2))
-                
-                lNumWords = len(sent1)
-                rNumWords = len(sent2)
-                
-                alignments = []
-                alignsRead = []
-                
-                avg_alignments = []
-                avg_alignsRead = []
-                
-                """TRAINING: Record the larger of the sentence length"""
-                sent_len = max([len(sent1), len(sent2)])
-                
-                lTOr = {}
-                rTOl = {}
-                aligned_set = set()
+            
+            assert (left_num_words, right_num_words) == (len(sent1), len(sent2))
+            
+            lNumWords = len(sent1)
+            rNumWords = len(sent2)
+            
+            alignments = []
+            alignsRead = []
+            
+            avg_alignments = []
+            avg_alignsRead = []
+            
+            """TRAINING: Record the larger of the sentence length"""
+            sent_len = max([len(sent1), len(sent2)])
+            
+            lTOr = {}
+            rTOl = {}
+            aligned_set = set()
 #                print("Reach before single alignment")
-                
-                for row in range(left_num_words):
-                    for col in range(right_num_words):
-                        left_vector = left[row]
-                        right_vector = right[col]
-                        
-                        """这个条件式其实可以去掉了"""
-                        if row < len(sent1) and col < len(sent2):
-                            """The row and col in cell matches the two sentences"""
-                            alignString = str(row) + "-" + str(col)
-                            alignWords = str(sent1[row]) + " | " + str(sent2[col])
+            
+            for row in range(left_num_words):
+                for col in range(right_num_words):
+                    left_vector = left[row]
+                    right_vector = right[col]
+                    
+                    """这个条件式其实可以去掉了"""
+                    if row < len(sent1) and col < len(sent2):
+                        """The row and col in cell matches the two sentences"""
+                        alignString = str(row) + "-" + str(col)
+                        alignWords = str(sent1[row]) + " | " + str(sent2[col])
 #                            print("Involved index: ")
 #                            print(alignString)
 #                            print("Involved words: ")
 #                            print(alignWords)
-                            
+                        
 #                            print("Left vector")
 #                            print(left_vector)
 #                            print("Right vector")
 #                            print(right_vector)
-                            
-                            aligned_set.add(alignString)
-                            gold_label = self.processing.is_gold(alignString, gold)
-                            
-                            """只要gold label有，就加入考虑"""
-                            if gold_label:
-                                lTOr[row] = col
-                                rTOl[col] = row
+                        
+                        aligned_set.add(alignString)
+                        gold_label = self.processing.is_gold(alignString, gold)
+                        
+                        """只要gold label有，就加入考虑"""
+                        if gold_label:
+                            lTOr[row] = col
+                            rTOl[col] = row
 #                                print("Block middle reached")
-                                alignments.append(alignString)
-                                alignsRead.append(alignWords)
-                                
-                                avg_alignments.append(alignString)
-                                avg_alignsRead.append(alignWords)
-                                
-                            """TRAINING: Get the token tuples (index, POS, DEP, text)"""
-                            tuple1 = self.processing.get_POS_and_DEP(' '.join(sent1), self.nlp, [row])
-                            tuple2 = self.processing.get_POS_and_DEP(' '.join(sent2), self.nlp, [col])
-                            pos = str(self.processing.get_POS(tuple1, [row])) + '-' + str(self.processing.get_POS(tuple2, [col]))
-                            dep = str(self.processing.get_DEP(tuple1, [row])) + '-' + str(self.processing.get_DEP(tuple2, [col]))
-                            self.BERT_INFO.append((alignString, alignWords, pos, dep, left_vector, right_vector, gold_label, sent_len))
+                            alignments.append(alignString)
+                            alignsRead.append(alignWords)
                             
+                            avg_alignments.append(alignString)
+                            avg_alignsRead.append(alignWords)
+                            
+                        """TRAINING: Get the token tuples (index, POS, DEP, text)"""
+                        tuple1 = self.processing.get_POS_and_DEP(' '.join(sent1), self.nlp, [row])
+                        tuple2 = self.processing.get_POS_and_DEP(' '.join(sent2), self.nlp, [col])
+                        pos = str(self.processing.get_POS(tuple1, [row])) + '-' + str(self.processing.get_POS(tuple2, [col]))
+                        dep = str(self.processing.get_DEP(tuple1, [row])) + '-' + str(self.processing.get_DEP(tuple2, [col]))
+                        self.BERT_INFO.append((alignString, alignWords, pos, dep, left_vector, right_vector, gold_label, sent_len))
+                        
 #                        print("--------------------------Single Separator---------------------------")
-                            
-                            
-                        """暂时不考虑multi-alignment！！！！"""
-                            
-                            
-                nulls = self.processing.hasNull(alignments, lNumWords, rNumWords)
-                
-                allAligns = self.processing.alignsToRead(alignments, sent1, sent2)
-                alignments = allAligns[0]
-                alignsRead = allAligns[1]
-                
+                        
+                        
+                    """暂时不考虑multi-alignment！！！！"""
+                        
+                        
+            nulls = self.processing.hasNull(alignments, lNumWords, rNumWords)
+            
+            allAligns = self.processing.alignsToRead(alignments, sent1, sent2)
+            alignments = allAligns[0]
+            alignsRead = allAligns[1]
+            
 #                print(alignments)
 #                print(alignsRead)
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 #                """以下预留给multi-alignment部分"""
 #                
 #                """★追加一段与已经aligned的进行multi align的block！！！！"""
@@ -301,37 +303,37 @@ class TrainingData():
 #                
 #                
 #                """以上预留给multi-alignment部分，等single好了再说（到时候直接从原文档复制粘贴）"""
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                """allAligns的[0]是word-word版本，[1]是index-index版本"""
-                avg_allAligns = self.processing.alignsToRead(avg_alignments, sent1, sent2)
-                avg_alignments = avg_allAligns[0]
-                avg_alignsRead = avg_allAligns[1]
-                
-                """每次除以2再取整就能保证trails中同样的index包含同一对句子的两个不同的alignment pair"""
-                trials[int(i/2)].append(allAligns)
-                trials[int(i/2)].append(avg_allAligns)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            """allAligns的[0]是word-word版本，[1]是index-index版本"""
+            avg_allAligns = self.processing.alignsToRead(avg_alignments, sent1, sent2)
+            avg_alignments = avg_allAligns[0]
+            avg_alignsRead = avg_allAligns[1]
+            
+            """每次除以2再取整就能保证trails中同样的index包含同一对句子的两个不同的alignment pair"""
+            trials[int(i/2)].append(allAligns)
+            trials[int(i/2)].append(avg_allAligns)
 #                print(trials[int(i/2)])
-                
-                i += 2
-                j += 2
-                
-            batch_loc += batch_size
+            
+            i += 2
+            j += 2
+            
+#        batch_loc += batch_size
 
     def get_info(self):
         return self.BERT_INFO
