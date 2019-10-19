@@ -95,9 +95,8 @@ class PredictingData():
                         self.trials.append([])
                         
         batch_size = 10
-        # pdb.set_trace()
         i = 0
-        batch_loc = 0
+#        batch_loc = 0
         # while batch_loc < len(self.sentences):
         #     pdb.set_trace()
         # batches = self.sentences[batch_loc : (batch_loc + batch_size)]
@@ -149,6 +148,9 @@ class PredictingData():
             
             
             for row in range(left_num_words):
+                """best_instance stores (row, column 1, score of row-0)"""
+                """initialized to -1 so the first col will always rewrite the number, DEBUG"""
+                best_instance = (row, 0, -1)
                 for col in range(right_num_words):
                     left_vector = left[row]
                     right_vector = right[col]
@@ -165,6 +167,10 @@ class PredictingData():
                     feedVectorToInput(input_value, right_vector, 0, self.dimension, which='right')
                     pred_value = self.model.predict(input_value)
                     
+                    """Update the best score"""
+                    if pred_value > best_instance[2]:
+                        best_instance = (row, col, pred_value)
+                    
                     alignString = str(row) + "-" + str(col)
                     alignWords = str(sent1[row]) + " | " + str(sent2[col])
                     
@@ -175,28 +181,31 @@ class PredictingData():
                     print("Currently in single alignment")
                     print("Neural Prediction is [single]: ")
                     print(pred_value)
-                    
-                    
-                    if pred_value > 0.5 and sent1[row] not in self.punctuation and sent2[col] not in self.punctuation:
-                        """The row and col in cell matches the two sentences"""
-                        print("Oh Yeah! Singly Aligned!")
-                        """下面的重新考虑"""
-#                            alignedCols.add(col)
-#                            alignedRows.add(row)
-                        aligned_set.add(alignString)
-                        
-                        lTOr[row] = col
-                        rTOl[col] = row
-                        
-                        alignments.append(alignString)
-                        alignsRead.append(alignWords)
-                        
-                        avg_alignments.append(alignString)
-                        avg_alignsRead.append(alignWords)
-                        
                     print("-------------Single Alignment Separator----------------")
                 
-        
+                """Below are the 'best' row-col combination for each row"""
+                best_row = best_instance[0]
+                best_col = best_instance[1]
+                best_combo = (row, col)
+                best_score = best_instance[2]
+                if best_score > 0.5 and best_combo not in aligned_set and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation:
+                    """The row and col in cell matches the two sentences"""
+                    print("Oh Yeah! Singly Aligned!")
+                    aligned_set.add(best_combo)
+                    
+                    lTOr[row] = col
+                    rTOl[col] = row
+                    
+                    aligned_index = str(best_row) + "-" + str(best_col)
+                    aligned_string = str(sent1[best_row]) + "|" + str(sent2[best_col])
+                    
+                    alignments.append(aligned_index)
+                    alignsRead.append(aligned_string)
+                    
+                    avg_alignments.append(aligned_index)
+                    avg_alignsRead.append(aligned_string)
+                    
+                    
             nulls = self.processing.hasNull(alignments, lNumWords, rNumWords)
             
             allAligns = self.processing.alignsToRead(alignments, sent1, sent2)

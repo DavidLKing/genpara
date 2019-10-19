@@ -121,7 +121,7 @@ class TrainingData():
         batch_size = 10
         # pdb.set_trace()
         i = 0
-        batch_loc = 0
+#        batch_loc = 0
         # while batch_loc < len(self.sentences):
         #     pdb.set_trace()
         # batches = self.sentences[batch_loc : (batch_loc + batch_size)]
