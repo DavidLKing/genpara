@@ -106,7 +106,7 @@ class PredictingData():
         else:
             b = BertBatch(device=-1)
 
-        embeddings = b.extract(self.sentences, batch_size, self.layer)
+        embeddings = b.extract(self.sentences, batch_size)
         
         j = 0
         while (j+1) < len(embeddings):
