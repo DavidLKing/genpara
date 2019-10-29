@@ -208,57 +208,8 @@ class UnsupervisedTraining():
                 best_col = best_instance[1]
                 best_combo = (best_row, best_col)
                 best_score = best_instance[2]
-                if best_score < self.boundary and best_combo not in aligned_set and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation:
-                    print("Oh Yeah! Singly Aligned!")
-                    aligned_set.add(best_combo)
-                    
-                    lTOr[row] = col
-                    rTOl[col] = row
-                    
-                    aligned_index = str(best_row) + "-" + str(best_col)
-                    aligned_string = str(sent1[best_row]) + "|" + str(sent2[best_col])
-                    print("Aligned index: " + aligned_index)
-                    print("Aligned words: " + aligned_string)
-                    
-                    alignments.append(aligned_index)
-                    alignsRead.append(aligned_string)
-                    
-                    avg_alignments.append(aligned_index)
-                    avg_alignsRead.append(aligned_string)
-            
-            
-            
-            
-            """以下为right-to-left的VER3，把left和right互换即可"""
-            print("Now we enter VER3: bidirenctional one-to-one single alignment")
-            for col in range(right_num_words):
-                """best_instance stores (row 1, column, score of 0-col)"""
-                best_instance = (0, col, scores[0][col])
-                for row in range(left_num_words):
-                    score = scores[row][col]
-                    
-                    """Update the best score"""
-                    if score < best_instance[2]:
-                        best_instance = (row, col, scores[row][col])
-                    
-                    """以下条件式先去掉吧 还没想到更好的替代"""
-                    alignString = str(row) + "-" + str(col)
-                    alignWords = str(sent1[row]) + " | " + str(sent2[col])
-
-                    """The row and col in cell matches the two sentences"""
-                    print("Involved index: ")
-                    print(alignString)
-                    print("Involved words: ")
-                    print(alignWords)
-                    print("Cos Distance for the single alignment is: " + str(score)[:8])
-                    print("-------------Single Alignment Separator----------------")
                 
-                """Below are the 'best' row-col combination for each row"""
-                best_row = best_instance[0]
-                best_col = best_instance[1]
-                best_combo = (best_row, best_col)
-                best_score = best_instance[2]
-                if best_score < self.boundary and best_combo not in aligned_set and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation:
+                if best_score < self.boundary and best_combo not in aligned_set: #and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation
                     print("Oh Yeah! Singly Aligned!")
                     aligned_set.add(best_combo)
                     
@@ -275,6 +226,56 @@ class UnsupervisedTraining():
                     
                     avg_alignments.append(aligned_index)
                     avg_alignsRead.append(aligned_string)
+            
+            
+            
+            
+#            """以下为right-to-left的VER3，把left和right互换即可"""
+#            print("Now we enter VER3: bidirenctional one-to-one single alignment")
+#            for col in range(right_num_words):
+#                """best_instance stores (row 1, column, score of 0-col)"""
+#                best_instance = (0, col, scores[0][col])
+#                for row in range(left_num_words):
+#                    score = scores[row][col]
+#                    
+#                    """Update the best score"""
+#                    if score < best_instance[2]:
+#                        best_instance = (row, col, scores[row][col])
+#                    
+#                    """以下条件式先去掉吧 还没想到更好的替代"""
+#                    alignString = str(row) + "-" + str(col)
+#                    alignWords = str(sent1[row]) + " | " + str(sent2[col])
+#
+#                    """The row and col in cell matches the two sentences"""
+#                    print("Involved index: ")
+#                    print(alignString)
+#                    print("Involved words: ")
+#                    print(alignWords)
+#                    print("Cos Distance for the single alignment is: " + str(score)[:8])
+#                    print("-------------Single Alignment Separator----------------")
+#                
+#                """Below are the 'best' row-col combination for each row"""
+#                best_row = best_instance[0]
+#                best_col = best_instance[1]
+#                best_combo = (best_row, best_col)
+#                best_score = best_instance[2]
+#                if best_score < self.boundary and best_combo not in aligned_set and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation:
+#                    print("Oh Yeah! Singly Aligned!")
+#                    aligned_set.add(best_combo)
+#                    
+#                    lTOr[row] = col
+#                    rTOl[col] = row
+#                    
+#                    aligned_index = str(best_row) + "-" + str(best_col)
+#                    aligned_string = str(sent1[best_row]) + "|" + str(sent2[best_col])
+#                    print("Aligned index: " + aligned_index)
+#                    print("Aligned words: " + aligned_string)
+#                    
+#                    alignments.append(aligned_index)
+#                    alignsRead.append(aligned_string)
+#                    
+#                    avg_alignments.append(aligned_index)
+#                    avg_alignsRead.append(aligned_string)
 #                
             
             
