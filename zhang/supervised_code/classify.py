@@ -186,9 +186,9 @@ class PredictingData():
                 """Below are the 'best' row-col combination for each row"""
                 best_row = best_instance[0]
                 best_col = best_instance[1]
-                best_combo = (row, col)
+                best_combo = (best_row, best_col)
                 best_score = best_instance[2]
-                if best_score > 0.5 and best_combo not in aligned_set and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation:
+                if best_score > 0.5 and best_combo not in aligned_set and sent1[best_row] : #not in self.punctuation and sent2[best_col] not in self.punctuation
                     """The row and col in cell matches the two sentences"""
                     print("Oh Yeah! Singly Aligned!")
                     aligned_set.add(best_combo)
