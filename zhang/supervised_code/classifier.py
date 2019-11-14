@@ -89,11 +89,15 @@ def feedVectorToInput(input_matrix, vector, example_index, dimension, which='lef
 
 class NeuralClassifier:
     
-    def __init__(self, info_list, hidden, intermediate_dimension):
+    def __init__(self, info_list, hidden, intermediate_dimension, poss_sure):
         self.model = None
         self.hidden = hidden
         self.intermediate_dimension = intermediate_dimension
         self.dimensions = []
+        if poss_sure == "SURE":
+            self.model_name = "pretrained_bert_model_V2_SURE.h5"
+        else:
+            self.model_name = "pretrained_bert_model_V2_POSS.h5"
         example_index = 0
         
         for line in info_list:
@@ -165,7 +169,7 @@ class NeuralClassifier:
         
         """keras.callbacks.ModelCheckpoint will automatically save the model after each epoch"""
         callbacks = [EarlyStopping(monitor='acc', min_delta=0, patience=0, verbose=1, restore_best_weights=True),
-                     ModelCheckpoint(filepath='pretrained_bert_model_V2.h5', monitor='acc', save_best_only=True, verbose=1)]
+                     ModelCheckpoint(filepath=self.model_name, monitor='acc', save_best_only=True, verbose=1)]
         
         self.model.summary()
         self.model.fit(self.input_matrix, self.output_matrix, epochs=200, batch_size=128, callbacks = callbacks)

@@ -25,7 +25,8 @@ def main():
     
     hidden_layers = int(sys.argv[2])
     intermediate_dimensions = int(sys.argv[3])
-    neural_classifier = NeuralClassifier(BERT_INFO, hidden_layers, intermediate_dimensions)
+    poss_sure = str(sys.arv[4])
+    neural_classifier = NeuralClassifier(BERT_INFO, hidden_layers, intermediate_dimensions, poss_sure)
     print("Begin neural network training process")
     neural_classifier.train()
     print("Classifier training session finished")
@@ -34,7 +35,7 @@ def main():
     
     """Step 3↓👇"""
     
-    predicting_data = PredictingData(sys.argv[4], best_model, nlp, dimension)
+    predicting_data = PredictingData(sys.argv[5], best_model, nlp, dimension)
     print("Start allGold.tsv prediction process")
     predicting_data.predict()
     print("Start allGold.tsv evaluation")

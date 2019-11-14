@@ -12,6 +12,8 @@ Created on Mon Sep 23 17:11:01 2019
 @author: 13982
 """
 
+import pdb
+
 import torch
 from pytorch_transformers import BertTokenizer, BertModel, BertForMaskedLM
 import spacy
@@ -120,99 +122,174 @@ class UnsupervisedTraining():
                         sentSet.add(combo)
                         self.trials.append([])
                         
-        batch_size = 128
-        
+        batch_size = 30
+        # pdb.set_trace()
         i = 0
-        batch_loc = 0
-        while batch_loc < len(self.sentences):
-            batches = self.sentences[batch_loc : (batch_loc + batch_size)]
-            
+#        batch_loc = 0
+        # while batch_loc < len(self.sentences):
+        #     pdb.set_trace()
+        # batches = self.sentences[batch_loc : (batch_loc + batch_size)]
+
+        if torch.cuda.is_available():
+            b = BertBatch(device=0)
+        else:
             b = BertBatch(device=-1)
-            
-            embeddings = b.extract(batches, 1, self.layer)     
-            
-            j = 0
-            while (j+1) < len(embeddings):
-                
-#                gold = self.goldScores[int(i/2)]
-                
-                sent1 = list(self.sentences[i])
-                sent2 = list(self.sentences[i+1])
-                
-                left = embeddings[j]
-                right = embeddings[j+1]
-                
-                left_num_words = len(left)
-                right_num_words = len(right)
-                
-                print("sent1: ")
-                print(sent1)
-                print("sent2： ")
-                print(sent2)
-                
-                scores = np.ones((left_num_words, right_num_words))
-            
-                """以更多的单词数量为标准，将每一行每一列都分别对比，再算distance是否低于threshold！！！！"""
-                for row in range(left_num_words):
-                    lVec = left[row]
-                    for col in range(right_num_words):
-                        rVec = right[col]
-                        scores[row][col] = distance.cosine(lVec, rVec)
-                        
-                """左右句分别的num of words！！！！"""
-                lNumWords = len(sent1)
-                rNumWords = len(sent2)
-                
-                alignments = []
-                alignsRead = []
-                
-                avg_alignments = []
-                avg_alignsRead = []
-                
-                
-                lTOr = {}
-                rTOl = {}
-                aligned_set = set()
-                print("Reach before single alignment")
-                
-                for row in range(left_num_words):
-                    for col in range(right_num_words):
-                        score = scores[row][col]
-                        """以下条件式先去掉吧 还没想到更好的替代"""
-                        alignString = str(row) + "-" + str(col)
-                        alignWords = str(sent1[row]) + " | " + str(sent2[col])
-                        
-                        """The row and col in cell matches the two sentences"""
-                        print("Involved index: ")
-                        print(alignString)
-                        print("Involved words: ")
-                        print(alignWords)
-                        print("Cos Distance for the single alignment is: " + str(score)[:8])
-                        
-                        if score < self.boundary and alignString not in aligned_set and sent1[row] not in self.punctuation and sent2[col] not in self.punctuation:
-                            print("Oh Yeah! Singly Aligned!")
-                            aligned_set.add(alignString)
-                            
-                            lTOr[row] = col
-                            rTOl[col] = row
-                            
-                            alignments.append(alignString)
-                            alignsRead.append(alignWords)
-                            
-                            avg_alignments.append(alignString)
-                            avg_alignsRead.append(alignWords)
-                            
-                        print("-------------Single Alignment Separator----------------")
+
+        embeddings = b.extract(self.sentences, batch_size, self.layer)
+
+        j = 0
+        while (j+1) < len(embeddings):
+
+            # gold = self.goldScores[int(i/2)]
+
+            sent1 = list(self.sentences[i])
+            sent2 = list(self.sentences[i+1])
+
+            left = embeddings[j]
+            right = embeddings[j+1]
+
+            left_num_words = len(sent1)
+            right_num_words = len(sent2)
+
+            print("sent1: ")
+            print(sent1)
+            print("sent2： ")
+            print(sent2)
+
+            scores = np.ones((left_num_words, right_num_words))
+
+            """以更多的单词数量为标准，将每一行每一列都分别对比，再算distance是否低于threshold！！！！"""
+            for row in range(left_num_words):
+                lVec = left[row]
+                for col in range(right_num_words):
+                    rVec = right[col]
+                    scores[row][col] = distance.cosine(lVec, rVec)
+
+            """左右句分别的num of words！！！！"""
+            lNumWords = len(sent1)
+            rNumWords = len(sent2)
+
+            alignments = []
+            alignsRead = []
+
+            avg_alignments = []
+            avg_alignsRead = []
+
+
+            lTOr = {}
+            rTOl = {}
+            aligned_set = set()
+            print("Reach before single alignment")
+
+            for row in range(left_num_words):
+                """best_instance stores (row, column 1, score of row-0)"""
+                best_instance = (row, 0, scores[row][0])
+                for col in range(right_num_words):
+                    score = scores[row][col]
                     
+                    """Update the best score"""
+                    if score < best_instance[2]:
+                        best_instance = (row, col, scores[row][col])
+                    
+                    """以下条件式先去掉吧 还没想到更好的替代"""
+                    alignString = str(row) + "-" + str(col)
+                    alignWords = str(sent1[row]) + " | " + str(sent2[col])
+
+                    """The row and col in cell matches the two sentences"""
+                    print("Involved index: ")
+                    print(alignString)
+                    print("Involved words: ")
+                    print(alignWords)
+                    print("Cos Distance for the single alignment is: " + str(score)[:8])
+                    print("-------------Single Alignment Separator----------------")
+                
+                """Below are the 'best' row-col combination for each row"""
+                best_row = best_instance[0]
+                best_col = best_instance[1]
+                best_combo = (best_row, best_col)
+                best_score = best_instance[2]
+                
+                if best_score < self.boundary and best_combo not in aligned_set: #and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation
+                    print("Oh Yeah! Singly Aligned!")
+                    aligned_set.add(best_combo)
+                    
+                    lTOr[row] = col
+                    rTOl[col] = row
+                    
+                    aligned_index = str(best_row) + "-" + str(best_col)
+                    aligned_string = str(sent1[best_row]) + "|" + str(sent2[best_col])
+                    print("Aligned index: " + aligned_index)
+                    print("Aligned words: " + aligned_string)
+                    
+                    alignments.append(aligned_index)
+                    alignsRead.append(aligned_string)
+                    
+                    avg_alignments.append(aligned_index)
+                    avg_alignsRead.append(aligned_string)
             
-                nulls = self.processing.hasNull(alignments, lNumWords, rNumWords)
-                
-                allAligns = self.processing.alignsToRead(alignments, sent1, sent2)
-                alignments = allAligns[0]
-                alignsRead = allAligns[1]
-                
-                print(alignments)
-                print(alignsRead)
+            
+            
+            
+#            """以下为right-to-left的VER3，把left和right互换即可"""
+#            print("Now we enter VER3: bidirenctional one-to-one single alignment")
+#            for col in range(right_num_words):
+#                """best_instance stores (row 1, column, score of 0-col)"""
+#                best_instance = (0, col, scores[0][col])
+#                for row in range(left_num_words):
+#                    score = scores[row][col]
+#                    
+#                    """Update the best score"""
+#                    if score < best_instance[2]:
+#                        best_instance = (row, col, scores[row][col])
+#                    
+#                    """以下条件式先去掉吧 还没想到更好的替代"""
+#                    alignString = str(row) + "-" + str(col)
+#                    alignWords = str(sent1[row]) + " | " + str(sent2[col])
+#
+#                    """The row and col in cell matches the two sentences"""
+#                    print("Involved index: ")
+#                    print(alignString)
+#                    print("Involved words: ")
+#                    print(alignWords)
+#                    print("Cos Distance for the single alignment is: " + str(score)[:8])
+#                    print("-------------Single Alignment Separator----------------")
+#                
+#                """Below are the 'best' row-col combination for each row"""
+#                best_row = best_instance[0]
+#                best_col = best_instance[1]
+#                best_combo = (best_row, best_col)
+#                best_score = best_instance[2]
+#                if best_score < self.boundary and best_combo not in aligned_set and sent1[best_row] not in self.punctuation and sent2[best_col] not in self.punctuation:
+#                    print("Oh Yeah! Singly Aligned!")
+#                    aligned_set.add(best_combo)
+#                    
+#                    lTOr[row] = col
+#                    rTOl[col] = row
+#                    
+#                    aligned_index = str(best_row) + "-" + str(best_col)
+#                    aligned_string = str(sent1[best_row]) + "|" + str(sent2[best_col])
+#                    print("Aligned index: " + aligned_index)
+#                    print("Aligned words: " + aligned_string)
+#                    
+#                    alignments.append(aligned_index)
+#                    alignsRead.append(aligned_string)
+#                    
+#                    avg_alignments.append(aligned_index)
+#                    avg_alignsRead.append(aligned_string)
+#                
+            
+            
+            
+            
+
+            nulls = self.processing.hasNull(alignments, lNumWords, rNumWords)
+
+            allAligns = self.processing.alignsToRead(alignments, sent1, sent2)
+            alignments = allAligns[0]
+            alignsRead = allAligns[1]
+
+            print(alignments)
+            print(alignsRead)
                 
                 
                 
@@ -329,20 +406,20 @@ class UnsupervisedTraining():
                 
                 
                 
-                """allAligns的[0]是word-word版本，[1]是index-index版本"""
-                avg_allAligns = self.processing.alignsToRead(avg_alignments, sent1, sent2)
-                avg_alignments = avg_allAligns[0]
-                avg_alignsRead = avg_allAligns[1]
-                
-                """每次除以2再取整就能保证trails中同样的index包含同一对句子的两个不同的alignment pair"""
-                self.trials[int(i/2)].append(allAligns)
-                self.trials[int(i/2)].append(avg_allAligns)
-                print(self.trials[int(i/2)])
-                
-                i += 2
-                j += 2
-                
-            batch_loc += batch_size
+            """allAligns的[0]是word-word版本，[1]是index-index版本"""
+            avg_allAligns = self.processing.alignsToRead(avg_alignments, sent1, sent2)
+            avg_alignments = avg_allAligns[0]
+            avg_alignsRead = avg_allAligns[1]
+
+            """每次除以2再取整就能保证trails中同样的index包含同一对句子的两个不同的alignment pair"""
+            self.trials[int(i/2)].append(allAligns)
+            self.trials[int(i/2)].append(avg_allAligns)
+            print(self.trials[int(i/2)])
+
+            i += 2
+            j += 2
+
+        # batch_loc += batch_size
             
     def evaluate(self):
         TP_single = 0
