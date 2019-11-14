@@ -193,8 +193,8 @@ elmos = open(sys.argv[1], 'r').readlines()
 elmos = [x.strip().split('\t') for x in elmos]
 elmos = elmo_clean(elmos)
 
-# elmo_singles = {}
-# elmo_singles = get_align(elmos, elmo_singles)
+elmo_singles = {}
+elmo_singles = get_align(elmos, elmo_singles)
 
 # prec = rec_prec(elmo_singles, gold_singles)
 # rec = rec_prec(gold_singles, elmo_singles)
@@ -214,8 +214,8 @@ gold_phrases = get_range_align(golds, gold_phrases)# , use_phrase = True)
 # elmos = [x.strip().split('\t') for x in elmos]
 # elmos = elmo_clean(elmos)
 
-# elmo_phrases = {}
-# elmo_phrases = get_range_align(elmos, elmo_phrases)#  , use_phrase = True)
+elmo_phrases = {}
+elmo_phrases = get_range_align(elmos, elmo_phrases)#  , use_phrase = True)
 
 # save them
 pkl.dump(gold_singles, open('gold_singles.pkl', 'wb'))
@@ -239,10 +239,10 @@ low_freq = get_low_freq(sents)
 
 # GEN SWAPS
 gold_sg_para = swap(low_freq, gold_singles)
-# elmo_sg_para = swap(low_freq, elmo_singles)
+elmo_sg_para = swap(low_freq, elmo_singles)
 # Not currently being used
 gold_ph_para = swap(low_freq, gold_phrases)
-# elmo_ph_para = swap(low_freq, elmo_phrases)
+elmo_ph_para = swap(low_freq, elmo_phrases)
 
 # s = Score()
 # print("getting gold alignment vectors")
@@ -252,7 +252,7 @@ gold_ph_para = swap(low_freq, gold_phrases)
 
 writeout('gold_singular_swap.tsv', gold_sg_para)
 writeout('gold_phrase_swap.tsv', gold_ph_para)
-# writeout('elmo_singular_swap.tsv', elmo_sg_para)
+writeout('elmo_singular_swap.tsv', elmo_sg_para)
 
 
 # pdb.set_trace()

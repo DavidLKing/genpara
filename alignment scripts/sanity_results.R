@@ -44,7 +44,8 @@ graphwap <- function(dataset, title){
 
 
 setwd("~/bin/git/genpara/alignment scripts")
-sane = read.csv('sanity_output_noarraysWeightTesting.tsv', header = TRUE, sep = '\t')
+# setwd("~/Desktop")
+sane = read.csv('sanity_output.tsv', header = TRUE, sep = '\t')
 # sane = read.csv('genpara.maxent.nobias.tsv.csv', header = FALSE, sep = ' ')
 
 # EXAMPLE OF HOW TO ORDER
@@ -65,7 +66,26 @@ ninety = subset(sane, percent == 90)
 all = subset(sane, percent == 100)
 # tens = tens[order(tens$prec)]
 
-graphprec(tens, "Precision at 10%")
+ofinterest = subset(all, metric %in% c("elmo_src_para_joint", "elmo_joint", "elmo_src_para_dist", "w2v_align_para_dist", "glove_src_para_dist", "ng_orig_para"))
+
+
+
+ggplot(data=ofinterest, aes(x=reorder(metric, -AveP),y=AveP)) +
+  # ggplot(data=dataset, aes(x=metric,y=AveP)) +
+  ggtitle("Top Performing Metrics' Average Precision") +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  scale_x_discrete(name="Metrics") + 
+  scale_x_discrete(name="Metrics",
+                   labels=c("elmo_src_para_joint" = "ELMo PS -> CT Joint", 
+                            "elmo_joint" = "ELMo Full Joint", 
+                            "elmo_src_para_dist" = "ELMo PS -> CT Dist", 
+                            "w2v_align_para_dist" = "W2V PT -> CT Dist", 
+                            "glove_src_para_dist" = "GloVe PS -> CT Dist", 
+                            "ng_orig_para" = "ngram CS -> CT"))
+
+graphavg(ofinterest, "AvgP at 100%")
+graphavg(all, "AvgP at 100%")
 
 pdfpath = "sanity.pdf"
 pdf(file = pdfpath)
