@@ -125,10 +125,6 @@ class UnsupervisedTraining():
         batch_size = 30
         # pdb.set_trace()
         i = 0
-#        batch_loc = 0
-        # while batch_loc < len(self.sentences):
-        #     pdb.set_trace()
-        # batches = self.sentences[batch_loc : (batch_loc + batch_size)]
 
         if torch.cuda.is_available():
             b = BertBatch(device=0)
