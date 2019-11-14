@@ -2,16 +2,15 @@ import pdb
 import torch
 import numpy as np
 from pytorch_pretrained_bert import BertTokenizer, BertModel, BertForMaskedLM
-# Load pre-trained model tokenizer (vocabulary)
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
 class BertBatch:
 
-    def __init__(self, device=-1):
+    def __init__(self, model, device=-1):
         # for cuda, 0 or greater
         # for cpu, -1
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        self.bert = BertModel.from_pretrained('bert-base-uncased')
+        # Load pre-trained model tokenizer (vocabulary)
+        self.tokenizer = BertTokenizer.from_pretrained(model)
+        self.bert = BertModel.from_pretrained(model)
         self.bert.eval()
         self.device = device
         if device >= 0:
@@ -50,8 +49,8 @@ class BertBatch:
                toID = sentences[(batchLoc * batchSize) : ]
             if toID != []:
                sents = [ 
-                   [ tokenizer.vocab.get(
-                     x, tokenizer.vocab['[UNK]']
+                   [ self.tokenizer.vocab.get(
+                     x, self.tokenizer.vocab['[UNK]']
                      ) for x in sent 
                      ] for sent in toID 
                    ]
@@ -63,7 +62,7 @@ class BertBatch:
                if self.device >= 0:
                   padded_sents = padded_sents.to('cuda')
                embeddings, _ = self.bert(padded_sents)
-               [tensors.append(np.asarray(x.tolist())) for x in embeddings[-1]]
+               [tensors.append(np.asarray(x.tolist())) for x in embeddings[7]]
                # pdb.set_trace()
             batchLoc += 1
 

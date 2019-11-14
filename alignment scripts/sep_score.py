@@ -71,6 +71,8 @@ def normalize(dist):
 
 dialog = [x for x in scored_csv['dialog'].tolist()]
 turn = [x for x in scored_csv['turn'].tolist()]
+bert1324 = [x for x in scored_csv['bert1324'].tolist()]
+bert24 = [x for x in scored_csv['bert24'].tolist()]
 glove_src_para_sim = [x for x in scored_csv['glove_src_para_sim'].tolist()]
 glove_src_para_dist = [x for x in scored_csv['glove_src_para_dist'].tolist()]
 glove_src_para_david = [x for x in scored_csv['glove_src_para_david'].tolist()]
@@ -136,7 +138,9 @@ para = [x for x in scored_csv['para'].tolist()]
 orig = [x for x in scored_csv['orig'].tolist()]
 
 
-metrics = [(normalize(glove_src_para_sim), 'glove_src_para_sim'),
+metrics = [(normalize(bert24), 'bert1324'),
+    (normalize(bert24), 'bert24'),
+    (normalize(glove_src_para_sim), 'glove_src_para_sim'),
     (normalize_and_invert(glove_src_para_dist), 'glove_src_para_dist'),
     (normalize_and_invert(glove_src_para_david), 'glove_src_para_joint'),
     (normalize(glove_src_orig_sim), 'glove_src_orig_sim'),
