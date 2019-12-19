@@ -62,7 +62,7 @@ class BertBatch:
                if self.device >= 0:
                   padded_sents = padded_sents.to('cuda')
                embeddings, _ = self.bert(padded_sents)
-               [tensors.append(np.asarray(x.tolist())) for x in embeddings[7]]
+               [tensors.append(np.asarray(x.tolist())) for x in embeddings[8]]
                # pdb.set_trace()
             batchLoc += 1
 

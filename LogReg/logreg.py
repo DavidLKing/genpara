@@ -66,26 +66,46 @@ for line in open('labels.txt', 'r'):
 # one off:
 labels["unk"] = max(labels.values()) + 1
 
-metrics = pd.read_csv('multiple.cleaned.noarrays.scored.tsv', delimiter='\t')
+# metrics = pd.read_csv('multiple.cleaned.noarrays.scored.tsv', delimiter='\t')
+metrics = pd.read_csv('newannots.scored.tsv', delimiter='\t')
 
 
 names = [
-    ['glove_src_para_sim', 'glove_src_orig_sim', 'glove_orig_para_sim', 'glove_align_para_sim'],
-    ['glove_src_para_dist', 'glove_src_orig_dist', 'glove_orig_para_dist', 'glove_align_para_dist'],
-    ['glove_src_para_david', 'glove_src_orig_david', 'glove_orig_para_david', 'glove_align_para_david'],
-    ['w2v_src_para_sim', 'w2v_src_orig_sim', 'w2v_orig_para_sim', 'w2v_align_para_sim'],
-    ['w2v_src_para_dist', 'w2v_src_orig_dist', 'w2v_orig_para_dist', 'w2v_align_para_dist'],
-    ['w2v_src_para_david', 'w2v_src_orig_david', 'w2v_orig_para_david', 'w2v_align_para_david'],
-    ['elmo_src_para_sim', 'elmo_src_orig_sim', 'elmo_orig_para_sim', 'elmo_align_para_sim'],
-    ['elmo_src_para_dist', 'elmo_src_orig_dist', 'elmo_orig_para_dist', 'elmo_align_para_dist'],
-    ['elmo_src_para_david', 'elmo_src_orig_david', 'elmo_orig_para_david', 'elmo_align_para_david'],
-    ['bert_src_para_sim', 'bert_src_orig_sim', 'bert_orig_para_sim', 'bert_align_para_sim'],
-    ['bert_src_para_dist', 'bert_src_orig_dist', 'bert_orig_para_dist', 'bert_align_para_dist'],
-    ['bert_src_para_david', 'bert_src_orig_david', 'bert_orig_para_david', 'bert_align_para_david'],
-    ['ng_src_para', 'ng_src_orig', 'ng_orig_para', 'ng_align_para']
+    ['glove_src_para_sim', 'glove_src_orig_sim', 'glove_src_align_sim',
+     'glove_orig_para_sim', 'glove_align_para_sim', 'glove_align_orig_sim'],
+    ['glove_src_para_dist', 'glove_src_orig_dist', 'glove_src_align_dist',
+     'glove_orig_para_dist', 'glove_align_para_dist', 'glove_align_orig_dist'],
+    ['glove_src_para_david', 'glove_src_orig_david', 'glove_src_align_david',
+     'glove_orig_para_david', 'glove_align_para_david', 'glove_align_orig_david'],
+    ['w2v_src_para_sim', 'w2v_src_orig_sim', 'w2v_src_align_sim',
+     'w2v_orig_para_sim', 'w2v_align_para_sim', 'w2v_align_orig_sim'],
+    ['w2v_src_para_dist', 'w2v_src_orig_dist', 'w2v_src_align_dist',
+     'w2v_orig_para_dist', 'w2v_align_para_dist', 'w2v_align_orig_dist'],
+    ['w2v_src_para_david', 'w2v_src_orig_david', 'w2v_src_align_david',
+     'w2v_orig_para_david', 'w2v_align_para_david', 'w2v_align_orig_david'],
+    # ['elmo_src_para_sim', 'elmo_src_orig_sim',w2v_src_align_sim
+    #  'elmo_orig_para_sim', 'elmo_align_para_sim'w2v_align_src_sim],
+    # ['elmo_src_para_dist', 'elmo_src_orig_dist'w2v_src_align_dist,
+    #  'elmo_orig_para_dist', 'elmo_align_para_dist'w2v_align_src_dist],
+    # ['elmo_src_para_david', 'elmo_src_orig_david',w2v_src_align_david
+    #  'elmo_orig_para_david', 'elmo_align_para_david'w2v_align_orig_david],
+    ['bert_src_para_sim', 'bert_src_orig_sim', 'bert_src_align_sim',
+     'bert_orig_para_sim', 'bert_align_para_sim', 'bert_align_orig_sim'],
+    ['bert_src_para_dist', 'bert_src_orig_dist', 'bert_src_align_dist',
+     'bert_orig_para_dist', 'bert_align_para_dist', 'bert_align_orig_dist'],
+    ['bert_src_para_david', 'bert_src_orig_david', 'bert_src_align_david',
+     'bert_orig_para_david', 'bert_align_para_david', 'bert_align_orig_david'],
+    ['ng_src_para', 'ng_src_orig', 'ng_src_align',
+     'ng_orig_para', 'ng_align_para', 'ng_align_orig']
     ]
 
-individs = {0 : 'src_para', 1 : 'src_orig', 2 : 'orig_para', 3 : "align_para"}
+individs = {0 : 'src_para',
+            1 : 'src_orig',
+            2: 'src_align',
+            3 : 'orig_para',
+            4 : "align_para",
+            5 : "align_orig"}
+
 
 def logreg(names, outfile):
     results = []
@@ -112,6 +132,8 @@ def logreg(names, outfile):
 
         whole_y = []
         whole_score = []
+
+        # pdb.set_trace()
 
         for train, test in gkf.split(X, y, groups=groups):
             # print("Currently on {}".format(current))
@@ -170,6 +192,30 @@ all_corrs = logreg(names, outfile)
 corrs = {}
 corrs['all rels'] = all_corrs
 
+print("paired rels")
+# horizontally
+name1 = individs[2]
+name2 = individs[3]
+print(name1, 'and', name2)
+outfile.write("pair {}".format('\t'.join([name1, name2])))
+new_names = [[x[2], x[3]] for x in names]
+pair_corrs = logreg(new_names, outfile)
+# vertically
+name1 = individs[1]
+name2 = individs[4]
+print(name1, 'and', name2)
+outfile.write("pair {}".format('\t'.join([name1, name2])))
+new_names = [[x[1], x[4]] for x in names]
+pair_corrs = logreg(new_names, outfile)
+# criscross
+name1 = individs[0]
+name2 = individs[5]
+print(name1, 'and', name2)
+outfile.write("pair {}".format('\t'.join([name1, name2])))
+new_names = [[x[0], x[5]] for x in names]
+pair_corrs = logreg(new_names, outfile)
+
+
 for num in individs:
     name = individs[num]
     print("just {}".format(name))
@@ -212,5 +258,3 @@ with open('pivot.tsv', 'w') as of:
     of.write('\t'.join(['from', 'to', 'sig', 'acc diff']) + '\n')
     for line in to_nparray:
         of.write('\t'.join(line) + '\n')
-
-pdb.set_trace()

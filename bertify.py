@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# this file is depreciated
+
 import sys
 import random
 import tqdm
@@ -229,7 +231,7 @@ class Bertify:
         of.write('\t'.join([str(index), tupe[0], tupe[1], str(tupe[-1])]) + '\n')
         index += 1
 
-
-Bertify(sys.argv[1], sys.argv[2], float(sys.argv[3]))
+if __name__ != '__main__':
+  Bertify(sys.argv[1], sys.argv[2], float(sys.argv[3]))
 
 
