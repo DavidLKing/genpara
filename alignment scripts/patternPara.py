@@ -271,8 +271,12 @@ class PatternSwap:
         # testing
         for (pattern_1, pattern_2, sent_1, sent_2) in tqdm(checked_patterns):
             # range for testing
+            if until:
+                end = until
+            else:
+                end = len(checked_patterns) + 1
             # for (pattern_1, pattern_2, sent_1, sent_2) in tqdm(checked_patterns[0:until]):
-            for line in tqdm(sents):
+            for line in tqdm(sents[0:end]):
                 if not line.startswith('#'):
                     line = line.split('\t')
                     label = line[3]
@@ -716,4 +720,4 @@ class PatternSwap:
                 row = [sent, trans, source1, source2, paraphrase, wilks, lab, dialTurn]
                 para_list.append(row)
                 # writer.writerow(row)
-            return para_list
+        return para_list

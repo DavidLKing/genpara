@@ -168,7 +168,6 @@ if __name__ == '__main__':
     # SINGLES
     gold_singles = {}
     gold_singles = aS.get_align(golds, gold_singles)
-    # pdb.set_trace()
 
     # HACKY PROTOTYPING
     sents = open('../data/corrected.tsv', 'r').readlines()
@@ -179,18 +178,23 @@ if __name__ == '__main__':
     ps = PatternSwap()
     gold_lines = [x.split('\t') for x in open(sys.argv[2], 'r').readlines()]
     patterns = ps.extract_pattern(gold_lines)
+    print("patterns", len(patterns))
 
     checked_patterns = ps.template_check(patterns)
+    print("checked_patterns", len(checked_patterns))
 
     test_num = 0
-    # range = 10
-    # diffed_matches = ps.get_diff(checked_patterns, sents, test_num, until=range)
+    # diffed_matches = ps.get_diff(checked_patterns, sents, test_num, until=100)
     diffed_matches = ps.get_diff(checked_patterns, sents, test_num)
+    print("diffed_matches", len(diffed_matches))
 
-    best_matches = ps.refine_matches(diffed_matches)
+    # best_matches = ps.refine_matches(diffed_matches)
+    # print("best_matches", len(best_matches))
 
-    phrasal_paraphrases = ps.gen_para(best_matches)
+    # phrasal_paraphrases = ps.gen_para(best_matches)
+    phrasal_paraphrases = ps.gen_para(diffed_matches)
 
+    print("phrasal_paraphrases", len(phrasal_paraphrases))
     pdb.set_trace()
 
 
