@@ -36,7 +36,7 @@ def doDiff(lab, trans, sent, wilks, source1, source2, response, cs_guess, cs_cor
 templates = pickle.load(open('autTemplatesCheckedwithSourcesNoPOS.p', 'rb'))
 print(len(templates))
 with open('wilkinsWithDialTurn.csv', 'r') as wilkins:
-    wilkins = csv.reader(wilkins)
+    wilkins = csv.reader(wilkins, delimiter='\t')
     for line in wilkins:
         wilks.append((line[0].split(), line[1].split(), line[3], line[2], line[2], line[4], line[5], line[6], line[-1]))
 

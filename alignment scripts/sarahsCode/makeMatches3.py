@@ -52,7 +52,7 @@ def doDiff(lab, trans, sent, wilks):
 templates = pickle.load(open('templates3.p', 'rb'))
 print(len(templates))
 with open('wilkins.csv', 'r') as wilkins:
-    wilkins = csv.reader(wilkins)
+    wilkins = csv.reader(wilkins, delimiter='\t')
     for line in wilkins:
         wilks.append((line[0].split(), line[1].split(), line[3]))
 

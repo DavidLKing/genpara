@@ -20,7 +20,7 @@ stopwords = {'is', 'are', 'what', 'who', 'where', 'when', 'how', 'why', 'you', '
 templates = []
 templates2 = []
 for item in nums:
-    filename = 'goldalign-repo-master/data/users/arbit/demo-user-1_demo-user-2/complete/vpd-corpus/batch_'+item+'.tsv'
+    filename = '../../data/goldalign-repo/data/users/arbit/demo-user-1_demo-user-2/complete/vpd-corpus/batch_'+item+'.tsv'
     try:
         with open(filename, 'r') as file:
             read = csv.reader(file, delimiter='\t')

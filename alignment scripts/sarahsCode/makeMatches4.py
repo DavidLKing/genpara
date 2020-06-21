@@ -46,7 +46,7 @@ templates = pickle.load(open('autTemplatesChecked4.p', 'rb'))
 print(len(templates))
 
 with open('wilkinsWithDialTurn.csv', 'r') as wilkins:
-    wilkins = csv.reader(wilkins)
+    wilkins = csv.reader(wilkins, delimiter='\t')
     for line in wilkins:
         wilks.append((line[0].split(), line[1].split(), line[3], line[-1]))
 

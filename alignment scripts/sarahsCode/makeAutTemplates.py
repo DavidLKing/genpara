@@ -1,3 +1,4 @@
+import pdb
 import pickle
 import csv
 
@@ -13,7 +14,8 @@ stopwords = {'is', 'are', 'what', 'who', 'where', 'when', 'how', 'why', 'you', '
 
 templates = []
 for item in nums:
-    filename = 'goldalign-repo-master/data/users/arbit/demo-user-1_demo-user-2/complete/vpd-corpus/batch_'+item+'.tsv'
+    filename = '../../data/goldalign-repo/data/users/arbit/demo-user-1_demo-user-2/complete/vpd-corpus/batch_'+item+'.tsv'
+    print(filename)
     try:
         with open(filename, 'r') as file:
             read = csv.reader(file, delimiter='\t')
@@ -24,6 +26,8 @@ for item in nums:
                     sent2 = line[3].split()
                     sure = line[7].split()
                     poss = line[8].split()
+                    if poss != []:
+                        pdb.set_trace()
                     align = sure+poss
                     for item in align:
                         x,y = item.split('-')
@@ -87,8 +91,8 @@ for item in nums:
 ##                    print('Sent2', sent2)
 ##                    print('Templates', templates)
 ##                    print()
-    except FileNotFoundError:
-        pass
+    except: # FileNotFoundError:
+        print("could not find\n", filename)
 
 ##for item in templates:
 ##    print(item)

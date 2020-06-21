@@ -1,3 +1,25 @@
+Mike stuff:
+
+To the extent that you have remaining GRA time available, it would be great to look into the questions listed below.  Knowing the answers to these questions could be useful for expanding upon or resubmitting the ACL submission as well as the project’s final report.
+
+ 
+
+-What is the effect of data augmentation on rare label accuracy?
+-How many of the generated paraphrases are estimated to be domain- or task-specific, not appearing in WordNet or PPDB?
+-Does it help to begin by training the CNN over a uniform distribution then freezing the filter weights before continuing with sampling based on the actual label distribution?
+-Does it help to progressively increase the sampling proportion until max validation accuracy is achieved?
+-How well do the previous paraphrases (from BEA-18 paper, incl NMT backtranslation) work using Bert-based ranking and sampling-based training?
+-Are the previous paraphrases and the current ones (derived from the dataset itself) complementary for downstream performance improvement?
+ 
+
+Note re 5 that WordNet does have glosses for synsets that could in principle be used with our four-sentence method; otherwise we’d only have the two sentence available.
+
+###
+Besides the questions below, I’d also be interested in hearing what you think we could’ve done differently to avoid deadline madness.  I saw a twitter thread on this topic (started by Sam Bowman) but was not particularly convinced by any of the replies.
+###
+
+#########################################################
+
 For pipline
 
   cut -f 1-73 FILE
@@ -31,3 +53,5 @@ paste multiple.anno.tsv multiple.feats.tsv > multiple.ready.tsv
 cat lexsub.ready.tsv multiple.ready.tsv > sanity.feats
 
 python score_noclass.py > sanity_output.tsv
+
+

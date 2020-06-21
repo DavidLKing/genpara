@@ -1,4 +1,4 @@
-import pickle,csv,difflib
+import pickle,csv,difflib, pdb
 
 matches = []
 wilks = []
@@ -37,9 +37,10 @@ templates = pickle.load(open('autTemplatesCheckedwithSources.p', 'rb'))
 print(len(templates))
 
 with open('wilkinsWithDialTurn.csv', 'r') as wilkins:
-    wilkins = csv.reader(wilkins)
+    wilkins = csv.reader(wilkins, delimiter='\t')
     for line in wilkins:
-        wilks.append((line[0].split(), line[1].split(), line[3], line[2], line[1], line[4], line[5], line[6], line[-1]))
+        try:
+            wilks.append((line[0].split(), line[1].split(), line[3], line[2], line[1], line[4], line[5], line[6], line[-1]))
 
 for (sent1, sent2, source1, source2) in templates:
     for (wilk0, wilk1, label, response, cs_guess, cs_corr, cc1, cc2, dialTurn) in wilks:
