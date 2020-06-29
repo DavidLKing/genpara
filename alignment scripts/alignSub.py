@@ -58,7 +58,6 @@ class alignSub:
                 #     # get analgous output to above
                 #     idxes = [[[i[0]], [i[1]]] for i in idxes]
                 phrases = p.align(src, tgt, idxes, phrases)
-        # pdb.set_trace()
         return phrases
 
     def elmo_clean(self, elmos):
@@ -127,7 +126,6 @@ class alignSub:
         ]
         paraphrases.append(header)
         for line in sents:
-            # pdb.set_trace()
             total += 1
             sent = line[0]
             for swappable in swap_dict:
@@ -138,7 +136,6 @@ class alignSub:
                         src = random.choice(swap_dict[swappable][swap]['src'])
                         align = random.choice(swap_dict[swappable][swap]['align'])
                         para = sent.replace(swappable, swap)
-                        # pdb.set_trace()
                         new_array = [swappable, swap, src, align, para] + line
                         assert(len(new_array) == len(header))
                         paraphrases.append(new_array)
@@ -149,7 +146,7 @@ class alignSub:
             for line in lines:
                 # TODO we shouldn't need this check
                 if line[0] != line[1]:
-                    of.write('\t'.join(line) + '\n')
+                    of.write('\t'.join(line[:7]) + '\n')
 
 if __name__ == '__main__':
 
@@ -159,19 +156,12 @@ if __name__ == '__main__':
 
     aS = alignSub()
 
-    golds = []
-    # for files in sys.argv[2:]:
-    golds = c.read_gold(golds, sys.argv[2])
-
     p = PhraseTable()
 
-    # SINGLES
-    gold_singles = {}
-    gold_singles = aS.get_align(golds, gold_singles)
-
     # HACKY PROTOTYPING
-    sents = open('../data/corrected.tsv', 'r').readlines()
+    sents = open(sys.argv[1], 'r').readlines()
     labels = aS.get_labels(sents)
+    # TODO CHANGE TO LOWER QUINTILE?
     low_freq = aS.get_low_freq(sents)
 
     # Attempt at using Sarah's code
@@ -187,40 +177,46 @@ if __name__ == '__main__':
     # diffed_matches = ps.get_diff(checked_patterns, sents, test_num, until=100)
     diffed_matches = ps.get_diff(checked_patterns, sents, test_num)
     print("diffed_matches", len(diffed_matches))
-
     # best_matches = ps.refine_matches(diffed_matches)
     # print("best_matches", len(best_matches))
 
     # phrasal_paraphrases = ps.gen_para(best_matches)
     phrasal_paraphrases = ps.gen_para(diffed_matches)
 
+    # TODO there's a better way to do this
+    header = [
+            'swappable',
+            'swap',
+            'src',
+            'align',
+            'para',
+            'orig',
+            'label',
+            'response',
+            'cs guess',
+            'cs correct',
+            'color code 1',
+            'color code 2'
+   ]
+
+    phrasal_paraphrases.insert(0, header)
+
     print("phrasal_paraphrases", len(phrasal_paraphrases))
-    pdb.set_trace()
-
-
-
 
 
     ###############################
     # OLDER STUFF---STILL NEEDED? #
+    # YES KEEP FOR GOLDS          #
+    # ... AND POSSIBLY NEW ALIGNS #
     ###############################
 
-    elmos = open(sys.argv[1], 'r').readlines()
-    elmos = [x.strip().split('\t') for x in elmos]
-    elmos = aS.elmo_clean(elmos)
+    golds = []
+    # for files in sys.argv[2:]:
+    golds = c.read_gold(golds, sys.argv[2])
 
-    elmo_singles = {}
-    elmo_singles = aS.get_align(elmos, elmo_singles)
-
-    # prec = rec_prec(elmo_singles, gold_singles)
-    # rec = rec_prec(gold_singles, elmo_singles)
-    # f1 = 2 * ((prec * rec) / (prec + rec))
-
-
-    print("single word alignments")
-    # print("prec", prec)
-    # print("rec", rec)
-    # print("f1", f1)
+    # SINGLES
+    gold_singles = {}
+    gold_singles = aS.get_align(golds, gold_singles)
 
     # PHRASES
     gold_phrases = {}
@@ -230,13 +226,10 @@ if __name__ == '__main__':
     # elmos = [x.strip().split('\t') for x in elmos]
     # elmos = elmo_clean(elmos)
 
-    elmo_phrases = {}
-    elmo_phrases = aS.get_range_align(elmos, elmo_phrases)#  , use_phrase = True)
-
     # save them
-    pkl.dump(gold_singles, open('gold_singles.pkl', 'wb'))
+    # pkl.dump(gold_singles, open('gold_singles.pkl', 'wb'))
     # pkl.dump(elmo_singles, open('elmo_singles.pkl', 'wb'))
-    pkl.dump(gold_phrases, open('gold_phrases.pkl', 'wb'))
+    # pkl.dump(gold_phrases, open('gold_phrases.pkl', 'wb'))
     # pkl.dump(elmo_phrases, open('elmo_phrases.pkl', 'wb'))
 
     # prec = rec_prec(elmo_phrases, gold_phrases)
@@ -252,10 +245,8 @@ if __name__ == '__main__':
 
     # GEN SWAPS
     gold_sg_para = aS.swap(low_freq, gold_singles)
-    elmo_sg_para = aS.swap(low_freq, elmo_singles)
     # Not currently being used
     gold_ph_para = aS.swap(low_freq, gold_phrases)
-    elmo_ph_para = aS.swap(low_freq, elmo_phrases)
 
     # s = Score()
     # print("getting gold alignment vectors")
@@ -263,10 +254,9 @@ if __name__ == '__main__':
     # print("getting elmo alignment vectors")
     # elmo_sg_para = s.elmo_diffs(elmo, elmo_sg_para)
 
+    # pdb.set_trace()
+
     aS.writeout('gold_singular_swap.tsv', gold_sg_para)
     aS.writeout('gold_phrase_swap.tsv', gold_ph_para)
-    aS.writeout('elmo_singular_swap.tsv', elmo_sg_para)
-
-
-    # pdb.set_trace()
+    aS.writeout('phrasal_swap.tsv', phrasal_paraphrases)
 

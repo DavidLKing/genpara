@@ -123,7 +123,6 @@ class PhraseTable:
         tgt = tgt.split()
         # pdb.set_trace()
         for pair in indexes:
-            # pdb.set_trace()
             src_phrase = self.gen_phrase(src, pair[0])
             tgt_phrase = self.gen_phrase(tgt, pair[1])
             phrase_table = self.update_phrase_table(src, tgt, src_phrase, tgt_phrase, phrase_table)

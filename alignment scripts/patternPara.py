@@ -665,6 +665,7 @@ class PatternSwap:
         #     writer.writerow(['TEMP MATCH (SWAPPABLE)', 'TEMP TRANSFORMATION (SWAP)', 'SOURCE LEFT (SOURCE ALIGN)',
         #                      'SOURCE RIGHT (SOURCE ALIGN)', 'PARAPHRASE', 'ORIGINAL', 'LABEL', 'DIALOGUE, TURN'])
         for (lab, wilks, sent, trans, source1, source2, dialTurn) in matches:
+            wilks_string = ' '.join(wilks)
             secCall += 1
             j, f, beg, par = 0, 0, [], []
             # if '$' not in sent[0]:
@@ -717,7 +718,8 @@ class PatternSwap:
 
                 paraphrase = ' '.join(paraphrase)
                 paraphrases += 1
-                row = [sent, trans, source1, source2, paraphrase, wilks, lab, dialTurn]
+                # row = [sent, trans, source1, source2, paraphrase, wilks, lab, dialTurn]
+                row = [' '.join(sent), ' '.join(trans), source1, source2, paraphrase, wilks_string, lab, dialTurn]
                 para_list.append(row)
                 # writer.writerow(row)
         return para_list
