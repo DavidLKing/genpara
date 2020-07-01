@@ -137,7 +137,10 @@ class alignSub:
                         align = random.choice(swap_dict[swappable][swap]['align'])
                         para = sent.replace(swappable, swap)
                         new_array = [swappable, swap, src, align, para] + line
-                        assert(len(new_array) == len(header))
+                        try:
+                            assert(len(new_array) == len(header) or len(new_array) == len(header) -2)
+                        except:
+                            pdb.set_trace()
                         paraphrases.append(new_array)
         return paraphrases
 
@@ -149,6 +152,13 @@ class alignSub:
                     of.write('\t'.join(line[:7]) + '\n')
 
 if __name__ == '__main__':
+
+    # Simple Options
+    PHRASAL = True
+    SINGLE = True
+    MULTI = True
+    WRITEOUT = True
+    TENFOLD = True
 
     ### Ready
 
@@ -164,44 +174,50 @@ if __name__ == '__main__':
     # TODO CHANGE TO LOWER QUINTILE?
     low_freq = aS.get_low_freq(sents)
 
-    # Attempt at using Sarah's code
-    ps = PatternSwap()
-    gold_lines = [x.split('\t') for x in open(sys.argv[2], 'r').readlines()]
-    patterns = ps.extract_pattern(gold_lines)
-    print("patterns", len(patterns))
+    if PHRASAL:
+        # Attempt at using Sarah's code
+        ps = PatternSwap()
+        gold_lines = [x.split('\t') for x in open(sys.argv[2], 'r').readlines()]
+        patterns = ps.extract_pattern(gold_lines)
+        print("patterns", len(patterns))
 
-    checked_patterns = ps.template_check(patterns)
-    print("checked_patterns", len(checked_patterns))
+        checked_patterns = ps.template_check(patterns)
+        print("checked_patterns", len(checked_patterns))
 
-    test_num = 0
-    # diffed_matches = ps.get_diff(checked_patterns, sents, test_num, until=100)
-    diffed_matches = ps.get_diff(checked_patterns, sents, test_num)
-    print("diffed_matches", len(diffed_matches))
-    # best_matches = ps.refine_matches(diffed_matches)
-    # print("best_matches", len(best_matches))
+        test_num = 0
+        # diffed_matches = ps.get_diff(checked_patterns, sents, test_num, until=100)
+        # diffed_matches = ps.get_diff(checked_patterns, sents, test_num)
+        # TODO FIX THIS HACK
+        hacky_sents = ['\t'.join(x) for x in low_freq]
+        diffed_matches = ps.get_diff(checked_patterns, hacky_sents, test_num)
+        print("diffed_matches", len(diffed_matches))
+        # best_matches = ps.refine_matches(diffed_matches)
+        # print("best_matches", len(best_matches))
 
-    # phrasal_paraphrases = ps.gen_para(best_matches)
-    phrasal_paraphrases = ps.gen_para(diffed_matches)
+        # phrasal_paraphrases = ps.gen_para(best_matches)
+        phrasal_paraphrases = ps.gen_para(diffed_matches)
 
-    # TODO there's a better way to do this
-    header = [
-            'swappable',
-            'swap',
-            'src',
-            'align',
-            'para',
-            'orig',
-            'label',
-            'response',
-            'cs guess',
-            'cs correct',
-            'color code 1',
-            'color code 2'
-   ]
+        # TODO there's a better way to do this
+        header = [
+                'swappable',
+                'swap',
+                'src',
+                'align',
+                'para',
+                'orig',
+                'label',
+                'response',
+                'cs guess',
+                'cs correct',
+                'color code 1',
+                'color code 2'
+       ]
 
-    phrasal_paraphrases.insert(0, header)
+        phrasal_paraphrases.insert(0, header)
 
-    print("phrasal_paraphrases", len(phrasal_paraphrases))
+        print("phrasal_paraphrases", len(phrasal_paraphrases))
+
+        if WRITEOUT: aS.writeout('phrasal_swap.tsv', phrasal_paraphrases)
 
 
     ###############################
@@ -215,48 +231,20 @@ if __name__ == '__main__':
     golds = c.read_gold(golds, sys.argv[2])
 
     # SINGLES
-    gold_singles = {}
-    gold_singles = aS.get_align(golds, gold_singles)
+    if SINGLE:
+        gold_singles = {}
+        gold_singles = aS.get_align(golds, gold_singles)
+        gold_sg_para = aS.swap(low_freq, gold_singles)
+        if WRITEOUT: aS.writeout('gold_singular_swap.tsv', gold_sg_para)
 
     # PHRASES
-    gold_phrases = {}
-    gold_phrases = aS.get_range_align(golds, gold_phrases)# , use_phrase = True)
-
-    # elmos = open(sys.argv[2], 'r').readlines()
-    # elmos = [x.strip().split('\t') for x in elmos]
-    # elmos = elmo_clean(elmos)
-
-    # save them
-    # pkl.dump(gold_singles, open('gold_singles.pkl', 'wb'))
-    # pkl.dump(elmo_singles, open('elmo_singles.pkl', 'wb'))
-    # pkl.dump(gold_phrases, open('gold_phrases.pkl', 'wb'))
-    # pkl.dump(elmo_phrases, open('elmo_phrases.pkl', 'wb'))
-
-    # prec = rec_prec(elmo_phrases, gold_phrases)
-    # rec = rec_prec(gold_phrases, elmo_phrases)
-    # f1 = 2 * ((prec * rec) / (prec + rec))
-
-    print("phrasal alignments")
-    # print("prec", prec)
-    # print("rec", rec)
-    # print("f1", f1)
+    if MULTI:
+        gold_phrases = {}
+        gold_phrases = aS.get_range_align(golds, gold_phrases)# , use_phrase = True)
+        gold_ph_para = aS.swap(low_freq, gold_phrases)
+        if WRITEOUT: aS.writeout('gold_phrase_swap.tsv', gold_ph_para)
 
 
 
-    # GEN SWAPS
-    gold_sg_para = aS.swap(low_freq, gold_singles)
-    # Not currently being used
-    gold_ph_para = aS.swap(low_freq, gold_phrases)
 
-    # s = Score()
-    # print("getting gold alignment vectors")
-    # gold_sg_para = s.elmo_diffs(elmo, gold_sg_para)
-    # print("getting elmo alignment vectors")
-    # elmo_sg_para = s.elmo_diffs(elmo, elmo_sg_para)
-
-    # pdb.set_trace()
-
-    aS.writeout('gold_singular_swap.tsv', gold_sg_para)
-    aS.writeout('gold_phrase_swap.tsv', gold_ph_para)
-    aS.writeout('phrasal_swap.tsv', phrasal_paraphrases)
 
