@@ -10,6 +10,7 @@
 *.backup
 *.tar.*
 data/*
+alignment\ scripts/old_stuff/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
