@@ -660,7 +660,7 @@ if __name__ == "__main__":
     # TODO add sanity check to make sure lengths are all correct
     # TODO figure out how to get Pandas to output something I can iterate through
     for line in swap_txt[1:]:
-        print("number", total)
+        # print("number", total)
         total += 1
         line = line.lower()
         sims = s.score(line, w2v, glove, lm,
@@ -673,7 +673,7 @@ if __name__ == "__main__":
         # print('\t'.join(list([str(x) for x in sims]) + line.strip().split('\t')))
         split_line = line.strip().split('\t')
         original = split_line[5]
-        print("original", original)
+        # print("original", original)
         if len(split_line) == 13:
             dia_turn = split_line[-1]
             dia_turn = eval(dia_turn)

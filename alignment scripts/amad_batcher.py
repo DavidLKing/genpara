@@ -1,4 +1,5 @@
 import pdb
+from tqdm import tqdm
 import numpy as np
 from allennlp.modules.elmo import Elmo, batch_to_ids
 
@@ -31,8 +32,9 @@ class MiniBatch:
         # batchSize = 128
         batchLoc = 0
         # i = 0
+        pbar = tqdm(total=total)
         while batchLoc <= total:
-            print("On batch", batchLoc, "of", total)
+            # print("On batch", batchLoc, "of", total)
             # print("batchLoc", batchLoc)
             # print("batchLoc * batchSize", batchLoc * batchSize)
             # print("(batchLoc + 1) * batchSize", (batchLoc + 1) * batchSize)
@@ -56,6 +58,8 @@ class MiniBatch:
                 for tns in npTensor:
                     tensors.append(tns)
             batchLoc += 1
+            pbar.update(1)
+        pbar.close()
         assert(len(tensors) == len(sentences))
         tensors = np.asarray(tensors)
         # pdb.set_trace()

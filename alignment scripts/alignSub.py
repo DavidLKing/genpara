@@ -156,6 +156,19 @@ class alignSub:
 if __name__ == '__main__':
 
     # Simple Options
+
+    '''
+    For clarification:
+        Phrasal = Sarah's variable based sentence templates
+            lambda x y: [Do x like y] (you, hamsters) --> Do you like hamsters
+        Single = single word alignment swaps
+        Multi = multiple word alignment swaps---only partially worked, as I recall
+        Writeout = Shall we write to a file?
+        Ten fold = split data into 10 folds for cross eval---NOT IMPLEMENTED (yet)
+        Score = the 100,000 scoring metrics we tried
+        Device = cuda device (0, 1, or higher) or cpu (-1)
+    '''
+
     # PHRASAL = False
     PHRASAL = True
     # SINGLE = False
@@ -166,13 +179,16 @@ if __name__ == '__main__':
     # WRITEOUT = True
     TENFOLD = False
     # TENFOLD = True
-    # SCORE = False
     SCORE = True
+    # SCORE = True
     DEVICE = 0
     # DEVICE = 1
     # DEVICE = -1
 
     ### Ready
+
+    if WRITEOUT:
+        output_file = 'output.tsv'
 
     paraphrases = []
 
@@ -235,9 +251,6 @@ if __name__ == '__main__':
 
         print("phrasal_paraphrases", len(phrasal_paraphrases))
 
-        # if WRITEOUT: aS.writeout('phrasal_swap.tsv', phrasal_paraphrases)
-
-
     ###############################
     # OLDER STUFF---STILL NEEDED? #
     # YES KEEP FOR GOLDS          #
@@ -254,7 +267,6 @@ if __name__ == '__main__':
         gold_singles = aS.get_align(golds, gold_singles)
         gold_sg_para = aS.swap(low_freq, gold_singles)
         paraphrases += gold_sg_para
-        # if WRITEOUT: aS.writeout('gold_singular_swap.tsv', gold_sg_para)
 
     # PHRASES
     if MULTI:
@@ -262,7 +274,8 @@ if __name__ == '__main__':
         gold_phrases = aS.get_range_align(golds, gold_phrases)# , use_phrase = True)
         gold_ph_para = aS.swap(low_freq, gold_phrases)
         paraphrases += gold_ph_para
-        # if WRITEOUT: aS.writeout('gold_phrase_swap.tsv', gold_ph_para)
+
+    if WRITEOUT and not SCORE: aS.writeout(output_file, paraphrases)
 
     if SCORE:
         para_header = paraphrases.pop(0)
@@ -300,11 +313,10 @@ if __name__ == '__main__':
                 4 = original corrected.tsv (2016 VP data)
                 5 = Gigaword 5-gram model
                     """)
-        # TODO make these into arguments
+        # TODO make these back into arguments
         w2v_file = '../data/GoogleNews-vectors-negative300.bin'
         glove_file = '../data/glove.6B.300d.txt.word2vec'
         kenlm_file = '../data/gigaword4.5g.kenlm.bin'
-        output_file = 'output.tsv'
         # temp test
 
         corrected = sents
@@ -323,7 +335,6 @@ if __name__ == '__main__':
         glove = gensim.models.KeyedVectors.load_word2vec_format(glove_file, binary=False)
 
         ### BERT INIT ###
-        # TODO bert isn't reading device id
         b = BertBatch('bert-base-uncased', device=DEVICE)
 
         # pre-b2 = BertBatch('bert-base-uncased', device=0)
@@ -420,7 +431,6 @@ if __name__ == '__main__':
 
         # TODO make this an option or get logging to a different file
         if WRITEOUT:
-            outfile = open(output_file, 'w')
 
             header = para_header
             # swap_txt[0].strip().split('\t')
@@ -493,6 +503,7 @@ if __name__ == '__main__':
                       'ng_sum'] + header
 
             # print('\t'.join(header))
+            outfile = open(output_file, 'w')
             outfile.write('\t'.join(header) + '\n')
 
             line_nmr = 0
@@ -504,10 +515,9 @@ if __name__ == '__main__':
             SANITY = True
 
             # TODO add sanity check to make sure lengths are all correct
-            # TODO figure out how to get Pandas to output something I can iterate through
-            for line in paraphrases:
+            for line in tqdm(paraphrases):
                 # swap_txt[1:]:
-                print("number", total)
+                # print("number", total)
                 total += 1
                 sims = sc.score(line, w2v, glove, lm,
                                bert_src[line_nmr],
@@ -521,7 +531,7 @@ if __name__ == '__main__':
                 split_line = line
                 # split_line = line.strip().split('\t')
                 original = split_line[5]
-                print("original", original)
+                # print("original", original)
                 if len(split_line) == 13:
                     dia_turn = split_line[-1]
                     dia_turn = eval(dia_turn)

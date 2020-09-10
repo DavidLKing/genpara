@@ -1,4 +1,5 @@
 import pdb
+from tqdm import tqdm
 import torch
 import numpy as np
 from pytorch_pretrained_bert import BertTokenizer, BertModel, BertForMaskedLM
@@ -35,8 +36,9 @@ class BertBatch:
         tensors = []
         batchLoc = 0
         # i = 0
+        pbar = tqdm(total=total)
         while batchLoc <= total:
-            print("On batch", batchLoc, "of", total)
+            # print("On batch", batchLoc, "of", total)
             # print("batchLoc", batchLoc)
             # print("batchLoc * batchSize", batchLoc * batchSize)
             # print("(batchLoc + 1) * batchSize", (batchLoc + 1) * batchSize)
@@ -65,7 +67,8 @@ class BertBatch:
                [tensors.append(np.asarray(x.tolist())) for x in embeddings[8]]
                # pdb.set_trace()
             batchLoc += 1
-
+            pbar.update(1)
+        pbar.close()
         assert(len(tensors) == len(sentences))
         tensors = np.asarray(tensors)
         # pdb.set_trace()
