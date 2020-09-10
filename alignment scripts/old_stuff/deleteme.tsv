@@ -1,0 +1,15 @@
+#STARTDIALOGUE						
+hello mr. wilkins, what brings you in today	what brings you in today	hello doctor.  i am so glad to see you.	hello	False	FF00B050	FF000000
+can you tell me a little about your issue	what brings you in today	i'm sorry, i don't understand that question. would you restate it?	none	False	FFFFFF00	FF00B0F0
+what brings you in today	what brings you in today	i was hoping you could help me with my back pain, it really hurts! it has been awful.   i can barely even tie my shoes.	what brings you in today	True	0	FF000000
+where is the pain	where is the pain	it is mostly in my lower back.	where is the pain	True	0	FF000000
+when did it start	when did the pain start	the pain started about four or five days ago.	when did the pain start	True	0	FF000000
+is there anything that makes the pain worse	what makes the pain worse	[ pain3 ]bending down and moving makes it feel a lot worse.  the other day i couldn't even pick up a car part off of the bottom shelf.	what makes the pain worse	True	0	FF000000
+are you a mechanic	what do you do for a living	i am an auto mechanic.  i have a garage a couple of blocks from here.  i do repairs and custom restorations.	what do you do for a living	True	0	FF000000
+is there anything that makes it better	what makes the pain better	[ sadness2 ]the only thing that seems to help some is ibuprofen, and that doesn't help all that much.	what makes the pain better	True	0	FF000000
+are you taking any other medications	are you taking any other medication	i am taking baby aspirin once a day as a preventative for my heart. it was prescribed by my doctor. she said it would be a good idea at my age.	are you taking any other medication	True	0	FF000000
+#STARTDIALOGUE						
+hello mr. wilkins, my name is dr. savinoff. do you prefer mr. wilkins	what should i call you	i'm afraid i don't understand that question.	none	False	FFFFFF00	FF00B0F0
+why did you come into the office today	what brings you in today	i was hoping you could help me with my back pain, it really hurts! it has been awful.   i can barely even tie my shoes.	what brings you in today	True	0	FF000000
+that sounds rough. we will definitely try and find out what is wrong with your back. doyou have any other topics for discussion	any other problems	i'm afraid i don't understand that question.	none	False	FFFFFF00	FF00B0F0
+do you wish to discuss anything other than your back pain today	any other problems	no, just the back pain.	are you having any other pain	True	0	FF000000
