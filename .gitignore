@@ -11,6 +11,8 @@
 *.tar.*
 data/*
 alignment\ scripts/old_stuff/*
+*.txt
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

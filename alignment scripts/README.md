@@ -14,3 +14,5 @@ annotations before calling `build_phrase_table.py`. It can
 only work on one file at a time.
 
 All scripts currently just write to stdout.
+
+testing... wow I'm going to need to update this a lot
