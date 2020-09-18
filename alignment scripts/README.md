@@ -17,6 +17,7 @@ A/B test---how now?
 ## Next up:
 - [ ] Run VP data with all (?) metrics through RNN?
 - [ ] Generate paraphrases from COSI data---run through RNN
+- [ ] Analysis on output
 
 ## Ideas:
 - [ ] KNN over sentence embeddings!
