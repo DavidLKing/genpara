@@ -36,7 +36,11 @@ class PatternSwap:
                 sent2a = line[3].split()
                 sent2b = nltk.pos_tag(sent2a)
                 sure = line[7].split()
+                # try:
                 poss = line[8].split()
+                # except:
+                # TODO this isn't working, why did Sarah leave it here
+                # pdb.set_trace()
                 align = sure + poss
                 variable = 0
                 for item in align:
@@ -56,13 +60,17 @@ class PatternSwap:
                     if not (left, right) in aligns2:
                         aligns2.append((left, right))
                 for (left, right) in aligns2:
-                    l, r = 0, 0
-                    for i in left:
-                        if not sent1a[i] in stopwords: l += 1
-                    for i in right:
-                        if not sent2a[i] in stopwords: r += 1
-                    if l > 0 or r > 0:
-                        finalaligns.append((left, right))
+                    try:
+                        l, r = 0, 0
+                        for i in left:
+                            if not sent1a[i] in stopwords: l += 1
+                        for i in right:
+                            if not sent2a[i] in stopwords: r += 1
+                        if l > 0 or r > 0:
+                            finalaligns.append((left, right))
+                    except:
+                        # TODO why is sara's code breaking again?!
+                        continue
                 ## no need to change anything so far
                 for i in range(0, len(finalaligns)):
                     tpl = finalaligns[i]

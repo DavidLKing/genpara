@@ -49,16 +49,16 @@ class PhraseTable:
         if type(indexes) == int:
             # TODO weird even handling.
             indexes = [indexes]
-        # try:
-        for num in indexes:
-            if prev == None or num - prev == 1:
-                phrase += sent[num]
-                phrase += ' '
-            else:
-                phrase += '_ '
-            prev = num
-        # except:
-        #     pdb.set_trace()
+        try:
+            for num in indexes:
+                if prev == None or num - prev == 1:
+                    phrase += sent[num]
+                    phrase += ' '
+                else:
+                    phrase += '_ '
+                prev = num
+        except:
+            pdb.set_trace()
         return phrase.strip()
 
     def update_phrase_table(self, src, tgt, src_phrase, tgt_phrase, phrase_table):

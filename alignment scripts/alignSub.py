@@ -173,17 +173,18 @@ if __name__ == '__main__':
     PHRASAL = True
     # SINGLE = False
     SINGLE = True
-    # MULTI = False
-    MULTI = True
+    MULTI = False
+    # MULTI = True
     WRITEOUT = True
     # WRITEOUT = True
     TENFOLD = False
     # TENFOLD = True
+    # SCORE = False
     SCORE = True
-    # SCORE = True
     DEVICE = 0
     # DEVICE = 1
     # DEVICE = -1
+    batch_size = 1
 
     ### Ready
 
@@ -355,9 +356,8 @@ if __name__ == '__main__':
         lm = lang_mod()
         lm.load_lm(kenlm_file)
 
-        batch_size = 1
-
         def get_bert(srcs, aligns, origs, paras, queue):
+            print("Warming up BERT")
             _ = b.extract(srcs, batch_size)
             # b.extract(srcs, batch_size)
             print("Extracting BERT rep for srcs")
