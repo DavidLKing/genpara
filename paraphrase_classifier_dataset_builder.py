@@ -31,11 +31,12 @@ print("Generating positive examples")
 for label in tqdm(label_store):
     for first_example in label_store[label]:
         for second_example in label_store[label]:
-            line = "1\t{} [SEP] {}\n".format(first_example, second_example)
-            inverse_line = "1\t{} [SEP] {}\n".format(second_example, first_example)
-            if line not in all_pos:
-                all_pos.append(line)
-                all_pos.append(inverse_line)
+            if first_example != second_example:
+                line = "1\t{} [@] {}\n".format(first_example, second_example)
+                inverse_line = "1\t{} [@] {}\n".format(second_example, first_example)
+                if line not in all_pos:
+                    all_pos.append(line)
+                    all_pos.append(inverse_line)
 
 up_to = len(all_pos)
 print("Generated {} positive paraphrases pairs for the classifier".format(up_to))
@@ -50,8 +51,8 @@ while len(all_neg) < up_to:
     if first_label != second_label:
         example_1 = random.choice(label_store[first_label])
         example_2 = random.choice(label_store[second_label])
-        line = "0\t{} [SEP] {}\n".format(example_1, example_2)
-        line_inverse = "0\t{} [SEP] {}\n".format(example_2, example_1)
+        line = "0\t{} [@] {}\n".format(example_1, example_2)
+        line_inverse = "0\t{} [@] {}\n".format(example_2, example_1)
         if line not in all_neg:
             all_neg.append(line)
             all_neg.append(line_inverse)
@@ -64,6 +65,21 @@ print("Generated {} negative examples".format(len(all_neg)))
 print("Shuffling")
 random.shuffle(all_pos)
 random.shuffle(all_neg)
+
+# ADDED LATER
+def make_bert(annotation, all_paras, up_to):
+    all_paras_4 = []
+    while len(all_paras_4) < up_to:
+        text_a = random.choice(all_paras).strip().split('\t')[1]
+        text_b = random.choice(all_paras).strip().split('\t')[1]
+        if text_a != text_b:
+            all_paras_4.append("{}\t{} [SEP] {}\n".format(annotation, text_a, text_b))
+    return all_paras_4
+
+all_pos = make_bert("1", all_pos, up_to)
+all_neg = make_bert("0", all_neg, up_to)
+
+print("Additional mixing to utilize all 4 sentences")
 
 print("Splitting")
 def split(dataset):

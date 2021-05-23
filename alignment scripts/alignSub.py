@@ -176,11 +176,11 @@ if __name__ == '__main__':
     MULTI = False
     # MULTI = True
     WRITEOUT = True
-    # WRITEOUT = True
+    # WRITEOUT = False
     TENFOLD = False
     # TENFOLD = True
-    # SCORE = False
     SCORE = True
+    # SCORE = True
     DEVICE = 0
     # DEVICE = 1
     # DEVICE = -1
@@ -189,7 +189,7 @@ if __name__ == '__main__':
     ### Ready
 
     if WRITEOUT:
-        output_file = 'output.tsv'
+        output_file = sys.argv[3]
 
     paraphrases = []
 
@@ -544,7 +544,8 @@ if __name__ == '__main__':
                         dial_num = nums[0]
                         turn_num = nums[1]
                         outfile.write('\t'.join(
-                            [str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line) + '\n')
+                            [str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + [str(x) for x in line]
+                        ) + '\n')
                 # Sarah's originals are strings that were once arrays
                 # TODO I don't think these have to be converted, but
                 # double check
@@ -556,9 +557,11 @@ if __name__ == '__main__':
                         outfile.write('\t'.join(
                             [str(dial_num), str(turn_num)] + list([str(x) for x in sims]) + line) + '\n')
                 else:
-                    outfile.write(
-                        '\t'.join([str(999), str(999)] + list([str(x) for x in sims]) + line) + '\n')
-                    # pdb.set_trace()
+                    try:
+                        outfile.write(
+                            '\t'.join([str(999), str(999)] + list([str(x) for x in sims]) + line) + '\n')
+                    except:
+                        pdb.set_trace()
                     lost.append('\t'.join(list([str(x) for x in sims]) + line) + '\n')
                     missing += 1
                 line_nmr += 1
